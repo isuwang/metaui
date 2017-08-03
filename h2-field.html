@@ -1,0 +1,116 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./widgets/widget-resources.html">
+<link rel="import" href="./widgets/h2-widget-base.html">
+<link rel="import" href="./behaviors/base-behavior.html">
+
+<!--
+@group H2 Elements
+@element h2-field
+@demo demo/h2-field/index.html
+-->
+
+<dom-module id="h2-field">
+    <template>
+    </template>
+    <script>
+      class H2Field extends Polymer.mixinBehaviors([BaseBehavior], H2WidgetBase) {
+        static get is() {
+          return "h2-field";
+        }
+
+        static get properties() {
+          return {
+            editable: {
+              type: Boolean,
+              value: false
+            },
+            ref: {
+              type: Object
+            },
+            context: {
+              type: Object
+            }
+          };
+        }
+
+        static get observers() {
+          return [
+            '__metadataChange(metadata)',
+            '__valueChange(value)',
+            '__contextChange(context.*)'
+          ];
+        }
+
+        __contextChange(obj) {
+          this.ref && this.ref.notifyPath(obj.path);
+        }
+
+        validate() {
+          const ele = this.ref;
+          return ele && ele.validate && ele.validate();
+        }
+
+        __metadataChange() {
+          if (this.editable) {
+            const tagName = this.metadata.element || H2Field.defaultElements(this.metadata.datatype.type);
+            const eleDom = document.createElement(tagName);
+
+            eleDom.addEventListener('value-changed', e => {
+              this.value = e.detail.value;
+            });
+
+            eleDom.context = this.context;
+
+            if (this.metadata.datatype.metadata) {
+              eleDom.metadata = this.metadata.datatype.metadata;
+            } else {
+              eleDom.metadata = this.metadata;
+            }
+
+            this.ref = this.shadowRoot.appendChild(eleDom);
+          } else {
+
+            const element = this.elementRender(this.context, this.metadata);
+            this.shadowRoot.innerHTML = element;
+          }
+
+        }
+
+        connectedCallback() {
+          super.connectedCallback();
+          this.dispatchEvent(new CustomEvent('field-attached', {
+            composed: true
+          }));
+        }
+
+        __valueChange() {
+          const target = this.ref;
+
+          target && (target.value = this.value);
+
+          if (!this.editable) {
+            const element = this.elementRender(this.context, this.metadata);
+            this.shadowRoot.innerHTML = element;
+          }
+        }
+
+        static defaultElements(datatype) {
+          switch (datatype) {
+            case "action":
+              return "h2-action";
+            default:
+              return "h2-text";
+          }
+
+//          return {
+//            'text': 'h2-text',
+//            'textarea': 'h2-text-area',
+//            'select-list': 'h2-select-list',
+//            'action': 'h2-action'
+//          };
+        }
+      }
+
+      customElements.define(H2Field.is, H2Field);
+    </script>
+</dom-module>

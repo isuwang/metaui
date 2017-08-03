@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+  <title>h2-action-group demo</title>
+
+  <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../../h2-action.html">
+  <link rel="import" href="../../h2-action-group.html">
+
+  <link rel="import" href="../../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../../iron-demo-helpers/demo-pages-shared-styles.html">
+
+  <custom-style>
+    <style is="custom-style" include="demo-pages-shared-styles">
+    .centered {
+      min-width: 500px;
+    }
+
+    demo-snippet {
+      --demo-snippet-code: {
+        max-height: 250px;
+      }
+    }
+  </style>
+  </custom-style>
+
+</head>
+
+<body unresolved class="centered">
+  <h3>Action Group</h3>
+  <demo-snippet>
+    <template>
+      <style is="custom-style">
+        h2-action-group {
+          width: 180px;
+          height: 35px;
+        }
+      </style>
+      <h2-action-group name="Group1">
+        <h2-action id="action"></h2-action>
+        <h2-action id="action1"></h2-action>
+      </h2-action-group>
+      <script>
+        action.context = action1.context = {
+          name: "WahsonLeung",
+          phone: "15900000000"
+        };
+        action.metadata = {
+          actionId: "record-add",
+          actionName: "Add Record1",
+          operType: 1,
+          formMeta: {
+            formUrl: "/url-to-send-form",
+            confirm: "Sure to submit?",
+            fields: [
+              {
+                element: "h2-text",
+                name: "name",
+                label:"Name"
+              },
+              {
+                element: "h2-text",
+                name: "phone",
+                label:"Phone"
+              },
+            ],
+          }
+        };
+        action1.metadata = {
+          actionId: "record-add",
+          actionName: "Add Record2",
+          operType: 2,
+          formMeta: {
+            formUrl: "/url-to-send-form",
+            title:"Add Record",
+            fields: [
+              {
+                element: "h2-text",
+                name: "name",
+                label:"Name",
+                required: true,
+                editable:false,
+                visible:true
+              },
+              {
+                element: "h2-text",
+                name: "phone",
+                label:"Phone",
+                required: true,
+                editable:true,
+                visible:true
+              },
+            ],
+          }
+        }
+      </script>
+    </template>
+  </demo-snippet>
+</body>
+
+</html>

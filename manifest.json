@@ -1,0 +1,7 @@
+{
+  "name": "metaui",
+  "short_name": "metaui",
+  "description": "metaui",
+  "start_url": "/",
+  "display": "standalone"
+}
