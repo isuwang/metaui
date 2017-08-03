@@ -1,0 +1,7 @@
+{
+  "name": "front-end-meta",
+  "short_name": "front-end-meta",
+  "description": "front end meta",
+  "start_url": "/",
+  "display": "standalone"
+}

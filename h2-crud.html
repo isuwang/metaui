@@ -1,0 +1,115 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="widgets/widget-resources.html">
+<link rel="import" href="./behaviors/ajax-behavior.html">
+<link rel="import" href="./behaviors/base-behavior.html">
+<link rel="import" href="h2-crud-query.html">
+<link rel="import" href="h2-grid.html">
+<link rel="import" href="h2-action.html">
+<link rel="import" href="h2-pagination.html">
+
+<!--
+@group H2 Elements
+@element h2-crud
+@demo demo/h2-crud/index.html
+-->
+
+<dom-module id="h2-crud">
+    <template>
+        <style>
+            :host .crud-actions {
+                display: flex;
+                justify-content: flex-end;
+                border-top: 1px dashed;
+                padding: 10px;
+            }
+            :host .action-items {
+                margin-left: 10px;
+            }
+        </style>
+        <div class="crud-query">
+            <h2-crud-query id="query"
+                           query-after-reset
+                           metadata="{{ metadata.query }}"
+                           result="{{ rawResult }}"
+                           paging="[[ paging ]]"
+                           context="{{ context }}">
+                <slot name="ext-condition" slot="ext-condition"></slot>
+            </h2-crud-query>
+        </div>
+
+        <div class="crud-actions">
+            <template is="dom-repeat" items="[[ metadata.actions ]]" as="action">
+                    <span class="action-items">
+                        <h2-action metadata="[[ action ]]"></h2-action>
+                    </span>
+            </template>
+        </div>
+
+        <div class="crud-result">
+            <h2-grid metadata="{{ metadata.result }}"
+                     value="[[ getValueByPath(finalResult, keyForItems) ]]">
+
+            </h2-grid>
+        </div>
+
+        <div class="crud-pagination">
+            <template is="dom-if" if="{{metadata.query.paging}}">
+                <h2-pagination paging="{{ paging }}"
+                               total="[[ getValueByPath(finalResult, keyForPageResult) ]]">
+
+                </h2-pagination>
+            </template>
+        </div>
+
+    </template>
+    <script>
+      class H2Crud extends Polymer.mixinBehaviors([BaseBehavior, AjaxBehavior], Polymer.Element) {
+        constructor() {
+          super();
+        }
+
+        static get is() {
+          return "h2-crud";
+        }
+
+        static get properties() {
+          return {
+            resultDescriptor: {
+              type: Object
+            },
+            rawResult: {
+              type: Array,
+            },
+            finalResult: {
+              type: Array,
+              computed: '_resultDescriptor(rawResult)'
+            },
+            metadata: {
+              type: Object,
+            },
+            context: {
+              type: Object
+            },
+            keyForItems: {
+              type: String,
+              value: "rows"
+            },
+            keyForPageResult: {
+              type: String,
+              value: "results"
+            }
+          }
+        }
+
+        _resultDescriptor(result) {
+          return Function.prototype.isPrototypeOf(this.resultDescriptor) ?
+              this.resultDescriptor(result) : result;
+        }
+
+        refresh() {
+          this.$.query.submit();
+        }
+      }
+      customElements.define(H2Crud.is, H2Crud);
+    </script>
+</dom-module>

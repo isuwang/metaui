@@ -1,0 +1,181 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./behaviors/base-behavior.html">
+<link rel="import" href="h2-field.html">
+<link rel="import" href="h2-action.html">
+<link rel="import" href="h2-action-group.html">
+
+<!--
+@group H2 Elements
+@element h2-grid
+@demo demo/h2-grid/index.html
+-->
+
+<dom-module id="h2-grid">
+    <template>
+        <style>
+            :host {
+                font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+                font-size: 12px;
+            }
+
+            dom-repeat, dom-if {
+                display: none;
+            }
+
+            :host thead {
+                background: #595959;
+                color: #fff;
+            }
+
+            :host th {
+                text-align: left;
+                padding: 12px 10px;
+            }
+
+            :host .result-grid {
+                background: transparent;
+                border-spacing: 0;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            :host td {
+                padding: 5px 10px;
+            }
+
+            :host .grid-column {
+                min-width: 70px;
+            }
+            :host tr:nth-of-type(even) {
+                background-color: lightgrey;
+            }
+
+            :host td:nth-last-of-type(1) {
+                display: inline;
+                width: 200px;
+            }
+
+            :host .action, :host .action-group {
+                margin: 10px 5px;
+                width: 100px;
+                height: 30px;
+            }
+
+            :host .table-caption {
+                text-align: left;
+                font-size: 1.2em;
+                padding-bottom: 10px;
+            }
+
+        </style>
+        <slot name="filter"></slot>
+        <table class="result-grid">
+            <caption class="table-caption">[[ metadata.title ]]</caption>
+            <thead>
+            <tr class="grid-head">
+                <template is="dom-repeat" items="[[ metadata.grids ]]">
+                    <th>[[item.label]]</th>
+                </template>
+            </tr>
+            </thead>
+            <tbody>
+            <template is="dom-repeat" items="[[ value ]]" as="model">
+                <tr class="grid-row">
+                    <template is="dom-repeat" items="[[ metadata.grids ]]" as="fieldMeta">
+                        <td class="grid-column">
+                            <template is="dom-if" if="[[ !isEqual(fieldMeta.datatype, 'action') ]]">
+                                <h2-field class="widget"
+                                           metadata="[[ fieldMeta ]]"
+                                           editable="[[ fieldMeta.editable ]]"
+                                           context="[[ model ]]"
+                                           value="[[ getValueByKey(model,fieldMeta.name) ]]">
+                                </h2-field>
+                            </template>
+
+                            <template is="dom-if" if="[[ isEqual(fieldMeta.datatype,'action') ]]">
+                                <template is="dom-repeat" items="[[ noGroupActions(model.actions) ]]" as="actionMeta">
+                                    <h2-action class="action"
+                                               metadata="[[ actionMeta ]]"
+                                               context="[[ model ]]">
+                                    </h2-action>
+                                </template>
+                                <template is="dom-repeat" items="[[ groupedActions(model.actions) ]]">
+                                    <h2-action-group
+                                            class="action-group"
+                                            name="[[ item.group ]]">
+                                        <template is="dom-repeat" items="[[ item.actions ]]" as="actionMeta">
+                                            <h2-action metadata="[[ actionMeta ]]"
+                                                       context="[[ model ]]">
+                                            </h2-action>
+                                        </template>
+                                    </h2-action-group>
+                                </template>
+                            </template>
+                        </td>
+                    </template>
+                </tr>
+            </template>
+            </tbody>
+        </table>
+    </template>
+    <script>
+      class H2Grid extends Polymer.mixinBehaviors([BaseBehavior], Polymer.Element) {
+        constructor() {
+          super();
+        }
+
+        static get is() {
+          return "h2-grid";
+        }
+
+        static get properties() {
+          return {
+            editable: {
+              type: Boolean,
+              value: false
+            },
+            value: {
+              type: Array
+            },
+            metadata: {
+              type: Object,
+              observer: '__metadataChange'
+            }
+          }
+        }
+
+        __metadataChange(metadata) {
+          if (metadata) {
+            return this.updateStyle(metadata.style);
+          }
+        }
+
+        groupedActions(actions) {
+          const groupedActions = [];
+          const groupMap = {};
+          actions.map(actionId => {
+            const meta = this.getValueByKey(this.metadata.actions, actionId);
+            const grp = meta.group;
+            if (grp) {
+              groupMap[grp] = groupMap[grp] || [];
+              groupMap[grp].push(meta);
+            }
+          });
+          for (let grp in groupMap) {
+            groupedActions.push({group: grp, actions: groupMap[grp]});
+          }
+          return groupedActions;
+        }
+
+        noGroupActions(actions) {
+          return actions.filter(actionId => {
+            const meta = this.getValueByKey(this.metadata.actions, actionId);
+            const grp = meta.group;
+            return !grp;
+          }).map(actionId => this.getValueByKey(this.metadata.actions, actionId));
+        }
+      }
+
+      customElements.define(H2Grid.is, H2Grid);
+    </script>
+</dom-module>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>h2-grid test</title>
+
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../web-component-tester/browser.js"></script>
+    <link rel="import" href="../../../web-animations-js/web-animations.html">
+    <link rel="import" href="../../h2-grid.html">
+  </head>
+  <body>
+    <test-fixture id="basic">
+      <template>
+        <h2-grid></h2-grid>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('h2-grid', function() {
+        test('instantiating the element works', function() {
+          const element = fixture('basic');
+          assert.equal(element.is, 'h2-grid');
+        });
+      });
+    </script>
+  </body>
+</html>
