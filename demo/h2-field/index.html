@@ -3,72 +3,126 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
 
-  <title>h2-field demo</title>
+    <title>h2-field demo</title>
 
-  <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 
-  <link rel="import" href="../../h2-field.html">
+    <link rel="import" href="../../h2-field.html">
+    <link rel="import" href="../../widgets/h2-select-list.html">
 
-  <link rel="import" href="../../../iron-demo-helpers/demo-snippet.html">
-  <link rel="import" href="../../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../../iron-demo-helpers/demo-pages-shared-styles.html">
 
-  <custom-style>
-    <style is="custom-style" include="demo-pages-shared-styles">
-    .centered {
-      min-width: 500px;
-    }
+    <custom-style>
+        <style is="custom-style" include="demo-pages-shared-styles">
+            .centered {
+                min-width: 500px;
+            }
 
-    demo-snippet {
-      --demo-snippet-code: {
-        max-height: 250px;
-      }
-    }
-  </style>
-  </custom-style>
+            demo-snippet {
+                --demo-snippet-code: {
+                    max-height: 250px;
+                }
+            }
+        </style>
+    </custom-style>
 
 </head>
 
 <body unresolved class="centered">
-  <h3>Editable Text Field</h3>
-  <demo-snippet>
+<h3>Editable Text Field</h3>
+<demo-snippet>
     <template>
-      <style is="custom-style">
+        <style is="custom-style">
 
-      </style>
-      <h2-field id="field" editable></h2-field>
-      <script>
-        field.metadata = {
-          element: "h2-text",
-          name: "name",
-          label:"Please input your name here: ",
-          required: true,
-          editable:true
-        }
-      </script>
+        </style>
+        <h2-field id="field" editable></h2-field>
+        <script>
+            field.metadata = {
+                element: "h2-text",
+                name: "name",
+                label: "Please input your name here: ",
+                required: true,
+                editable: true
+            }
+        </script>
     </template>
-  </demo-snippet>
+</demo-snippet>
 
-  <h3>ReadOnly Text Field</h3>
-  <demo-snippet>
+<h3>ReadOnly Text Field</h3>
+<demo-snippet>
     <template>
-      <style is="custom-style">
+        <style is="custom-style">
 
-      </style>
-      <h2-field id="field1"></h2-field>
-      <script>
-        field1.context = {
-          name: "WahsonLeung"
-        };
-        field1.metadata = {
-          render: (model) => `<div style="color:blue">${model.name}</div>`
-        }
-      </script>
+        </style>
+        <h2-field id="field1" ></h2-field>
+        <script>
+            field1.context = {
+                name: "WahsonLeung"
+            };
+            field1.metadata = {
+                element: "h2-text",
+                name: "name",
+                label: "Please input your name here: ",
+                required: true,
+                editable: true
+            }
+        </script>
     </template>
-  </demo-snippet>
+</demo-snippet>
+
+<h3>ReadOnly Text Field</h3>
+<demo-snippet>
+    <template>
+        <style is="custom-style">
+
+        </style>
+        <h2-field id="field2"></h2-field>
+        <script>
+            field2.context = {
+                name: "WahsonLeung"
+            };
+            field2.metadata = {
+                render: (model) => `<div style="color:blue">${model.name}</div>`
+            }
+        </script>
+    </template>
+</demo-snippet>
+
+<h3>Editable Select Field</h3>
+<demo-snippet>
+    <template>
+        <style is="custom-style">
+
+        </style>
+        <h2-field id="field3" editable></h2-field>
+        <script>
+            field3.metadata = {
+                datatype: "select",
+                name: "sex",
+                label: "Please select your sex here:",
+                editable: true,
+                element: "h2-select-list",
+                candidates: [
+                    {
+                        label: "男",
+                        value: "1"
+                    },
+                    {
+                        label: "女",
+                        value: "2"
+                    }
+                ],
+                candidateLabel: "label",
+                candidateValue: "value",
+            }
+        </script>
+    </template>
+</demo-snippet>
 
 </body>
 

@@ -109,6 +109,107 @@
       </script>
     </template>
   </demo-snippet>
+
+  <h3>Dialog Hide Field Action</h3>
+  <demo-snippet>
+    <template>
+      <style is="custom-style">
+      </style>
+      <h2-action id="action2"></h2-action>
+      <script>
+          action2.context = {
+              id:"123",
+              name: "WahsonLeung"
+          };
+          action2.metadata = {
+              actionId: "hide-record",
+              actionName: "Hide Record",
+              operType: 2,
+              formMeta: {
+                  formUrl: "/url-to-send-form",
+                  title:"Add Record",
+                  fields: [
+                      {
+                          element: "h2-text",
+                          name: "id",
+                          label:"ID",
+                          required: true,
+                          editable:false,
+                          visible:false
+                      },
+                      {
+                          element: "h2-text",
+                          name: "name",
+                          label:"Name",
+                          required: true,
+                          editable:false,
+                          visible:true
+                      },
+                      {
+                          element: "h2-text",
+                          name: "phone",
+                          label:"Phone",
+                          required: true,
+                          editable:true,
+                          visible:true
+                      },
+                  ],
+              }
+          };
+      </script>
+    </template>
+  </demo-snippet>
+
+  <h3>Dialog Alias Action</h3>
+  <demo-snippet>
+    <template>
+      <style is="custom-style">
+      </style>
+      <h2-action id="action3"></h2-action>
+      <script>
+          action3.context = {
+              id:"123",
+              name: "WahsonLeung"
+          };
+          action3.metadata = {
+              actionId: "alias-record",
+              actionName: "Alias Record",
+              operType: 2,
+              formMeta: {
+                  formUrl: "/url-to-send-form",
+                  title:"Alias Record",
+                  fields: [
+                      {
+                          element: "h2-text",
+                          name: "id",
+                          label:"ID",
+                          required: true,
+                          editable:false,
+                          visible:false
+                      },
+                      {
+                          element: "h2-text",
+                          name: "name",
+                          alias:"userName",
+                          label:"Name",
+                          required: true,
+                          editable:false,
+                          visible:true
+                      },
+                      {
+                          element: "h2-text",
+                          name: "phone",
+                          label:"Phone",
+                          required: true,
+                          editable:true,
+                          visible:true
+                      },
+                  ],
+              }
+          };
+      </script>
+    </template>
+  </demo-snippet>
 </body>
 
 </html>
