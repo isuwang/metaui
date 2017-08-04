@@ -1,14 +1,14 @@
 {
-  "name": "front-end-meta",
-  "version": "0.1.0",
-  "description": "front end meta",
+  "name": "metaui",
+  "version": "0.5.0",
+  "description": "meta ui",
   "authors": [
     "WahsonLeung"
   ],
   "keywords": [
     "web-components",
     "polymer",
-    "front-end-meta"
+    "metaui"
   ],
   "main": [
     "h2-crud.html",
@@ -24,10 +24,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/mrLeung/front-end-meta.git"
+    "url": "git://github.com/isuwang/metaui.git"
   },
-  "license": "https://github.com/mrLeung/front-end-meta/blob/master/LICENSE",
-  "homepage": "https://github.com/mrLeung/front-end-meta",
+  "license": "https://github.com/isuwang/metaui/blob/master/LICENSE",
+  "homepage": "https://github.com/isuwang/metaui",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.1",
     "webcomponentsjs": "webcomponents/webcomponentsjs#1.0.0",

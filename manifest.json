@@ -1,7 +1,7 @@
 {
-  "name": "front-end-meta",
-  "short_name": "front-end-meta",
-  "description": "front end meta",
+  "name": "metaui",
+  "short_name": "metaui",
+  "description": "meta ui",
   "start_url": "/",
   "display": "standalone"
 }
