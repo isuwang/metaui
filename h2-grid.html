@@ -84,7 +84,7 @@
                     <template is="dom-repeat" items="[[ metadata.grids ]]" as="fieldMeta">
                         <td class="grid-column">
                             <template is="dom-if" if="[[ !isEqual(fieldMeta.datatype, 'action') ]]">
-                                <h2-field class="widget"
+                                <h2-field class="field"
                                            metadata="[[ fieldMeta ]]"
                                            editable="[[ fieldMeta.editable ]]"
                                            context="[[ model ]]"

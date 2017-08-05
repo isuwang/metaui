@@ -106,13 +106,16 @@
           document.body.appendChild(this._dialog);
           this._dialog.open();
 
-          const form = this._createForm();
-          form.slot = "container";
-          this._form = form;
-          this._dialog.appendChild(form);
-          this._dialog.addEventListener('dialog-closed', e => {
-            this._dialog = undefined;
-          });
+          // make sure the dialog is opened smoothly
+          setTimeout(() => {
+            const form = this._createForm();
+            form.slot = "container";
+            this._form = form;
+            this._dialog.appendChild(form);
+            this._dialog.addEventListener('dialog-closed', e => {
+              this._dialog = undefined;
+            });
+          }, 0);
 
           return this._dialog;
         }
