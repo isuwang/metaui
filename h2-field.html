@@ -52,7 +52,7 @@
 
         __metadataChange() {
           if (this.editable) {
-            const tagName = this.metadata.element || H2Field.defaultElements(this.metadata.datatype.type);
+            const tagName = this.metadata.element || H2Field.defaultElements[this.metadata.datatype];
             const eleDom = document.createElement(tagName);
 
             eleDom.addEventListener('value-changed', e => {
@@ -61,8 +61,12 @@
 
             eleDom.context = this.context;
 
-            if (this.metadata.datatype.metadata) {
-              eleDom.metadata = this.metadata.datatype.metadata;
+            if (this.metadata.dataTypeExtra) {
+              // TODO
+              // fetch metadata with dataTypeExtra,
+              // but the metadata service doesn't work yet,
+              // so currently get metadata from this.metadata instead
+              eleDom.metadata = this.metadata.metadata;
             } else {
               eleDom.metadata = this.metadata;
             }
@@ -94,20 +98,16 @@
           }
         }
 
-        static defaultElements(datatype) {
-          switch (datatype) {
-            case "action":
-              return "h2-action";
-            default:
-              return "h2-text";
-          }
-
-//          return {
-//            'text': 'h2-text',
-//            'textarea': 'h2-text-area',
-//            'select-list': 'h2-select-list',
-//            'action': 'h2-action'
-//          };
+        static get defaultElements() {
+          return {
+            'text': 'h2-text',
+            'textarea': 'h2-text-area',
+            'number': 'h2-number',
+            'date': 'h2-date',
+            'select-list': 'h2-select-list',
+            'select-tree': 'h2-select-tree',
+            'radio-group': 'h2-radio-group'
+          };
         }
       }
 
