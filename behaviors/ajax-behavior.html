@@ -172,7 +172,7 @@
     },
 
     __fetch(handleAs, request, succCallback, failCallback) {
-
+        this.showLoading();
       window.fetch(request).then(response => {
         if (response.ok) {
           // response content is blank
@@ -190,9 +190,10 @@
 //          throw error;
           response.text().then(failCallback);
         }
-
+        this.hideLoading();
       }).catch(err => {
         console.error(err);
+          this.hideLoading();
       });
     },
 
@@ -212,7 +213,30 @@
     },
     __throwUrlNotFoundError(){
       throw new Error("url not found");
-    }
+    },
+
+      /**
+       * 添加loading
+       */
+      showLoading() {
+          if (!document.body.querySelector("#polymer-loading-div")) {
+              this.async(function () {
+                  var loadingDiv = document.body.querySelector("h2-loading") || document.createElement("h2-loading") ;
+                  loadingDiv.open();
+                  document.body.appendChild(loadingImg);
+              }, 100);
+          }
+      },
+
+      /**
+       * 消除loading
+       */
+      hideLoading() {
+          this.async(function () {
+              var loadingDiv = document.body.querySelector("h2-loading");
+              loadingDiv.close();
+          }, 100);
+      }
 
   }
 </script>
