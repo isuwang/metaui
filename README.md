@@ -8,7 +8,7 @@
 
 - Install front-end-meta
 ```
-bower install git://github.com/mrLeung/front-end-meta.git
+bower install git://github.com/isuwang/metaui.git
 ```
 
 ### Elements Usage
