@@ -1,3 +1,5 @@
+<link rel="import" href="../../polymer/lib/utils/async.html">
+<link rel="import" href="../h2-loading.html">
 <script>
   BaseBehavior = {
     /**
@@ -54,6 +56,39 @@
       }
 
       return copy;
+    },
+
+    /**
+     * 添加loading
+     */
+    showLoading() {
+
+      if (!document.body.querySelector("#h2-loading")) {
+        this.async(function () {
+          var loadingDiv = document.body.querySelector("h2-loading") || document.createElement("h2-loading");
+          loadingDiv.setAttribute("id", "h2-loading");
+          loadingDiv.noCancelOnOutsideClick = true;
+          loadingDiv.noCancelOnEscKey = true;
+          loadingDiv.withBackdrop = true;
+          document.body.appendChild(loadingDiv);
+          loadingDiv.open();
+        }, 100);
+      } else {
+        this.async(function () {
+          var loadingDiv = document.body.querySelector("#h2-loading");
+          loadingDiv.open();
+        }, 100);
+      }
+    },
+
+    /**
+     * 消除loading
+     */
+    hideLoading() {
+      this.async(function () {
+        var loadingDiv = document.body.querySelector("#h2-loading");
+        loadingDiv.close();
+      }, 100);
     },
 
     /**

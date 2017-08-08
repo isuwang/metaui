@@ -2,13 +2,61 @@
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../iron-collapse/iron-collapse.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
-
 <!--
-@group H2 Elements
-@element h2-action-group
-@demo demo/h2-action-group/index.html
--->
+    A component works like a dropdown menu.
 
+```
+<h2-action-group name="GroupName">
+    <h2-action metadata="{{metadata}}"></h2-action>
+    <h2-action metadata="{{metadata1}}"></h2-action>
+</h2-action-group>
+
+```
+```
+metadata = {
+  actionId: "action-0",
+  actionName: "Action0",
+  operType: 1,
+  formMeta: {
+    formUrl: "/url-to-send-form",
+    confirm: "Sure to submit?",
+    fields: [
+      {
+        element: "h2-text",
+        name: "name",
+        label:"Name"
+      },
+      {
+        element: "h2-text",
+        name: "phone",
+        label:"Phone"
+      },
+    ],
+  }
+}
+metadata1 = {
+  actionId: "action-1",
+  actionName: "Action1",
+  operType: 1,
+  formMeta: {
+    formUrl: "/url-to-send-form",
+    confirm: "Sure to submit?",
+    fields: [
+      {
+        element: "h2-text",
+        name: "name",
+        label:"Name"
+      },
+      {
+        element: "h2-text",
+        name: "phone",
+        label:"Phone"
+      },
+    ],
+  }
+};
+```
+-->
 <dom-module id="h2-action-group">
     <template strip-whitespace>
         <style include="paper-material-styles">
@@ -88,7 +136,7 @@
             </paper-button>
             <paper-button class="icon" raised>
                 <div>
-                    <iron-icon icon="[[ _getIcon(opened) ]]" hidden$="[[noIcons]]"></iron-icon>
+                    <iron-icon icon="[[ __getIcon(opened) ]]"></iron-icon>
                 </div>
             </paper-button>
         </div>
@@ -99,6 +147,11 @@
     </template>
 
     <script>
+      /**
+       * @customElement
+       * @polymer
+       * @demo demo/h2-action-group/index.html
+       */
       class H2ActionGroup extends Polymer.Element {
         constructor() {
           super();
@@ -106,32 +159,40 @@
 
         static get properties() {
           return {
+            /**
+             * Name of the action group.
+             */
             name: {
               type: String
             },
+            /**
+             * If true, the orientation is horizontal; otherwise is vertical.
+             */
             horizontal: {
               type: Boolean,
               value: false
             },
+            /**
+             * True if the action group is expanded.
+             */
             opened: {
               type: Boolean,
               value: false
             },
+            /**
+             * The icon when expanded.
+             */
             expandIcon: {
               type: String,
               value: 'arrow-drop-up'
             },
             /**
-             * The icon when expanded.
+             * The icon when collapsed.
              */
             collapseIcon: {
               type: String,
               value: 'arrow-drop-down'
-            },
-            noIcons: {
-              type: Boolean,
-              value: false
-            },
+            }
           };
         }
 
@@ -147,19 +208,28 @@
           });
         }
 
+        /**
+         * Expand the group.
+         */
         open() {
           this.opened = true;
         }
 
+        /**
+         * Collpase the group.
+         */
         close() {
           this.opened = false;
         }
 
+        /**
+         * Toggle the group.
+         */
         toggle() {
           this.opened = !this.opened;
         }
 
-        _getIcon(opened) {
+        __getIcon(opened) {
           return opened ? this.expandIcon : this.collapseIcon;
         }
       }
