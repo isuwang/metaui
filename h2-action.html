@@ -1,15 +1,66 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="./behaviors/ajax-behavior.html">
-<link rel="import" href="./h2-dialog.html">
 <link rel="import" href="./h2-form.html">
+<link rel="import" href="./h2-dialog.html">
 
 <!--
-@group H2 Elements
-@element h2-action
-@demo demo/h2-action/index.html
--->
 
+A magic component, which you can post a form or open a dialog.
+
+```
+// Immediately submit a form.
+<h2-action context="{{ context }}" metadata="{{ metadata }}"></h2-action>
+
+// Open a h2-dialog
+<h2-action context="{{ context }}" metadata="{{ metadata1 }}"></h2-action>
+
+```
+```
+context = {
+  name: "WahsonLeung",
+  phone: "15900000000"
+}
+
+metadata = {
+    actionId: "record-add",
+    actionName: "Add Record",
+    operType: 1,
+    formMeta: {
+    formUrl: "/url-to-send-form",
+    confirm: "Sure to submit?",
+    fields: [
+      {
+        name: "name",
+        label:"Name"
+      },
+      {
+        name: "phone",
+        label:"Phone"
+      },
+    ],
+}
+
+metadata1 = {
+    actionId: "record-add",
+    actionName: "Add Record",
+    operType: 2,
+    formMeta: {
+    formUrl: "/url-to-send-form",
+    confirm: "Sure to submit?",
+    fields: [
+      {
+        name: "name",
+        label:"Name"
+      },
+      {
+        name: "phone",
+        label:"Phone"
+      },
+    ],
+}
+```
+-->
 <dom-module id="h2-action">
     <template>
         <style>
@@ -29,6 +80,11 @@
         <div id="form" hidden></div>
     </template>
     <script>
+      /**
+       * @customElement
+       * @polymer
+       * @demo demo/h2-action/index.html
+       */
       class H2Action extends Polymer.mixinBehaviors([AjaxBehavior], Polymer.Element) {
         constructor() {
           super();
@@ -43,19 +99,29 @@
             metadata: {
               type: Object
             },
+
             context: {
-              type: Object
+              type: Object,
+              observer: "__contextChange"
             },
 
             _dialog: {
               type: Object
             },
+
             _form: {
               type: Object
             }
           }
         }
 
+        __contextChange() {
+          this._dialog = null;
+          this._form = null;
+        }
+        /**
+         * When this.metadata.modelSrc is defined, fetch the new context.
+         */
         fetchContext() {
           if (!this.metadata.modelSrc) return;
           // fetch model with modelSrc
@@ -74,6 +140,10 @@
 
         }
 
+        /**
+         * If this.metadata.operType == 1 submit a form
+         * else if this.metadata.operType == 2  open a dialog.
+         */
         submitOrOpenDialog() {
           if (this.metadata.operType == 1) {
             // If no <h2-form /> exists in #form component, then append one.
@@ -112,8 +182,9 @@
             form.slot = "container";
             this._form = form;
             this._dialog.appendChild(form);
-            this._dialog.addEventListener('dialog-closed', e => {
-              this._dialog = undefined;
+            this._dialog.addEventListener('h2-dialog-closed', e => {
+              this._form = null;
+              this._dialog = null;
             });
           }, 0);
 
@@ -128,8 +199,10 @@
             this._dialog.close();
           }
 
-          // bubble the form-submitted event
-          // this event will be fired to user
+          /**
+           * @event form-submitted
+           * Fire when the form submitted.
+           */
           this.dispatchEvent(new CustomEvent("form-submitted", {
             bubbles: true, composed: true, detail: e.detail
           }));

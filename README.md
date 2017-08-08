@@ -6,7 +6,7 @@
 ### Installation
 - [Install Polymer from Bower][1]
 
-- Install front-end-meta
+- Install metaui
 ```
 bower install git://github.com/isuwang/metaui.git
 ```
