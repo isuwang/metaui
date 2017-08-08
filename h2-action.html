@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="./behaviors/ajax-behavior.html">
+<link rel="import" href="./behaviors/tip-behavior.html">
 <link rel="import" href="./h2-dialog.html">
 <link rel="import" href="./h2-form.html">
 
@@ -29,7 +30,7 @@
         <div id="form" hidden></div>
     </template>
     <script>
-      class H2Action extends Polymer.mixinBehaviors([AjaxBehavior], Polymer.Element) {
+      class H2Action extends Polymer.mixinBehaviors([AjaxBehavior,TipBehavior], Polymer.Element) {
         constructor() {
           super();
         }
@@ -70,7 +71,7 @@
             data: data
           }, (data) => {
             this._refreshContext(data);
-          }, (err) => window.alert(JSON.stringify(err)));
+          }, (err) => this.hTip.error(JSON.stringify(err)));
 
         }
 
