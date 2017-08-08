@@ -1,8 +1,9 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="./behaviors/ajax-behavior.html">
-<link rel="import" href="./h2-form.html">
+<link rel="import" href="./behaviors/tip-behavior.html">
 <link rel="import" href="./h2-dialog.html">
+<link rel="import" href="./h2-form.html">
 
 <!--
 
@@ -136,7 +137,7 @@ metadata1 = {
             data: data
           }, (data) => {
             this._refreshContext(data);
-          }, (err) => window.alert(JSON.stringify(err)));
+          }, (err) => this.hTip.error(JSON.stringify(err)));
 
         }
 

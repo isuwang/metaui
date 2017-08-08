@@ -1,6 +1,7 @@
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="./behaviors/ajax-behavior.html">
 <link rel="import" href="./behaviors/base-behavior.html">
+<link rel="import" href="./behaviors/tip-behavior.html">
 <link rel="import" href="h2-field.html">
 
 <!--
@@ -65,7 +66,7 @@
         </div>
     </template>
     <script>
-      class H2Form extends Polymer.mixinBehaviors([BaseBehavior, AjaxBehavior], Polymer.Element) {
+      class H2Form extends Polymer.mixinBehaviors([BaseBehavior, AjaxBehavior,TipBehavior], Polymer.Element) {
 
         static get is() {
           return "h2-form";
@@ -170,16 +171,14 @@
               this.isFunction(this.onSuccess) && this.onSuccess(data);
 
             }, (err) => {
-              window.alert(JSON.stringify(err));
+              this.hTip.error(JSON.stringify(err));
               this.isFunction(this.onError) && this.onError(err)
             });
 
           };
 
           if (this.metadata.confirm) {
-            if (window.confirm(this.metadata.confirm)) {
-              _submit();
-            }
+              this.hTip.confirm(this.metadata.confirm,()=>{_submit()})
           } else {
             _submit();
           }
