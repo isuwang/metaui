@@ -46,11 +46,12 @@
             :host .grid-column {
                 min-width: 70px;
             }
+
             :host tr:nth-of-type(even) {
                 background-color: lightgrey;
             }
 
-            :host td:nth-last-of-type(1) {
+            :host .grid-actions {
                 display: inline;
                 width: 200px;
             }
@@ -85,31 +86,34 @@
                         <td class="grid-column">
                             <template is="dom-if" if="[[ !isEqual(fieldMeta.datatype, 'action') ]]">
                                 <h2-field class="field"
-                                           metadata="[[ fieldMeta ]]"
-                                           editable="[[ fieldMeta.editable ]]"
-                                           context="[[ model ]]"
-                                           value="[[ getValueByKey(model,fieldMeta.name) ]]">
+                                          metadata="[[ fieldMeta ]]"
+                                          editable="[[ fieldMeta.editable ]]"
+                                          context="[[ model ]]"
+                                          value="[[ getValueByKey(model,fieldMeta.name) ]]">
                                 </h2-field>
                             </template>
 
                             <template is="dom-if" if="[[ isEqual(fieldMeta.datatype,'action') ]]">
-                                <template is="dom-repeat" items="[[ noGroupActions(model.actions) ]]" as="actionMeta">
-                                    <h2-action class="action"
-                                               metadata="[[ actionMeta ]]"
-                                               context="[[ model ]]">
-                                    </h2-action>
-                                </template>
-                                <template is="dom-repeat" items="[[ groupedActions(model.actions) ]]">
-                                    <h2-action-group
-                                            class="action-group"
-                                            name="[[ item.group ]]">
-                                        <template is="dom-repeat" items="[[ item.actions ]]" as="actionMeta">
-                                            <h2-action metadata="[[ actionMeta ]]"
-                                                       context="[[ model ]]">
-                                            </h2-action>
-                                        </template>
-                                    </h2-action-group>
-                                </template>
+                                <div class="grid-actions">
+                                    <template is="dom-repeat" items="[[ noGroupActions(model.actions) ]]"
+                                              as="actionMeta">
+                                        <h2-action class="action"
+                                                   metadata="[[ actionMeta ]]"
+                                                   context="[[ model ]]">
+                                        </h2-action>
+                                    </template>
+                                    <template is="dom-repeat" items="[[ groupedActions(model.actions) ]]">
+                                        <h2-action-group
+                                                class="action-group"
+                                                name="[[ item.group ]]">
+                                            <template is="dom-repeat" items="[[ item.actions ]]" as="actionMeta">
+                                                <h2-action metadata="[[ actionMeta ]]"
+                                                           context="[[ model ]]">
+                                                </h2-action>
+                                            </template>
+                                        </h2-action-group>
+                                    </template>
+                                </div>
                             </template>
                         </td>
                     </template>
