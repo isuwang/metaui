@@ -1,11 +1,12 @@
-<link rel="import" href="../../polymer/lib/utils/async.html">
-<link rel="import" href="../h2-loading.html">
 <script>
+  /**
+   * @polymerBehavior
+   */
   BaseBehavior = {
     /**
      * 判断第一个参数是否与后面的某个参数相等， 使用Object.is() 进行判断
-     * @param args
-     * @returns {boolean}
+     * @param {...*} args
+     * @returns {Boolean}
      */
     isOneOf(...args) {
       if (Array.isArray(args) && args.length > 0) {
@@ -16,20 +17,48 @@
       return false;
     },
 
+    /**
+     * 判断两个值是否相等，使用 `Object.is` 判断。
+     * @param {*} left
+     * @param {*} right
+     * @returns {Boolean}
+     */
     isEqual(left, right) {
       return Object.is(left, right);
     },
 
 
+    /**
+     * 函数判断
+     * @param {*} fn
+     * @returns {Boolean}
+     */
     isFunction(fn) {
       return fn && Function.prototype.isPrototypeOf(fn);
     },
 
     /**
+     * Return the first giving arg which is not ``undefined``, ``null``, ``NaN`` , ``false`` ,``0`` or ``''``.
      *
-     * @param model
-     * @param key
-     * @param defVal  支持任何符合json格式的字符串
+     * eg.
+     * ```
+     * orElse(undefined, null, "foo")  // "foo"
+     * orElse(0, 1)  // 1
+     * orElse("bar", "foo")  // "bar"
+     * ```
+     * @param {...*} args
+     * @returns {*}
+     */
+    orElse(...args) {
+      const [first, ...rest] = args;
+      return rest.length === 0 ? first: (first || this.orElse(...rest));
+    },
+
+    /**
+     * 通过key查询对象中的值
+     * @param {Object} model
+     * @param {String} key
+     * @param {String} defVal  支持任何符合json格式的字符串
      * @returns {*}
      */
     getValueByKey(model, key, defVal = JSON.stringify("")) {
@@ -39,9 +68,9 @@
 
     /**
      * 通过路径获取对象字段值
-     * @param model 如： { foo: { bar: 1} }
-     * @param path  如 "foo.bar"
-     * @param defVal  支持任何符合json格式的字符串
+     * @param {Object} model eg. { foo: { bar: 1} }
+     * @param {String} path  eg. "foo.bar"
+     * @param {String} defVal  支持任何符合json格式的字符串
      * @returns {*}
      */
     getValueByPath(model, path, defVal) {
@@ -93,18 +122,23 @@
 
     /**
      *
-     * @param model
-     * @param field
+     * this.elementRender(model, {render});
+     * ```
+     * @param {Object} model
+     * @param {{render: {(model) => {}}, name: {String}}} param
      * @returns {*}
      */
-    elementRender(model, field) {
-      const _render = field && field.render;
-      if (Function.prototype.isPrototypeOf(_render)) {
-        return _render(model);
+    elementRender(model, {render, name} = {}) {
+      if (this.isFunction(render)) {
+        return render(model);
       }
-      return this.getValueByKey(model, field.name);
+      return this.getValueByKey(model, name);
     },
 
+    /**
+     * 更新样式
+     * @param {String} style
+     */
     updateStyle(style) {
       if (!style) return;
 
@@ -120,6 +154,12 @@
       styleEle.appendChild(document.createTextNode(style));
     },
 
+    /**
+     * 对象重定义
+     * @param {Object} obj
+     * @param {String} path
+     * @returns {Object}
+     */
     redefine(obj, path) {
       let pojo = this.__redefine(obj);
       pojo.__addObserver(path, this.notifyPath.bind(this));
@@ -252,97 +292,6 @@
         return obj;
       } else return obj;
     },
-
-    suite(obj) {
-      this.__suite(obj);
-      return obj;
-    },
-
-    __suite1(root) {
-      Object.defineProperties(root, {
-        select: {
-          writable: false,
-          enumerable: false,
-          value: (path) => {
-            return this.getValueByPath(root, path);
-          }
-        },
-        /**
-         * 1. support object
-         * 2. support array
-         * 3. support one key-value pair
-         * 4. support mutil key-value pair
-         */
-        ext: {
-          writable: false,
-          enumerable: false,
-          value: (path, key, value) => {
-            const target = this.getValueByPath(root, path);
-            if (Object.prototype.isPrototypeOf(target)) {
-              if (Object.prototype.isPrototypeOf(key)) {
-                Object.assign(target, key);
-              } else {
-                target[key] = value;
-              }
-            }
-            return root;
-          }
-        },
-
-        forEachExt: {
-          writable: false,
-          enumerable: false,
-          value: (path, handler) => {
-            const target = this.getValueByPath(root, path);
-            Array.isArray(target) && target.forEach(handler);
-            return root;
-          }
-        }
-      });
-    },
-
-    __suite(target, parent) {
-      if (!Object.prototype.isPrototypeOf(target))
-        throw new TypeError(`target is not an object`);
-
-      Object.defineProperties(target, {
-        select: {
-          writable: false,
-          enumerable: false,
-          value: (path) => {
-            if (!target[path]) throw new TypeError(`${path} is not a property of target`);
-            if (Object.prototype.isPrototypeOf(target[path]) && !target[path].hasOwnProperty('select')) {
-              this.__suite(target[path], target);
-            }
-            return target[path];
-          }
-        },
-        unselect: {
-          writable: false,
-          enumerable: false,
-          value: function () {
-            return parent || target;
-          }
-        },
-        ext: {
-          writable: false,
-          enumerable: false,
-          value: function (key, value) {
-            target[key] = value;
-            return target;
-          }
-        },
-        batchExt: {
-          writable: false,
-          enumerable: false,
-          value: function (key, handler) {
-            target[key].forEach(handler);
-            return target;
-          }
-        }
-
-      });
-    }
 
   }
 </script>
