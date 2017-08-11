@@ -8,11 +8,43 @@
 <link rel="import" href="h2-pagination.html">
 
 <!--
-@group H2 Elements
-@element h2-crud
-@demo demo/h2-crud/index.html
--->
+ # 由元数据驱动的增删改查组件
+```
+<h2-crud metadata="{{ metadata }}"
+         key-for-items="rows"
+         key-for-page-result="pageResponse.results"
+         result-descriptor="[[ _desc() ]]">
+</h2-crud>
+```
+```
+_desc() {
+    return (result) => {
+        result.rows[0].name = 'foo';
+        return result;
+    };
+}
 
+metadata = {
+    query: {
+        FormMeta & {
+            noPaging: Boolean     //  是否禁止分页
+        }
+    },
+    actions: {{Array<Action>}},
+    result: {{GridMeta}}
+}
+```
+### metadata定义 (DomainMeta)
+|字段名|类型|Required|描述|
+|:--|:--|:--|:--|
+|query|FormMeta|是|表格数据请求表单的元数据|
+|actions|``array.<ActionMeta>``|是|针对domain上的操作元数据
+|result|GridMeta|是|表格的元数据|
+
+### [See FormMeta](#/elements/h2-form)
+### [See ActionMeta](#/elements/h2-action)
+### [See GridMeta](#/elements/h2-grid)
+-->
 <dom-module id="h2-crud">
     <template>
         <style>
@@ -53,7 +85,7 @@
         </div>
 
         <div class="crud-pagination">
-            <template is="dom-if" if="{{metadata.query.paging}}">
+            <template is="dom-if" if="{{ !metadata.noPaging }}">
                 <h2-pagination paging="{{ paging }}"
                                total="[[ getValueByPath(finalResult, keyForPageResult) ]]">
 
@@ -63,6 +95,11 @@
 
     </template>
     <script>
+      /**
+       * @customElement
+       * @polymer
+       * @demo demo/h2-crud/index.html
+       */
       class H2Crud extends Polymer.mixinBehaviors([BaseBehavior, AjaxBehavior], Polymer.Element) {
         constructor() {
           super();
@@ -74,26 +111,54 @@
 
         static get properties() {
           return {
+            /**
+             * a closure ``(result) => result``, will be invoked before result is access to dom.
+             * @callback resultDescriptor {{(result) => result}}
+             */
             resultDescriptor: {
               type: Object
             },
+            /**
+             * The result response from server.
+             * @type  {{array}}
+             */
             rawResult: {
               type: Array,
             },
+            /**
+             * The result is described by ``resultDescriptor``
+             * @type  {{array}}
+             */
             finalResult: {
               type: Array,
               computed: '_resultDescriptor(rawResult)'
             },
+
+            /**
+             * The metadata of h2-crud
+             */
             metadata: {
               type: Object,
             },
+
+            /**
+             * The context of h2-crud
+             */
             context: {
               type: Object
             },
+
+            /**
+             * The field name of the items in the responsed result.
+             */
             keyForItems: {
               type: String,
               value: "rows"
             },
+
+            /**
+             * The field name of the page result in the responsed result.
+             */
             keyForPageResult: {
               type: String,
               value: "results"
@@ -106,6 +171,9 @@
               this.resultDescriptor(result) : result;
         }
 
+        /**
+         * 查询页面数据
+         */
         refresh() {
           this.$.query.submit();
         }
