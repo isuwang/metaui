@@ -61,6 +61,18 @@ metadata1 = {
     ],
 }
 ```
+### metadata定义 (ActionMeta)
+|字段名|类型|Required|描述|
+|:--|:--|:--|:--|
+|actionId|string|是|操作的唯一标识|
+|actionName|string|是|操作名，如 “收货”
+|group|string|否|操作组，如 “更多”
+|operType|number|是|操作类型，1：表单，2.弹窗
+|formMeta|FormMeta|是|表单meta
+|modelSrc|string|否|弹窗的model请求url
+|modelQueryParams|``array.<string>``|否|弹窗的model请求参数
+
+### [See FormMeta](#/elements/h2-form)
 -->
 <dom-module id="h2-action">
     <template>
@@ -121,9 +133,9 @@ metadata1 = {
           this._form = null;
         }
         /**
-         * When this.metadata.modelSrc is defined, fetch the new context.
+         * When metadata.modelSrc is defined, fetch the new context.
          */
-        fetchContext() {
+        _fetchContext() {
           if (!this.metadata.modelSrc) return;
           // fetch model with modelSrc
           const data = {};
@@ -142,8 +154,8 @@ metadata1 = {
         }
 
         /**
-         * If this.metadata.operType == 1 submit a form
-         * else if this.metadata.operType == 2  open a dialog.
+         * If metadata.operType == 1 submit a form
+         * else if metadata.operType == 2  open a dialog.
          */
         submitOrOpenDialog() {
           if (this.metadata.operType == 1) {
@@ -154,7 +166,7 @@ metadata1 = {
             },0);
 
           } else if (this.metadata.operType == 2) {
-            this.fetchContext();
+            this._fetchContext();
             this._createDialog();
           }
         }
@@ -202,7 +214,7 @@ metadata1 = {
 
           /**
            * @event form-submitted
-           * Fire when the form submitted.
+           * Fire when the form submitted, in fact the ``form-submitted`` transmits the event ``h2-form-submitted`` in h2-form.
            */
           this.dispatchEvent(new CustomEvent("form-submitted", {
             bubbles: true, composed: true, detail: e.detail
