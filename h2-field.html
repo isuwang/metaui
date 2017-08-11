@@ -1,18 +1,65 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./all-imports.html">
 <link rel="import" href="./widgets/widget-resources.html">
 <link rel="import" href="./widgets/h2-widget-base.html">
 <link rel="import" href="./behaviors/base-behavior.html">
 
 <!--
-@group H2 Elements
-@element h2-field
-@demo demo/h2-field/index.html
--->
 
+```
+<h2-field editable metadata="{{ metadata }}"></h2-field>
+```
+```
+metadata = {
+  element: "h2-text",
+  name: "name",
+  label: "Please input your name here: ",
+  required: true,
+  editable: true,
+  prompt: "Please input your name!"
+}
+```
+### metadata定义 (FieldMeta)
+|字段名|类型|Required|描述|
+|:--|:--|:--|:--|
+|name|string|是|字段名，如“orderNo”
+|label|string|是|字段名，如“订单号”
+|require|boolean|是|是否必填
+|mutil|boolean|是|是否多选
+|editable|boolean|是 | 是否可编辑
+|validate| boolean|是| 是否需要校验
+|visible| boolean|是| 界面是否可见，仅对表单中的字段有效
+|element|string|否|ui元素，缺省时，提供默认ui：h2-text
+|format|string|否| 显示格式，用于日期显示，如“yyyy-MM-dd”
+|length|number|否 | 字符长度
+|maxLength|number|否| string允许的最大长度
+|minLength|number|否 | string允许的最小长度
+|regexp|string|否|正则匹配
+|prompt|string|否|校验失败时的提示语，如“请输入备注”
+|min|number|否|数字最小值
+|max|number|否|数字最大值
+|placeholder|string|否| placeholder
+|candidates|string|否| 候选值，下拉选项中的值，json串，如 "[{value: 1,label: '男'}, {value: 2,label: '女'}]"
+|candidateLabel|string|否|组件显示字段名，针对下拉组件、radio-group组件等，“label”
+|candidateValue|string|否| 组件值字段名，针对下拉组件、radio-group组件等，“value”
+|alias|string|否|别名，如果配置了此字段，提交表单时已这个字段作为key保存
+|metaType|MetaType或string|否|元数据类型，如果缺少metaType，默认渲染的组件是<h2-text>；在表格元数据中定义操作列时，可以省略操作的元数据，如 metaType:"ACTION" [See h2-grid](#/elements/h2-grid)|
+
+### MetaType定义
+|字段名|类型|Required|描述|
+|:--|:--|:--|:--|
+|type|string|是|数据类型：BOOLEAN、BYTE、SHORT、INTEGER、LONG、DOUBLE、STRING、LIST、MAP、SET、STRUCT、ACTION|
+|metadata|object|是| 如果type是list，map，set中的一种，则metadata是这些嵌套类型的元数据|
+
+-->
 <dom-module id="h2-field">
-    <template>
-    </template>
+    <template></template>
     <script>
+      /**
+       * @customElement
+       * @polymer
+       * @demo demo/h2-field/index.html
+       */
       class H2Field extends Polymer.mixinBehaviors([BaseBehavior], H2WidgetBase) {
         static get is() {
           return "h2-field";
@@ -24,7 +71,7 @@
               type: Boolean,
               value: false
             },
-            ref: {
+            _ref: {
               type: Object
             },
             context: {
@@ -42,17 +89,28 @@
         }
 
         __contextChange(obj) {
-          this.ref && this.ref.notifyPath(obj.path);
+          // if context obj change, force to refresh
+          if (obj.path === "context") {
+            this.__valueChange();
+          }
+
+          if (this._ref && this.isFunction(this._ref.notifyPath)) {
+            this._ref.notifyPath(obj.path);
+          }
         }
 
+        /**
+         * Validate the editor.
+         * @returns {Boolean}
+         */
         validate() {
-          const ele = this.ref;
+          const ele = this._ref;
           return ele && ele.validate && ele.validate();
         }
 
         __metadataChange() {
           if (this.editable) {
-            const tagName = this.metadata.element || H2Field.defaultElements[this.metadata.datatype];
+            const tagName = this.metadata.element || H2Field.defaultElements(this.metadata.metaType);
             const eleDom = document.createElement(tagName);
 
             eleDom.addEventListener('value-changed', e => {
@@ -61,17 +119,16 @@
 
             eleDom.context = this.context;
 
-            if (this.metadata.dataTypeExtra) {
-              // TODO
-              // fetch metadata with dataTypeExtra,
-              // but the metadata service doesn't work yet,
-              // so currently get metadata from this.metadata instead
-              eleDom.metadata = this.metadata.metadata;
+            if (this.metadata.metaType && this.metadata.metaType.metadata) {
+              eleDom.metadata = this.metadata.metaType.metadata;
             } else {
               eleDom.metadata = this.metadata;
             }
 
-            this.ref = this.shadowRoot.appendChild(eleDom);
+            if (eleDom.metadata.editable == undefined) {
+              eleDom.metadata.editable = this.editable;
+            }
+            this._ref = this.shadowRoot.appendChild(eleDom);
           } else {
 
             const element = this.elementRender(this.context, this.metadata);
@@ -88,7 +145,7 @@
         }
 
         __valueChange() {
-          const target = this.ref;
+          const target = this._ref;
 
           target && (target.value = this.value);
 
@@ -98,16 +155,19 @@
           }
         }
 
-        static get defaultElements() {
-          return {
-            'text': 'h2-text',
-            'textarea': 'h2-text-area',
-            'number': 'h2-number',
-            'date': 'h2-date',
-            'select-list': 'h2-select-list',
-            'select-tree': 'h2-select-tree',
-            'radio-group': 'h2-radio-group'
-          };
+        //TODO
+        static defaultElements({type} = {}) {
+          // more default elements will support in the future.
+          switch (type) {
+            case "ACTION_META":
+              return "h2-action";
+            case "FORM_META":
+              return "h2-form";
+            case "GRID_META":
+              return "h2-grid";
+            default:
+              return "h2-text";
+          }
         }
       }
 
