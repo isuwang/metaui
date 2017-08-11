@@ -12,7 +12,6 @@
     <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 
     <link rel="import" href="../../h2-form.html">
-    <link rel="import" href="../../h2-grid.html">
 
     <link rel="import" href="../../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../../../iron-demo-helpers/demo-pages-shared-styles.html">
@@ -25,7 +24,7 @@
 
             demo-snippet {
                 --demo-snippet-code: {
-                    max-height: 250px;
+                    max-height: 500px;
                 }
             }
         </style>
@@ -39,34 +38,32 @@
     <template>
         <h2-form id="form"></h2-form>
         <script>
-            form.context = {
-                foo: "foo",
-                bar: "bar"
-            };
+          form.context = {
+            foo: "foo",
+            bar: "bar"
+          };
 
-            form.metadata = {
-                formUrl: "/url-to-send-form",
-                title: "Form Title",
-                confirm: "Sure to submit?",
-                fields: [
-                    {
-                        name: "foo",
-                        label: "foo",
-                        element: "h2-text",
-                        required: true,
-                        editable: true,
-                        visible: true
-                    },
-                    {
-                        datatype: "text",
-                        name: "bar",
-                        label: "bar",
-                        required: true,
-                        editable: true,
-                        visible: true
-                    },
-                ],
-            }
+          form.metadata = {
+            formUrl: "/url-to-send-form",
+            title: "Form Title",
+            confirm: "Sure to submit?",
+            fields: [
+              {
+                name: "foo",
+                label: "foo",
+                required: true,
+                editable: true,
+                visible: true
+              },
+              {
+                name: "bar",
+                label: "bar",
+                required: true,
+                editable: true,
+                visible: true
+              },
+            ],
+          }
         </script>
     </template>
 </demo-snippet>
@@ -77,38 +74,38 @@
         <h2-form id="form1"></h2-form>
         <script>
 
-            form1.onSubmit = (request) => {
-                window.alert(JSON.stringify(request));
-            };
+          form1.onSubmit = (request) => {
+            window.alert(JSON.stringify(request));
+          };
 
-            form1.context = {
-                foo: "foo",
-                bar: "bar"
-            };
+          form1.context = {
+            foo: "foo",
+            bar: "bar"
+          };
 
-            form1.metadata = {
-                formUrl: "/url-to-send-form",
-                title: "Form Title",
-                confirm: "Sure to submit?",
-                fields: [
-                    {
-                        element: "h2-text",
-                        name: "foo",
-                        label: "foo",
-                        required: true,
-                        editable: true,
-                        visible: true
-                    },
-                    {
-                        element: "h2-text",
-                        name: "bar",
-                        label: "bar",
-                        required: true,
-                        editable: true,
-                        visible: true
-                    },
-                ],
-            }
+          form1.metadata = {
+            formUrl: "/url-to-send-form",
+            title: "Form Title",
+            confirm: "Sure to submit?",
+            fields: [
+              {
+                element: "h2-text",
+                name: "foo",
+                label: "foo",
+                required: true,
+                editable: true,
+                visible: true
+              },
+              {
+                element: "h2-text",
+                name: "bar",
+                label: "bar",
+                required: true,
+                editable: true,
+                visible: true
+              },
+            ],
+          }
         </script>
     </template>
 </demo-snippet>
@@ -119,13 +116,13 @@
         <h2-form id="form2"></h2-form>
         <script>
 
-            form2.context = {
-                foo: "foo",
-                bar: "bar"
-            };
+          form2.context = {
+            foo: "foo",
+            bar: "bar"
+          };
 
-            form2.metadata = {
-                style: `.container {
+          form2.metadata = {
+            style: `.container {
                      grid-column-gap: 4%;
                      grid-template-columns: 48% 48%;
                  }
@@ -133,28 +130,28 @@
                      border: 1px dashed
                  }
                 `,
-                formUrl: "/url-to-send-form",
-                title: "Form Title",
-                confirm: "Sure to submit?",
-                fields: [
-                    {
-                        element: "h2-text",
-                        name: "foo",
-                        label: "foo",
-                        required: true,
-                        editable: true,
-                        visible: true
-                    },
-                    {
-                        element: "h2-text",
-                        name: "bar",
-                        label: "bar",
-                        required: true,
-                        editable: true,
-                        visible: true
-                    },
-                ],
-            }
+            formUrl: "/url-to-send-form",
+            title: "Form Title",
+            confirm: "Sure to submit?",
+            fields: [
+              {
+                element: "h2-text",
+                name: "foo",
+                label: "foo",
+                required: true,
+                editable: true,
+                visible: true
+              },
+              {
+                element: "h2-text",
+                name: "bar",
+                label: "bar",
+                required: true,
+                editable: true,
+                visible: true
+              },
+            ],
+          }
         </script>
     </template>
 </demo-snippet>
@@ -165,13 +162,13 @@
         <h2-form id="form3"></h2-form>
         <script>
 
-            form3.context = {
-                foo: "foo",
-                bar: "bar"
-            };
+          form3.context = {
+            foo: "foo",
+            bar: "bar"
+          };
 
-            form3.metadata = {
-                style: `.container {
+          form3.metadata = {
+            style: `.container {
                     grid-column-gap: 4%;
                     grid-template-columns: 48% 48%;
                 }
@@ -190,10 +187,11 @@
                 required: true,
                 editable: true,
                 visible: true,
-                onAttached: function (element, root) {
-                  root.watch(['bar'], ({bar}) => {
-                    element.style = bar.length > 4 ?
-                           'background:red;' : 'background:green;'
+                onAttached: (fieldEle, formEle) => {
+                  formEle.watch(['bar'], ({bar}, whoChange) => {
+                    console.log(whoChange);
+                    fieldEle.style = bar.length > 4 ?
+                        'background:red;' : 'background:green;'
 
                   });
                 }
@@ -212,191 +210,70 @@
     </template>
 </demo-snippet>
 
-<h3>Simple Form Just Show</h3>
+<h3>Nested Form</h3>
 <demo-snippet>
     <template>
         <h2-form id="form4"></h2-form>
         <script>
-            form4.context = {
-                foo: "foo",
-                bar: "bar"
-            };
 
-            form4.metadata = {
-                formUrl: "/url-to-send-form",
-                title: "Form Title",
-                confirm: "Sure to submit?",
-                isSubmitForbidden: true,
-                fields: [
-                    {
-                        name: "foo",
-                        label: "foo",
-                        element: "h2-text",
-                        required: true,
-                        editable: false,
-                        visible: true
-                    },
-                    {
-                        datatype: "text",
-                        name: "bar",
-                        label: "bar",
-                        required: true,
-                        editable: false,
-                        visible: true
-                    },
-                ],
-            }
-        </script>
-    </template>
-</demo-snippet>
+          form4.context = {
+            foo: "foo",
+            bar: "bar"
+          };
 
-<h3>Simple Form</h3>
-<demo-snippet>
-    <template>
-        <h2-form id="form5"></h2-form>
-        <script>
-            form5.context = {
-                foo: "foo",
-                bar: "bar",
-                grid: [
-                    {
-                        col1: "foo",
-                        col2: "bar",
-                        col3: "foobar",
-                        actions: ["action-1", "action-2"]
-                    },
-                    {
-                        col1: "foo",
-                        col2: "bar",
-                        col3: "foobar",
-                        actions: ["action-1"]
-                    },
-                    {
-                        col1: "foo",
-                        col2: "bar",
-                        col3: "foobar",
-                        actions: ["action-2"]
-                    },
-                    {
-                        col1: "foo",
-                        col2: "bar",
-                        col3: "foobar",
-                        actions: ["action-1", "action-2"]
-                    }
-                ]
-
-            };
-
-            form5.metadata = {
-                style: `.container {
-                    grid-column-gap: 4%;
-                    grid-template-columns: 48% 48%;
+          form4.metadata = {
+            style: `.container {
+                    grid-template-columns: auto;
+                }
+               .container__item {
+                    border-bottom: 1px dashed
                 }
               `,
-                formUrl: "/url-to-send-form",
-                title: "Form Title",
-                confirm: "Sure to submit?",
-                fields: [
-                    {
-                        name: "foo",
-                        label: "foo",
-                        element: "h2-text",
-                        required: true,
-                        editable: true,
-                        visible: true
-                    },
-                    {
-                        datatype: "text",
-                        name: "bar",
-                        label: "bar",
-                        required: true,
-                        editable: true,
-                        visible: true
-                    },
-                    {
-                        datatype: "grid",
-                        name: "grid",
-                        label: "grid",
-                        element: "h2-grid",
-                        dataTypeExtra: true,
+            formUrl: "/url-to-send-form",
+            title: "Form Title",
+            confirm: "Sure to submit?",
+            fields: [
+              {
+                name: "bar",
+                label: "bar",
+                required: true,
+                editable: true,
+                visible: true
+              },
+              {
+                name: "foo",
+                label: "foo",
+                required: true,
+                editable: true,
+                visible: true,
+                element: "h2-form",
+                metaType: {
+                  type: "FORM",
+                  metadata: {
+                    formUrl: "/url-to-send-form",
+                    title: "Nested Form",
+                    confirm: "Sure to submit?",
+                    fields: [
+                      {
+                        name: "foo1",
+                        label: "foo1",
                         required: true,
                         editable: true,
                         visible: true,
-                        metadata: {
-                            title: "This is a grid",
-                            grids: [
-                                {
-                                    name: "col1",
-                                    label: "Col1"
-                                },
-                                {
-                                    name: "col2",
-                                    label: "Col2"
-                                },
-                                {
-                                    name: "col3",
-                                    label: "Col3"
-                                },
-                                {
-                                    datatype: "action",
-                                    name: "actions",
-                                    label: "Actions",
-                                }
-
-                            ],
-                            actions: {
-                                "action-1": {
-                                    actionId: "action-1",
-                                    actionName: "Action1",
-                                    operType: 1,
-                                    formMeta: {
-                                        formUrl: "/url-to-send-form",
-                                        confirm: "Sure to submit?",
-                                        fields: [
-                                            {
-                                                element: "h2-text",
-                                                name: "name",
-                                                label: "Name"
-                                            },
-                                            {
-                                                element: "h2-text",
-                                                name: "phone",
-                                                label: "Phone"
-                                            },
-                                        ],
-                                    }
-                                },
-                                "action-2": {
-                                    actionId: "action-2",
-                                    actionName: "Action2",
-                                    operType: 2,
-                                    formMeta: {
-                                        title: "Dialog Title",
-                                        formUrl: "/url-to-send-form",
-                                        confirm: "Sure to submit?",
-                                        fields: [
-                                            {
-                                                element: "h2-text",
-                                                name: "name",
-                                                label: "Name",
-                                                visible: true,
-                                                editable: true
-                                            },
-                                            {
-                                                element: "h2-text",
-                                                name: "phone",
-                                                label: "Phone",
-                                                visible: true,
-                                                editable: true
-                                            },
-                                        ],
-                                    }
-                                }
-                            }
-                        }
-                    },
-                ],
-            }
+                      },
+                      {
+                        name: "bar1",
+                        label: "bar1",
+                        required: true,
+                        editable: true,
+                        visible: true
+                      },
+                    ],
+                  }
+                }
+              }
+            ],
+          }
         </script>
     </template>
 </demo-snippet>

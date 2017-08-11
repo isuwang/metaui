@@ -24,7 +24,7 @@
 
     demo-snippet {
       --demo-snippet-code: {
-        max-height: 250px;
+        max-height: 500px;
       }
     }
   </style>
@@ -56,7 +56,7 @@
               label: "Col3"
             },
             {
-              datatype: "action",
+              metaType:"ACTION",
               name: "actions",
               label: "Actions",
             }
@@ -109,10 +109,11 @@
                 ],
               }
             }
-          }
+          },
+          style: `.grid-column {font-size: 16px;}`
         };
 
-        grid.models = [
+        grid.value = [
           {
             col1: "foo",
             col2: "bar",
@@ -143,6 +144,169 @@
     </template>
   </demo-snippet>
 
+  <h3>Editable Grid, with a readonly column(Col3)</h3>
+  <demo-snippet>
+    <template>
+      <style is="custom-style">
+      </style>
+      <h2-grid id="grid1" editable></h2-grid>
+      <script>
+        grid1.metadata = {
+          title: "I am the title!",
+          grids: [
+            {
+              name: "col1",
+              label: "Col1"
+            },
+            {
+              name: "col2",
+              label: "Col2"
+            },
+            {
+              name: "col3",
+              label: "Col3",
+              editable: false
+            },
+            {
+              metaType:"ACTION",
+              name: "actions",
+              label: "Actions",
+            }
+          ],
+          actions: {
+            "action-1": {
+              actionId: "action-1",
+              actionName: "Action1",
+              operType: 1,
+              formMeta: {
+                formUrl: "/url-to-send-form",
+                confirm: "Sure to submit?",
+                fields: [
+                  {
+                    element: "h2-text",
+                    name: "col1",
+                    label: "Col1"
+                  },
+                  {
+                    element: "h2-text",
+                    name: "col2",
+                    label: "Col2"
+                  },
+                  {
+                    element: "h2-text",
+                    name: "col3",
+                    label: "Col3"
+                  }
+                ],
+              }
+            }
+          },
+          style: `.grid-column { width: 100px;}`
+        };
+
+        grid1.value = [
+          {
+            col1: "foo",
+            col2: "bar",
+            col3: "foobar",
+            actions:["action-1"]
+          }
+        ];
+
+      </script>
+    </template>
+  </demo-snippet>
+
+  <h3>Editable Grid (Config `editable:true` in metadata)</h3>
+  <demo-snippet>
+    <template>
+      <style is="custom-style">
+      </style>
+      <h2-grid id="grid2"></h2-grid>
+      <script>
+        grid2.metadata = {
+          title: "I am the title!",
+          editable: true,
+          grids: [
+            {
+              name: "col1",
+              label: "Col1"
+            },
+            {
+              name: "col2",
+              label: "Col2"
+            },
+            {
+              name: "col3",
+              label: "Col3"
+            }
+          ],
+          style: `.grid-row { height: 40px;}`
+        };
+
+        grid2.value = [
+          {
+            col1: "foo",
+            col2: "bar",
+            col3: "foobar"
+          },
+          {
+            col1: "foo",
+            col2: "bar",
+            col3: "foobar"
+          }
+        ];
+
+      </script>
+    </template>
+  </demo-snippet>
+
+  <h3>Editable Column</h3>
+  <demo-snippet>
+    <template>
+      <style is="custom-style">
+      </style>
+      <h2-grid id="grid3"></h2-grid>
+      <script>
+        grid3.metadata = {
+          title: "I am the title!",
+          grids: [
+            {
+              name: "col1",
+              label: "Col1",
+              editable: true,
+              validate: true,
+              required:true,
+              prompt: "Pls input col1!"
+            },
+            {
+              name: "col2",
+              label: "Col2"
+            },
+            {
+              name: "col3",
+              label: "Col3"
+            }
+          ],
+          style: `.grid-column {padding: 20px 10px; font-size: 16px;}`
+        };
+
+        grid3.value = [
+          {
+            col1: "foo",
+            col2: "bar",
+            col3: "foobar"
+          },
+          {
+            col1: "foo",
+            col2: "bar",
+            col3: "foobar"
+          }
+        ];
+
+      </script>
+    </template>
+  </demo-snippet>
 </body>
 
 </html>

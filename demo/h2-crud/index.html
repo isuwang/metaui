@@ -25,7 +25,7 @@
 
             demo-snippet {
                 --demo-snippet-code: {
-                    max-height: 250px;
+                    max-height: 500px;
                 }
             }
         </style>
@@ -40,81 +40,71 @@
         <style is="custom-style">
         </style>
         <h2-crud id="action"></h2-crud>
-
         <script>
-            action.metadata = {
-                query: {
-                    formUrl: "/query.do",
-                    httpMethod: "GET",
-                    paging: true,
-                    fields: [
-                        {
-                            datatype: "text",
-                            name: "username",
-                            label: "用户名",
-                            editable: true,
-                        }
-                    ]
-                },
-                result: {
-                    grids: [
-                        {
-                            datatype: "text",
-                            name: "用户名",
-                            label: "username"
-                        },
-                        {
-                            datatype: "text",
-                            name: "联系电话",
-                            label: "phone"
-                        },
-                        {
-                            datatype: "text",
-                            name: "联系地址",
-                            label: "address"
-                        },
-                        {
-                            datatype: "action",
-                            name: "actions",
-                            label: "操作"
-                        }
-                    ],
-                    actions: {
-                        "record-add": {
-                            actionId: "record-add",
-                            actionName: "Add Record",
-                            operType: 1,
-                            formMeta: {
-                                formUrl: "/url-to-send-form",
-                                confirm: "Sure to submit?",
-                                fields: [
-                                    {
-                                        element: "h2-text",
-                                        name: "name",
-                                        label: "Name"
-                                    },
-                                    {
-                                        element: "h2-text",
-                                        name: "phone",
-                                        label: "Phone"
-                                    },
-                                ],
-                            }
-                        }
-                    }
-                }
-            };
-            action.context={
-                username:"jack"
-            };
-            action.result=[
+          action.metadata = {
+            query: {
+              formUrl: "/query.do",
+              fields: [
                 {
-                    username:"Jack",
-                    phone:"15900000000",
-                    address:"XXXX",
-                    actions:["record-add"]
+                  name: "username",
+                  label: "用户名",
+                  editable: true
                 }
-            ];
+              ]
+            },
+            result: {
+              grids: [
+                {
+                  name: "username",
+                  label: "用户名"
+                },
+                {
+                  name: "phone",
+                  label: "联系电话"
+                },
+                {
+                  name: "address",
+                  label: "联系地址"
+                },
+                {
+                  name: "actions",
+                  label: "操作"
+                }
+              ],
+              actions: {
+                "record-add": {
+                  actionId: "record-add",
+                  actionName: "Add Record",
+                  operType: 1,
+                  formMeta: {
+                    formUrl: "/url-to-send-form",
+                    confirm: "Sure to submit?",
+                    fields: [
+                      {
+                        name: "name",
+                        label: "Name"
+                      },
+                      {
+                        name: "phone",
+                        label: "Phone"
+                      },
+                    ],
+                  }
+                }
+              }
+            }
+          };
+          action.context = {
+            username: "jack"
+          };
+          action.result = [
+            {
+              username: "Jack",
+              phone: "15900000000",
+              address: "XXXX",
+              actions: ["record-add"]
+            }
+          ];
 
         </script>
     </template>
@@ -129,68 +119,65 @@
         <h2-crud id="action1"></h2-crud>
 
         <script>
-            action1.metadata = {
-                query: {
-                    formUrl: "/query",
-                    httpMethod: "GET",
-                    paging: false,
-                    fields: [
-                        {
-                            datatype: "text",
-                            name: "username",
-                            label: "用户名",
-                            editable: true,
-                        }
-                    ]
-                },
-                result: {
-                    grids: [
-                        {
-                            datatype: "text",
-                            name: "用户名",
-                            label: "username"
-                        },
-                        {
-                            datatype: "text",
-                            name: "联系电话",
-                            label: "phone"
-                        },
-                        {
-                            datatype: "text",
-                            name: "联系地址",
-                            label: "address"
-                        },
-                        {
-                            datatype: "action",
-                            name: "actions",
-                            label: "操作"
-                        }
-                    ],
-                    actions: {
-                        "record-add": {
-                            actionId: "record-add",
-                            actionName: "Add Record",
-                            operType: 1,
-                            formMeta: {
-                                formUrl: "/url-to-send-form",
-                                confirm: "Sure to submit?",
-                                fields: [
-                                    {
-                                        element: "h2-text",
-                                        name: "name",
-                                        label: "Name"
-                                    },
-                                    {
-                                        element: "h2-text",
-                                        name: "phone",
-                                        label: "Phone"
-                                    },
-                                ],
-                            }
-                        }
-                    }
+          action1.metadata = {
+            query: {
+              formUrl: "/query",
+              httpMethod: "GET",
+              paging: false,
+              fields: [
+                {
+                  datatype: "text",
+                  name: "username",
+                  label: "用户名",
+                  editable: true,
                 }
+              ]
+            },
+            result: {
+              grids: [
+                {
+                  name: "用户名",
+                  label: "username"
+                },
+                {
+                  name: "联系电话",
+                  label: "phone"
+                },
+                {
+                  name: "联系地址",
+                  label: "address"
+                },
+                {
+                  metaType: "ACTION",
+                  name: "actions",
+                  label: "操作"
+                }
+              ],
+              actions: {
+                "record-add": {
+                  actionId: "record-add",
+                  actionName: "Add Record",
+                  operType: 1,
+                  formMeta: {
+                    formUrl: "/url-to-send-form",
+                    confirm: "Sure to submit?",
+                    fields: [
+                      {
+                        element: "h2-text",
+                        name: "name",
+                        label: "Name"
+                      },
+                      {
+                        element: "h2-text",
+                        name: "phone",
+                        label: "Phone"
+                      },
+                    ],
+                  }
+                }
+              }
             }
+          }
         </script>
     </template>
 </demo-snippet>
@@ -208,88 +195,85 @@
         </h2-crud>
 
         <script>
-            action2.metadata = {
-                query: {
-                    formUrl: "/query",
-                    httpMethod: "GET",
-                    paging: true,
-                    fields: [
-                        {
-                            datatype: "text",
-                            name: "username",
-                            label: "用户名",
-                            editable: true,
-                        }
-                    ]
-                },
-                result: {
-                    grids: [
-                        {
-                            datatype: "text",
-                            name: "用户名",
-                            label: "username"
-                        },
-                        {
-                            datatype: "text",
-                            name: "联系电话",
-                            label: "phone"
-                        },
-                        {
-                            datatype: "text",
-                            name: "联系地址",
-                            label: "address"
-                        },
-                        {
-                            datatype: "action",
-                            name: "actions",
-                            label: "操作"
-                        }
-                    ],
-                    actions: {
-                        "record-add": {
-                            actionId: "record-add",
-                            actionName: "Add Record",
-                            operType: 1,
-                            formMeta: {
-                                formUrl: "/url-to-send-form",
-                                confirm: "Sure to submit?",
-                                fields: [
-                                    {
-                                        element: "h2-text",
-                                        name: "name",
-                                        label: "Name"
-                                    },
-                                    {
-                                        element: "h2-text",
-                                        name: "phone",
-                                        label: "Phone"
-                                    },
-                                ],
-                            }
-                        }
-                    }
+          action2.metadata = {
+            query: {
+              formUrl: "/query",
+              httpMethod: "GET",
+              paging: true,
+              fields: [
+                {
+                  datatype: "text",
+                  name: "username",
+                  label: "用户名",
+                  editable: true,
                 }
+              ]
+            },
+            result: {
+              grids: [
+                {
+                  name: "用户名",
+                  label: "username"
+                },
+                {
+                  name: "联系电话",
+                  label: "phone"
+                },
+                {
+                  name: "联系地址",
+                  label: "address"
+                },
+                {
+                  metaType: "action",
+                  name: "actions",
+                  label: "操作"
+                }
+              ],
+              actions: {
+                "record-add": {
+                  actionId: "record-add",
+                  actionName: "Add Record",
+                  operType: 1,
+                  formMeta: {
+                    formUrl: "/url-to-send-form",
+                    confirm: "Sure to submit?",
+                    fields: [
+                      {
+                        element: "h2-text",
+                        name: "name",
+                        label: "Name"
+                      },
+                      {
+                        element: "h2-text",
+                        name: "phone",
+                        label: "Phone"
+                      },
+                    ],
+                  }
+                }
+              }
             }
-            status.statusItems = [{
-                value: "-1",
-                label: "全部",
-                count: "0"
-            }, {
-                value: 3,
-                label: "待确认",
-                count: "0"
-            }, {
-                value: 4,
-                label: "已确认",
-                count: "0"
-            }];
-            status.onStatusSelect = (e) => {
-                e.target.dispatchEvent(new CustomEvent('query-domain', {
-                    detail: e.detail,
-                    composed: true,
-                    bubbles: true
-                }));
-            }
+          };
+          status.statusItems = [{
+            value: "-1",
+            label: "全部",
+            count: "0"
+          }, {
+            value: 3,
+            label: "待确认",
+            count: "0"
+          }, {
+            value: 4,
+            label: "已确认",
+            count: "0"
+          }];
+          status.onStatusSelect = (e) => {
+            e.target.dispatchEvent(new CustomEvent('query-domain', {
+              detail: e.detail,
+              composed: true,
+              bubbles: true
+            }));
+          }
         </script>
     </template>
 </demo-snippet>

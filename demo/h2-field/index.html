@@ -12,7 +12,6 @@
     <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 
     <link rel="import" href="../../h2-field.html">
-    <link rel="import" href="../../widgets/h2-select-list.html">
 
     <link rel="import" href="../../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../../../iron-demo-helpers/demo-pages-shared-styles.html">
@@ -25,7 +24,7 @@
 
             demo-snippet {
                 --demo-snippet-code: {
-                    max-height: 250px;
+                    max-height: 500px;
                 }
             }
         </style>
@@ -42,13 +41,14 @@
         </style>
         <h2-field id="field" editable></h2-field>
         <script>
-            field.metadata = {
-                element: "h2-text",
-                name: "name",
-                label: "Please input your name here: ",
-                required: true,
-                editable: true
-            }
+          field.metadata = {
+            element: "h2-text",
+            name: "name",
+            label: "Please input your name here: ",
+            required: true,
+            editable: true,
+            prompt: "Please input your name!"
+          }
         </script>
     </template>
 </demo-snippet>
@@ -59,36 +59,36 @@
         <style is="custom-style">
 
         </style>
-        <h2-field id="field1" ></h2-field>
+        <h2-field id="field1"></h2-field>
         <script>
-            field1.context = {
-                name: "WahsonLeung"
-            };
-            field1.metadata = {
-                element: "h2-text",
-                name: "name",
-                label: "Please input your name here: ",
-                required: true,
-                editable: true
-            }
+          field1.context = {
+            name: "WahsonLeung"
+          };
+          field1.metadata = {
+            render: (model) => `<div style="color:blue">${model.name}</div>`
+          }
         </script>
     </template>
 </demo-snippet>
 
-<h3>ReadOnly Text Field</h3>
+<h3>TextArea</h3>
 <demo-snippet>
     <template>
         <style is="custom-style">
 
         </style>
-        <h2-field id="field2"></h2-field>
+        <h2-field id="field2" editable></h2-field>
         <script>
-            field2.context = {
-                name: "WahsonLeung"
-            };
-            field2.metadata = {
-                render: (model) => `<div style="color:blue">${model.name}</div>`
-            }
+          field2.context = {
+            msg: `Hello, WahsonLeung, \nbalabala...`
+          };
+          field2.metadata = {
+            element: "h2-text-area",
+            label: "Input something:  ",
+            name: "msg",
+            required: true,
+            editable: true
+          }
         </script>
     </template>
 </demo-snippet>
@@ -101,29 +101,27 @@
         </style>
         <h2-field id="field3" editable></h2-field>
         <script>
-            field3.metadata = {
-                datatype: "select",
-                name: "sex",
-                label: "Please select your sex here:",
-                editable: true,
-                element: "h2-select-list",
-                candidates: [
-                    {
-                        label: "男",
-                        value: "1"
-                    },
-                    {
-                        label: "女",
-                        value: "2"
-                    }
-                ],
-                candidateLabel: "label",
-                candidateValue: "value",
-            }
+          field3.metadata = {
+            name: "sex",
+            label: "Please select your sex: ",
+            editable: true,
+            element: "h2-select-list",
+            candidates: [
+              {
+                label: "Male",
+                value: "1"
+              },
+              {
+                label: "Female",
+                value: "2"
+              }
+            ],
+            candidateLabel: "label",
+            candidateValue: "value",
+          }
         </script>
     </template>
 </demo-snippet>
-
 </body>
 
 </html>
