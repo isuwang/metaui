@@ -1,12 +1,16 @@
-<link rel="import" href="./base-behavior.html">
 <script>
+  /**
+   * Some ajax methods base on fetch api.
+   *
+   * @polymerBehavior
+   */
   AjaxBehaviorImpl = {
 
     /**
      * GET 请求
      *
      * 例子：
-     *
+     *```javascript
      * 1. 直接传递一个Request 实例
      *  const req = new Request('/test?foo=1&bar=2', {method: 'GET'});
      *  this.query(req, console.log );
@@ -17,13 +21,14 @@
      * 3. 直接传递一个包含url、data内容的对象
      *  this.query({
      *       url: '/test',
-     *       data: { foo:1, bar:2 }
+     *       data: { foo:1, bar:2 },
      *       handleAs: 'json'
      *   }, console.log, console.log );
-     *
+     * ```
      * ******************************************************
      *
-     * @param input  支持3种类型： Request|String|Object
+     * @param {String|Request|Object} input -
+     *      支持3种类型： String|Request|Object
      *      1. Request实例
      *      2. String：请求url
      *      3: Object： 对象结构要求 { url , data, handleAs}
@@ -31,8 +36,8 @@
      *          data：可选
      *          handleAs：string, 可选，默认值是"json"， 取值范围: text|json|blob|formData|arrayBuffers
      *
-     * @param succCallback
-     * @param failCallback
+     * @param {Function} succCallback - callback whenever query success
+     * @param {Function} failCallback - callback whenever query fail
      */
     query(input, succCallback, failCallback) {
       let url,
@@ -62,6 +67,7 @@
     /**
      * POST 请求
      *
+     * ```javascript
      * 1. 直接传递一个Request 实例
      *  const req = new Request('/test?foo=1&bar=2', {method: 'POST'});
      *  this.post(req, console.log );
@@ -86,13 +92,14 @@
      *  5. 发送json格式的数据
      *  this.post({
      *      url: '/upload',
-     *      data: {foo:1,bar:2}
+     *      data: {foo:1,bar:2},
      *      sendAsJson: true
      *  }, console.log, console.log );
-     *
+     * ```
      * ******************************************************
      *
-     * @param input  支持3种类型： Request|String|Object
+     * @param {String|Request|Object} input -
+     *      支持3种类型： String|Request|Object
      *      1. Request实例
      *      2. String：请求url
      *      3: Object： 对象结构要求 { url , data, handleAs, sendAsJson}
@@ -101,9 +108,8 @@
      *          handleAs：string, 可选，默认值是"json"， 取值范围: text|json|blob|formData|arrayBuffer
      *          sendAsJson：boolean 可选，默认值是false
      *
-     * @param input
-     * @param succCallback
-     * @param failCallback
+     * @param {Function} succCallback - callback whenever post success
+     * @param {Function} failCallback - callback whenever post fail
      * @returns {*}
      */
     post(input, succCallback, failCallback) {
@@ -191,6 +197,7 @@
         }
 
       }).catch(err => {
+        Function.prototype.isPrototypeOf(failCallback) && failCallback(err.message);
         console.error(err);
         this.hideLoading();
       });

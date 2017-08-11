@@ -164,7 +164,7 @@
      */
     redefine(obj, path) {
       let pojo = this.__redefine(obj);
-      pojo.__addObserver(path, this.notifyPath.bind(this));
+      pojo && pojo.__addObserver(path, this.notifyPath.bind(this));
       return pojo;
     },
 
