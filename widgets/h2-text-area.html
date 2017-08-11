@@ -1,6 +1,5 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../paper-input/paper-textarea.html">
-<link rel="import" href="../behaviors/base-behavior.html">
 <link rel="import" href="h2-widget-base.html">
 <dom-module id="h2-text-area">
     <template>
@@ -21,7 +20,7 @@
         </paper-textarea>
     </template>
     <script>
-      class H2TextArea extends Polymer.mixinBehaviors([BaseBehavior], H2WidgetBase) {
+      class H2TextArea extends H2WidgetBase {
         static get is() {
           return "h2-text-area";
         }
