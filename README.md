@@ -140,7 +140,8 @@ metadata.style = `
       <!--  </paper-input>-->
     </template>
     <script>
-    class YourWidge extends H2WidgetBase {
+  
+    class YourWidget extends H2WidgetBase {
       static get is() {
         return "your-widget-name";
       }

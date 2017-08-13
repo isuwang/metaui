@@ -169,19 +169,28 @@
 
         static get properties() {
           return {
+            /**
+             *
+             * Paging object default = {limit: 15, start: 0, pageIndex: 1}
+             * ```
+             * start: the number of the first page index.
+             * limit: record size per page.
+             * pageIndex: the number of current page index.
+             * ```
+             */
             paging: {
               type: Object,
               value: function () {
                 return {
                   limit: 15,
                   start: 0,
-                  pageIndex: 1,
-                  results: 0
+                  pageIndex: 1
                 }
               },
               notify:true,
               reflectToAttribute: true
             },
+            /** Total size of records.*/
             total: {
               type: Number,
               value: 0
@@ -192,11 +201,11 @@
 
         static get observers() {
           return [
-            'pagingChanged(paging.pageIndex)'
+            '_pagingChanged(paging.pageIndex)'
           ];
         }
 
-        pagingChanged(pageIndex) {
+        _pagingChanged(pageIndex) {
           if (pageIndex > 0) {
             this.set("paging.start", (pageIndex - 1) * this.paging.limit);
             const detail = {'page': pageIndex};
@@ -204,13 +213,15 @@
           } else {
             this.set("paging.pageIndex", 1);
           }
-
         }
 
         _pageSize(results) {
           return Math.ceil((results || 0 )/ this.paging.limit);
         }
 
+        /**
+         * Go to the first page.
+         */
         first() {
           if (this.paging.pageIndex > 1) {
             this.set("paging.pageIndex", 1);
@@ -218,6 +229,9 @@
 
         }
 
+        /**
+         * Go to previous page.
+         */
         prev() {
           if (this.paging.pageIndex > 1) {
             const curPage = parseInt(this.paging.pageIndex) - 1;
@@ -225,6 +239,9 @@
           }
         }
 
+        /**
+         * Go to next page.
+         */
         next() {
           if (this.paging.pageIndex < this._pageSize(this.total)) {
             const curPage = parseInt(this.paging.pageIndex) + 1;
@@ -232,6 +249,9 @@
           }
         }
 
+        /**
+         * Go to the last page.
+         */
         last() {
           if (this.paging.pageIndex < this._pageSize(this.total)) {
             const curPage = this._pageSize(this.total);
