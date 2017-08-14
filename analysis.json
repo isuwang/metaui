@@ -2,6 +2,544 @@
   "schema_version": "1.0.0",
   "elements": [
     {
+      "description": "",
+      "summary": "",
+      "path": "h2-tip-dialog.html",
+      "properties": [
+        {
+          "name": "message",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 113,
+              "column": 16
+            },
+            "end": {
+              "line": 117,
+              "column": 17
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_watcherMessage\""
+            }
+          },
+          "defaultValue": "\"hello\""
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 118,
+              "column": 16
+            },
+            "end": {
+              "line": 122,
+              "column": 17
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"alert\""
+        },
+        {
+          "name": "remark",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 123,
+              "column": 16
+            },
+            "end": {
+              "line": 127,
+              "column": 17
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "yesBtn",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 128,
+              "column": 16
+            },
+            "end": {
+              "line": 133,
+              "column": 17
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"确定\""
+        },
+        {
+          "name": "noBtn",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 134,
+              "column": 16
+            },
+            "end": {
+              "line": 139,
+              "column": 17
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"取消\""
+        }
+      ],
+      "methods": [
+        {
+          "name": "_watcherMessage",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 142,
+              "column": 8
+            },
+            "end": {
+              "line": 146,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "message"
+            }
+          ]
+        },
+        {
+          "name": "cancelFn",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 147,
+              "column": 8
+            },
+            "end": {
+              "line": 152,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_isConfirm",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 153,
+              "column": 8
+            },
+            "end": {
+              "line": 155,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "type"
+            }
+          ]
+        },
+        {
+          "name": "_isPrompt",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 156,
+              "column": 8
+            },
+            "end": {
+              "line": 158,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "type"
+            }
+          ]
+        },
+        {
+          "name": "confirmFn",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 159,
+              "column": 8
+            },
+            "end": {
+              "line": 171,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": []
+        }
+      ],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 106,
+          "column": 4
+        },
+        "end": {
+          "line": 173,
+          "column": 5
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "name": "H2TipDialog",
+      "attributes": [
+        {
+          "name": "message",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 113,
+              "column": 16
+            },
+            "end": {
+              "line": 117,
+              "column": 17
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "type",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 118,
+              "column": 16
+            },
+            "end": {
+              "line": 122,
+              "column": 17
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "remark",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 123,
+              "column": 16
+            },
+            "end": {
+              "line": 127,
+              "column": 17
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "yes-btn",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 128,
+              "column": 16
+            },
+            "end": {
+              "line": 133,
+              "column": 17
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "no-btn",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 134,
+              "column": 16
+            },
+            "end": {
+              "line": 139,
+              "column": 17
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        }
+      ],
+      "events": [
+        {
+          "type": "CustomEvent",
+          "name": "remark-changed",
+          "description": "Fired when the `remark` property changes.",
+          "metadata": {}
+        }
+      ],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [],
+      "tagname": "h2-tip-dialog"
+    },
+    {
+      "description": "A component for dialog.\n```javascript\n<h2-dialog>\n    <div slot=\"container\">\n        Put your Content here inside an element which with [slot=container]\n    </div>\n</h2-dialog>\n```",
+      "summary": "",
+      "path": "h2-dialog.html",
+      "properties": [
+        {
+          "name": "stopAutoDismiss",
+          "type": "boolean",
+          "description": "True to stop auto dismiss.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 79,
+              "column": 12
+            },
+            "end": {
+              "line": 82,
+              "column": 13
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        }
+      ],
+      "methods": [
+        {
+          "name": "connectedCallback",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 90,
+              "column": 8
+            },
+            "end": {
+              "line": 119,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "open",
+          "description": "Open the dialog.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 124,
+              "column": 8
+            },
+            "end": {
+              "line": 126,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "close",
+          "description": "Close the dialog.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 131,
+              "column": 8
+            },
+            "end": {
+              "line": 133,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": []
+        }
+      ],
+      "staticMethods": [],
+      "demos": [
+        {
+          "url": "demo/h2-dialog/index.html",
+          "description": ""
+        }
+      ],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 74,
+          "column": 6
+        },
+        "end": {
+          "line": 135,
+          "column": 7
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "name": "H2Dialog",
+      "attributes": [
+        {
+          "name": "stop-auto-dismiss",
+          "description": "True to stop auto dismiss.",
+          "sourceRange": {
+            "start": {
+              "line": 79,
+              "column": 12
+            },
+            "end": {
+              "line": 82,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        }
+      ],
+      "events": [
+        {
+          "type": "CustomEvent",
+          "name": "h2-dialog-closed",
+          "description": "h2-dialog-closed\nFired when the dialog closed.",
+          "metadata": {}
+        }
+      ],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [
+        {
+          "description": "",
+          "name": "container",
+          "range": {
+            "file": "h2-dialog.html",
+            "start": {
+              "line": 62,
+              "column": 20
+            },
+            "end": {
+              "line": 62,
+              "column": 50
+            }
+          }
+        }
+      ],
+      "tagname": "h2-dialog"
+    },
+    {
+      "description": "",
+      "summary": "",
+      "path": "h2-loading.html",
+      "properties": [],
+      "methods": [
+        {
+          "name": "getImgUrl",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 30,
+              "column": 12
+            },
+            "end": {
+              "line": 32,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "e"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 23,
+          "column": 16
+        },
+        "end": {
+          "line": 34,
+          "column": 9
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [],
+      "events": [],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [
+        {
+          "description": "",
+          "name": "",
+          "range": {
+            "file": "h2-loading.html",
+            "start": {
+              "line": 14,
+              "column": 8
+            },
+            "end": {
+              "line": 14,
+              "column": 21
+            }
+          }
+        }
+      ],
+      "tagname": "h2-loading"
+    },
+    {
       "description": "A component works like a dropdown menu.\n\n```\n<h2-action-group name=\"GroupName\">\n    <h2-action metadata=\"{{ metadata }}\"></h2-action>\n    <h2-action metadata=\"{{ metadata1 }}\"></h2-action>\n</h2-action-group>\n\n```\n```\nmetadata = {\n  actionId: \"action-0\",\n  actionName: \"Action0\",\n  operType: 1,\n  formMeta: {\n    formUrl: \"/url-to-send-form\",\n    confirm: \"Sure to submit?\",\n    fields: [\n      {\n        element: \"h2-text\",\n        name: \"name\",\n        label:\"Name\"\n      },\n      {\n        element: \"h2-text\",\n        name: \"phone\",\n        label:\"Phone\"\n      },\n    ],\n  }\n}\nmetadata1 = {\n  actionId: \"action-1\",\n  actionName: \"Action1\",\n  operType: 1,\n  formMeta: {\n    formUrl: \"/url-to-send-form\",\n    confirm: \"Sure to submit?\",\n    fields: [\n      {\n        element: \"h2-text\",\n        name: \"name\",\n        label:\"Name\"\n      },\n      {\n        element: \"h2-text\",\n        name: \"phone\",\n        label:\"Phone\"\n      },\n    ],\n  }\n};\n\n```\n### [See h2-action](#/elements/h2-action)",
       "summary": "",
       "path": "h2-action-group.html",
@@ -337,11 +875,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 120,
+              "line": 121,
               "column": 12
             },
             "end": {
-              "line": 125,
+              "line": 126,
               "column": 13
             }
           },
@@ -359,11 +897,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 127,
+              "line": 131,
               "column": 12
             },
             "end": {
-              "line": 132,
+              "line": 136,
               "column": 13
             }
           },
@@ -381,11 +919,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 134,
+              "line": 138,
               "column": 12
             },
             "end": {
-              "line": 137,
+              "line": 141,
               "column": 13
             }
           },
@@ -423,11 +961,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 151,
+              "line": 155,
               "column": 12
             },
             "end": {
-              "line": 153,
+              "line": 157,
               "column": 13
             }
           },
@@ -444,11 +982,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 159,
+              "line": 163,
               "column": 12
             },
             "end": {
-              "line": 161,
+              "line": 165,
               "column": 13
             }
           },
@@ -465,11 +1003,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 167,
+              "line": 171,
               "column": 12
             },
             "end": {
-              "line": 169,
+              "line": 173,
               "column": 13
             }
           },
@@ -567,11 +1105,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 173,
+              "line": 177,
               "column": 8
             },
             "end": {
-              "line": 177,
+              "line": 181,
               "column": 9
             }
           },
@@ -590,11 +1128,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 193,
+              "line": 197,
               "column": 8
             },
             "end": {
-              "line": 205,
+              "line": 209,
               "column": 9
             }
           },
@@ -620,11 +1158,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 207,
+              "line": 211,
               "column": 8
             },
             "end": {
-              "line": 210,
+              "line": 214,
               "column": 9
             }
           },
@@ -643,11 +1181,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 212,
+              "line": 216,
               "column": 8
             },
             "end": {
-              "line": 222,
+              "line": 226,
               "column": 9
             }
           },
@@ -666,11 +1204,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 228,
+              "line": 232,
               "column": 8
             },
             "end": {
-              "line": 230,
+              "line": 234,
               "column": 9
             }
           },
@@ -707,11 +1245,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 276,
+              "line": 278,
               "column": 8
             },
             "end": {
-              "line": 278,
+              "line": 280,
               "column": 9
             }
           },
@@ -730,11 +1268,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 280,
+              "line": 282,
               "column": 8
             },
             "end": {
-              "line": 282,
+              "line": 284,
               "column": 9
             }
           },
@@ -753,11 +1291,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 284,
+              "line": 286,
               "column": 8
             },
             "end": {
-              "line": 298,
+              "line": 300,
               "column": 9
             }
           },
@@ -772,11 +1310,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 300,
+              "line": 302,
               "column": 8
             },
             "end": {
-              "line": 313,
+              "line": 315,
               "column": 9
             }
           },
@@ -864,11 +1402,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 127,
+              "line": 131,
               "column": 12
             },
             "end": {
-              "line": 132,
+              "line": 136,
               "column": 13
             }
           },
@@ -898,11 +1436,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 151,
+              "line": 155,
               "column": 12
             },
             "end": {
-              "line": 153,
+              "line": 157,
               "column": 13
             }
           },
@@ -916,11 +1454,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 159,
+              "line": 163,
               "column": 12
             },
             "end": {
-              "line": 161,
+              "line": 165,
               "column": 13
             }
           },
@@ -934,11 +1472,11 @@
           "sourceRange": {
             "file": "h2-form.html",
             "start": {
-              "line": 167,
+              "line": 171,
               "column": 12
             },
             "end": {
-              "line": 169,
+              "line": 173,
               "column": 13
             }
           },
@@ -1377,11 +1915,11 @@
           "sourceRange": {
             "start": {
               "line": 27,
-              "column": 8
+              "column": 12
             },
             "end": {
               "line": 29,
-              "column": 9
+              "column": 13
             }
           },
           "metadata": {},
@@ -1394,11 +1932,11 @@
       "sourceRange": {
         "start": {
           "line": 22,
-          "column": 6
+          "column": 8
         },
         "end": {
           "line": 31,
-          "column": 7
+          "column": 9
         }
       },
       "privacy": "public",
@@ -1809,6 +2347,23 @@
           },
           "metadata": {},
           "params": []
+        },
+        {
+          "name": "reset",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 46,
+              "column": 8
+            },
+            "end": {
+              "line": 48,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": []
         }
       ],
       "staticMethods": [],
@@ -1820,7 +2375,7 @@
           "column": 6
         },
         "end": {
-          "line": 46,
+          "line": 50,
           "column": 7
         }
       },
@@ -2304,7 +2859,7 @@
       "tagname": "h2-pagination"
     },
     {
-      "description": "# 由元数据驱动的增删改查组件\n```\n<h2-crud metadata=\"{{ metadata }}\"\n         key-for-items=\"rows\"\n         key-for-page-result=\"pageResponse.results\"\n         result-descriptor=\"[[ _desc() ]]\">\n</h2-crud>\n```\n```\n_desc() {\n    return (result) => {\n        result.rows[0].name = 'foo';\n        return result;\n    };\n}\n\nmetadata = {\n    query: {\n        FormMeta & {\n            noPaging: Boolean     //  是否禁止分页\n        }\n    },\n    actions: {{Array<Action>}},\n    result: {{GridMeta}}\n}\n```\n### metadata定义 (DomainMeta)\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|query|FormMeta|是|表格数据请求表单的元数据|\n|actions|``array.<ActionMeta>``|是|针对domain上的操作元数据\n|result|GridMeta|是|表格的元数据|\n\n### [See FormMeta](#/elements/h2-form)\n### [See ActionMeta](#/elements/h2-action)\n### [See GridMeta](#/elements/h2-grid)",
+      "description": "# 由元数据驱动的增删改查组件\n```\n<h2-crud metadata=\"{{ metadata }}\"\n         key-for-items=\"rows\"\n         key-for-page-result=\"pageResponse.results\"\n         result-descriptor=\"[[ _desc() ]]\">\n</h2-crud>\n```\n```\n_desc() {\n    return (result) => {\n        result.rows[0].name = 'foo';\n        return result;\n    };\n}\n\nmetadata = {\n    query: {\n        FormMeta & {\n            noPaging: Boolean     //  是否禁止分页\n        }\n    },\n    actions: {{Array<Action>}},\n    result: {{GridMeta}}\n}\n```\n### metadata定义 (DomainMeta)\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|query|FormMeta|是|表格数据请求表单的元数据|\n|actions|``array.<ActionMeta>``|是|针对domain上的操作元数据\n|result|GridMeta|是|表格的元数据|\n\n### [See FormMeta][1]\n### [See ActionMeta][2]\n### [See GridMeta][3]\n\n[1]: https://www.webcomponents.org/element/isuwang/metaui/elements/h2-form\n[2]: https://www.webcomponents.org/element/isuwang/metaui/elements/h2-action\n[3]: https://www.webcomponents.org/element/isuwang/metaui/elements/h2-grid",
       "summary": "",
       "path": "h2-crud.html",
       "properties": [
@@ -2315,11 +2870,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 117,
+              "line": 121,
               "column": 12
             },
             "end": {
-              "line": 119,
+              "line": 123,
               "column": 13
             }
           },
@@ -2334,11 +2889,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 124,
+              "line": 128,
               "column": 12
             },
             "end": {
-              "line": 126,
+              "line": 130,
               "column": 13
             }
           },
@@ -2353,11 +2908,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 131,
+              "line": 135,
               "column": 12
             },
             "end": {
-              "line": 134,
+              "line": 138,
               "column": 13
             }
           },
@@ -2374,11 +2929,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 139,
+              "line": 143,
               "column": 12
             },
             "end": {
-              "line": 141,
+              "line": 145,
               "column": 13
             }
           },
@@ -2393,11 +2948,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 146,
+              "line": 150,
               "column": 12
             },
             "end": {
-              "line": 148,
+              "line": 152,
               "column": 13
             }
           },
@@ -2412,11 +2967,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 153,
+              "line": 157,
               "column": 12
             },
             "end": {
-              "line": 156,
+              "line": 160,
               "column": 13
             }
           },
@@ -2432,11 +2987,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 161,
+              "line": 165,
               "column": 12
             },
             "end": {
-              "line": 164,
+              "line": 168,
               "column": 13
             }
           },
@@ -2453,11 +3008,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 168,
+              "line": 172,
               "column": 8
             },
             "end": {
-              "line": 171,
+              "line": 175,
               "column": 9
             }
           },
@@ -2474,11 +3029,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 176,
+              "line": 180,
               "column": 8
             },
             "end": {
-              "line": 178,
+              "line": 182,
               "column": 9
             }
           },
@@ -2496,11 +3051,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 102,
+          "line": 106,
           "column": 6
         },
         "end": {
-          "line": 179,
+          "line": 183,
           "column": 7
         }
       },
@@ -2513,11 +3068,11 @@
           "description": "a closure ``(result) => result``, will be invoked before result is access to dom.",
           "sourceRange": {
             "start": {
-              "line": 117,
+              "line": 121,
               "column": 12
             },
             "end": {
-              "line": 119,
+              "line": 123,
               "column": 13
             }
           },
@@ -2529,11 +3084,11 @@
           "description": "The result response from server.",
           "sourceRange": {
             "start": {
-              "line": 124,
+              "line": 128,
               "column": 12
             },
             "end": {
-              "line": 126,
+              "line": 130,
               "column": 13
             }
           },
@@ -2545,11 +3100,11 @@
           "description": "The result is described by ``resultDescriptor``",
           "sourceRange": {
             "start": {
-              "line": 131,
+              "line": 135,
               "column": 12
             },
             "end": {
-              "line": 134,
+              "line": 138,
               "column": 13
             }
           },
@@ -2561,11 +3116,11 @@
           "description": "The metadata of h2-crud",
           "sourceRange": {
             "start": {
-              "line": 139,
+              "line": 143,
               "column": 12
             },
             "end": {
-              "line": 141,
+              "line": 145,
               "column": 13
             }
           },
@@ -2577,11 +3132,11 @@
           "description": "The context of h2-crud",
           "sourceRange": {
             "start": {
-              "line": 146,
+              "line": 150,
               "column": 12
             },
             "end": {
-              "line": 148,
+              "line": 152,
               "column": 13
             }
           },
@@ -2593,11 +3148,11 @@
           "description": "The field name of the items in the responsed result.",
           "sourceRange": {
             "start": {
-              "line": 153,
+              "line": 157,
               "column": 12
             },
             "end": {
-              "line": 156,
+              "line": 160,
               "column": 13
             }
           },
@@ -2609,11 +3164,11 @@
           "description": "The field name of the page result in the responsed result.",
           "sourceRange": {
             "start": {
-              "line": 161,
+              "line": 165,
               "column": 12
             },
             "end": {
-              "line": 164,
+              "line": 168,
               "column": 13
             }
           },
@@ -2633,166 +3188,17 @@
           "range": {
             "file": "h2-crud.html",
             "start": {
-              "line": 67,
+              "line": 71,
               "column": 16
             },
             "end": {
-              "line": 67,
+              "line": 71,
               "column": 71
             }
           }
         }
       ],
       "tagname": "h2-crud"
-    },
-    {
-      "description": "A component for dialog.\n```javascript\n<h2-dialog>\n    <div slot=\"container\">\n        Put your Content here inside an element which with [slot=container]\n    </div>\n</h2-dialog>\n```",
-      "summary": "",
-      "path": "h2-dialog.html",
-      "properties": [
-        {
-          "name": "stopAutoDismiss",
-          "type": "boolean",
-          "description": "True to stop auto dismiss.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 79,
-              "column": 12
-            },
-            "end": {
-              "line": 82,
-              "column": 13
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "false"
-        }
-      ],
-      "methods": [
-        {
-          "name": "connectedCallback",
-          "description": "",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 90,
-              "column": 8
-            },
-            "end": {
-              "line": 119,
-              "column": 9
-            }
-          },
-          "metadata": {},
-          "params": []
-        },
-        {
-          "name": "open",
-          "description": "Open the dialog.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 124,
-              "column": 8
-            },
-            "end": {
-              "line": 126,
-              "column": 9
-            }
-          },
-          "metadata": {},
-          "params": []
-        },
-        {
-          "name": "close",
-          "description": "Close the dialog.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 131,
-              "column": 8
-            },
-            "end": {
-              "line": 133,
-              "column": 9
-            }
-          },
-          "metadata": {},
-          "params": []
-        }
-      ],
-      "staticMethods": [],
-      "demos": [
-        {
-          "url": "demo/h2-dialog/index.html",
-          "description": ""
-        }
-      ],
-      "metadata": {},
-      "sourceRange": {
-        "start": {
-          "line": 74,
-          "column": 6
-        },
-        "end": {
-          "line": 135,
-          "column": 7
-        }
-      },
-      "privacy": "public",
-      "superclass": "HTMLElement",
-      "name": "H2Dialog",
-      "attributes": [
-        {
-          "name": "stop-auto-dismiss",
-          "description": "True to stop auto dismiss.",
-          "sourceRange": {
-            "start": {
-              "line": 79,
-              "column": 12
-            },
-            "end": {
-              "line": 82,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        }
-      ],
-      "events": [
-        {
-          "type": "CustomEvent",
-          "name": "h2-dialog-closed",
-          "description": "h2-dialog-closed\nFired when the dialog closed.",
-          "metadata": {}
-        }
-      ],
-      "styling": {
-        "cssVariables": [],
-        "selectors": []
-      },
-      "slots": [
-        {
-          "description": "",
-          "name": "container",
-          "range": {
-            "file": "h2-dialog.html",
-            "start": {
-              "line": 62,
-              "column": 20
-            },
-            "end": {
-              "line": 62,
-              "column": 50
-            }
-          }
-        }
-      ],
-      "tagname": "h2-dialog"
     },
     {
       "description": "```\n<h2-field editable metadata=\"{{ metadata }}\"></h2-field>\n```\n```\nmetadata = {\n  element: \"h2-text\",\n  name: \"name\",\n  label: \"Please input your name here: \",\n  required: true,\n  editable: true,\n  prompt: \"Please input your name!\"\n}\n```\n### metadata定义 (FieldMeta)\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|name|string|是|字段名，如“orderNo”\n|label|string|是|字段名，如“订单号”\n|require|boolean|是|是否必填\n|mutil|boolean|是|是否多选\n|editable|boolean|是 | 是否可编辑\n|validate| boolean|是| 是否需要校验\n|visible| boolean|是| 界面是否可见，仅对表单中的字段有效\n|element|string|否|ui元素，缺省时，提供默认ui：h2-text\n|format|string|否| 显示格式，用于日期显示，如“yyyy-MM-dd”\n|length|number|否 | 字符长度\n|maxLength|number|否| string允许的最大长度\n|minLength|number|否 | string允许的最小长度\n|regexp|string|否|正则匹配\n|prompt|string|否|校验失败时的提示语，如“请输入备注”\n|min|number|否|数字最小值\n|max|number|否|数字最大值\n|placeholder|string|否| placeholder\n|candidates|string|否| 候选值，下拉选项中的值，json串，如 \"[{value: 1,label: '男'}, {value: 2,label: '女'}]\"\n|candidateLabel|string|否|组件显示字段名，针对下拉组件、radio-group组件等，“label”\n|candidateValue|string|否| 组件值字段名，针对下拉组件、radio-group组件等，“value”\n|alias|string|否|别名，如果配置了此字段，提交表单时已这个字段作为key保存\n|metaType|MetaType或string|否|元数据类型，如果缺少metaType，默认渲染的组件是<h2-text>；在表格元数据中定义操作列时，可以省略操作的元数据，如 metaType:\"ACTION\" [See h2-grid](#/elements/h2-grid)|\n\n### MetaType定义\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|type|string|是|数据类型：BOOLEAN、BYTE、SHORT、INTEGER、LONG、DOUBLE、STRING、LIST、MAP、SET、STRUCT、ACTION|\n|metadata|object|是| 如果type是list，map，set中的一种，则metadata是这些嵌套类型的元数据|",
@@ -3027,11 +3433,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 120,
+              "line": 121,
               "column": 12
             },
             "end": {
-              "line": 125,
+              "line": 126,
               "column": 13
             }
           },
@@ -3047,11 +3453,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 127,
+              "line": 131,
               "column": 12
             },
             "end": {
-              "line": 132,
+              "line": 136,
               "column": 13
             }
           },
@@ -3067,11 +3473,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 134,
+              "line": 138,
               "column": 12
             },
             "end": {
-              "line": 137,
+              "line": 141,
               "column": 13
             }
           },
@@ -3088,11 +3494,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 139,
+              "line": 143,
               "column": 12
             },
             "end": {
-              "line": 142,
+              "line": 146,
               "column": 13
             }
           },
@@ -3109,11 +3515,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 151,
+              "line": 155,
               "column": 12
             },
             "end": {
-              "line": 153,
+              "line": 157,
               "column": 13
             }
           },
@@ -3128,11 +3534,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 159,
+              "line": 163,
               "column": 12
             },
             "end": {
-              "line": 161,
+              "line": 165,
               "column": 13
             }
           },
@@ -3147,11 +3553,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 167,
+              "line": 171,
               "column": 12
             },
             "end": {
-              "line": 169,
+              "line": 173,
               "column": 13
             }
           },
@@ -3167,11 +3573,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 173,
+              "line": 177,
               "column": 8
             },
             "end": {
-              "line": 177,
+              "line": 181,
               "column": 9
             }
           },
@@ -3188,11 +3594,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 193,
+              "line": 197,
               "column": 8
             },
             "end": {
-              "line": 205,
+              "line": 209,
               "column": 9
             }
           },
@@ -3216,11 +3622,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 207,
+              "line": 211,
               "column": 8
             },
             "end": {
-              "line": 210,
+              "line": 214,
               "column": 9
             }
           },
@@ -3237,11 +3643,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 212,
+              "line": 216,
               "column": 8
             },
             "end": {
-              "line": 222,
+              "line": 226,
               "column": 9
             }
           },
@@ -3258,11 +3664,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 228,
+              "line": 232,
               "column": 8
             },
             "end": {
-              "line": 230,
+              "line": 234,
               "column": 9
             }
           },
@@ -3280,11 +3686,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 235,
+              "line": 239,
               "column": 8
             },
             "end": {
-              "line": 274,
+              "line": 276,
               "column": 9
             }
           },
@@ -3297,11 +3703,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 276,
+              "line": 278,
               "column": 8
             },
             "end": {
-              "line": 278,
+              "line": 280,
               "column": 9
             }
           },
@@ -3318,11 +3724,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 280,
+              "line": 282,
               "column": 8
             },
             "end": {
-              "line": 282,
+              "line": 284,
               "column": 9
             }
           },
@@ -3339,11 +3745,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 284,
+              "line": 286,
               "column": 8
             },
             "end": {
-              "line": 298,
+              "line": 300,
               "column": 9
             }
           },
@@ -3356,11 +3762,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 300,
+              "line": 302,
               "column": 8
             },
             "end": {
-              "line": 313,
+              "line": 315,
               "column": 9
             }
           },
@@ -3378,11 +3784,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 112,
+          "line": 113,
           "column": 6
         },
         "end": {
-          "line": 314,
+          "line": 316,
           "column": 7
         }
       },
@@ -3395,11 +3801,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 127,
+              "line": 131,
               "column": 12
             },
             "end": {
-              "line": 132,
+              "line": 136,
               "column": 13
             }
           },
@@ -3411,11 +3817,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 139,
+              "line": 143,
               "column": 12
             },
             "end": {
-              "line": 142,
+              "line": 146,
               "column": 13
             }
           },
@@ -3427,11 +3833,11 @@
           "description": "A function or closure to replace the default submit action, it will be invoked after the  _validate() return true.\n\nWhen it was called, the request param will be accessed as argument.",
           "sourceRange": {
             "start": {
-              "line": 151,
+              "line": 155,
               "column": 12
             },
             "end": {
-              "line": 153,
+              "line": 157,
               "column": 13
             }
           },
@@ -3443,11 +3849,11 @@
           "description": "The callback called when form post error occurs.",
           "sourceRange": {
             "start": {
-              "line": 159,
+              "line": 163,
               "column": 12
             },
             "end": {
-              "line": 161,
+              "line": 165,
               "column": 13
             }
           },
@@ -3459,11 +3865,11 @@
           "description": "The callback called when form post success.",
           "sourceRange": {
             "start": {
-              "line": 167,
+              "line": 171,
               "column": 12
             },
             "end": {
-              "line": 169,
+              "line": 173,
               "column": 13
             }
           },
@@ -3498,11 +3904,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 110,
+              "line": 111,
               "column": 12
             },
             "end": {
-              "line": 112,
+              "line": 113,
               "column": 13
             }
           },
@@ -3517,11 +3923,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 114,
+              "line": 115,
               "column": 12
             },
             "end": {
-              "line": 117,
+              "line": 118,
               "column": 13
             }
           },
@@ -3538,11 +3944,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 119,
+              "line": 120,
               "column": 12
             },
             "end": {
-              "line": 121,
+              "line": 122,
               "column": 13
             }
           },
@@ -3557,11 +3963,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 123,
+              "line": 124,
               "column": 12
             },
             "end": {
-              "line": 125,
+              "line": 126,
               "column": 13
             }
           },
@@ -3577,11 +3983,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 129,
+              "line": 130,
               "column": 8
             },
             "end": {
-              "line": 132,
+              "line": 133,
               "column": 9
             }
           },
@@ -3594,11 +4000,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 136,
+              "line": 137,
               "column": 8
             },
             "end": {
-              "line": 152,
+              "line": 153,
               "column": 9
             }
           },
@@ -3611,11 +4017,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 158,
+              "line": 159,
               "column": 8
             },
             "end": {
-              "line": 170,
+              "line": 171,
               "column": 9
             }
           },
@@ -3628,11 +4034,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 172,
+              "line": 173,
               "column": 8
             },
             "end": {
-              "line": 175,
+              "line": 176,
               "column": 9
             }
           },
@@ -3649,11 +4055,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 177,
+              "line": 178,
               "column": 8
             },
             "end": {
-              "line": 183,
+              "line": 184,
               "column": 9
             }
           },
@@ -3666,11 +4072,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 185,
+              "line": 186,
               "column": 8
             },
             "end": {
-              "line": 203,
+              "line": 204,
               "column": 9
             }
           },
@@ -3683,11 +4089,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 205,
+              "line": 206,
               "column": 8
             },
             "end": {
-              "line": 220,
+              "line": 221,
               "column": 9
             }
           },
@@ -3709,11 +4115,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 99,
+          "line": 100,
           "column": 6
         },
         "end": {
-          "line": 222,
+          "line": 223,
           "column": 7
         }
       },
@@ -3726,11 +4132,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 110,
+              "line": 111,
               "column": 12
             },
             "end": {
-              "line": 112,
+              "line": 113,
               "column": 13
             }
           },
@@ -3742,11 +4148,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 114,
+              "line": 115,
               "column": 12
             },
             "end": {
-              "line": 117,
+              "line": 118,
               "column": 13
             }
           },
@@ -3918,7 +4324,7 @@
                   "column": 4
                 },
                 "end": {
-                  "line": 201,
+                  "line": 203,
                   "column": 5
                 }
               },
@@ -3944,11 +4350,11 @@
               "privacy": "private",
               "sourceRange": {
                 "start": {
-                  "line": 203,
+                  "line": 205,
                   "column": 4
                 },
                 "end": {
-                  "line": 216,
+                  "line": 218,
                   "column": 5
                 }
               },
@@ -3965,11 +4371,11 @@
               "privacy": "private",
               "sourceRange": {
                 "start": {
-                  "line": 217,
+                  "line": 220,
                   "column": 4
                 },
                 "end": {
-                  "line": 219,
+                  "line": 222,
                   "column": 5
                 }
               },
@@ -3986,12 +4392,12 @@
               "column": 2
             },
             "end": {
-              "line": 221,
-              "column": 3
+              "line": 223,
+              "column": 4
             }
           },
           "privacy": "public",
-          "name": "AjaxBehavior",
+          "name": "AjaxBehaviorImpl",
           "attributes": [],
           "events": [],
           "styling": {
@@ -4012,11 +4418,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 10,
+                  "line": 12,
                   "column": 4
                 },
                 "end": {
-                  "line": 17,
+                  "line": 19,
                   "column": 5
                 }
               },
@@ -4036,11 +4442,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 25,
+                  "line": 27,
                   "column": 4
                 },
                 "end": {
-                  "line": 27,
+                  "line": 29,
                   "column": 5
                 }
               },
@@ -4065,11 +4471,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 35,
+                  "line": 37,
                   "column": 4
                 },
                 "end": {
-                  "line": 37,
+                  "line": 39,
                   "column": 5
                 }
               },
@@ -4090,11 +4496,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 51,
+                  "line": 53,
                   "column": 4
                 },
                 "end": {
-                  "line": 54,
+                  "line": 56,
                   "column": 5
                 }
               },
@@ -4114,11 +4520,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 63,
+                  "line": 65,
                   "column": 4
                 },
                 "end": {
-                  "line": 65,
+                  "line": 67,
                   "column": 5
                 }
               },
@@ -4146,11 +4552,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 75,
+                  "line": 77,
                   "column": 4
                 },
                 "end": {
-                  "line": 87,
+                  "line": 89,
                   "column": 5
                 }
               },
@@ -4177,16 +4583,50 @@
               }
             },
             {
-              "name": "elementRender",
-              "description": "元素渲染\n```javascript\nconst render = ({name}) => `\n        <style>a {color:green;}</style>\n        <a title=\"${name}\">${name}</a>`;\n\nthis.elementRender(model, {render});\n```",
+              "name": "showLoading",
+              "description": "添加loading",
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 102,
+                  "line": 94,
                   "column": 4
                 },
                 "end": {
-                  "line": 107,
+                  "line": 112,
+                  "column": 5
+                }
+              },
+              "metadata": {},
+              "params": []
+            },
+            {
+              "name": "hideLoading",
+              "description": "消除loading",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 117,
+                  "column": 4
+                },
+                "end": {
+                  "line": 122,
+                  "column": 5
+                }
+              },
+              "metadata": {},
+              "params": []
+            },
+            {
+              "name": "elementRender",
+              "description": "this.elementRender(model, {render});\n```",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 132,
+                  "column": 4
+                },
+                "end": {
+                  "line": 137,
                   "column": 5
                 }
               },
@@ -4207,11 +4647,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 113,
+                  "line": 143,
                   "column": 4
                 },
                 "end": {
-                  "line": 126,
+                  "line": 156,
                   "column": 5
                 }
               },
@@ -4229,11 +4669,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 134,
+                  "line": 164,
                   "column": 4
                 },
                 "end": {
-                  "line": 138,
+                  "line": 168,
                   "column": 5
                 }
               },
@@ -4258,11 +4698,11 @@
               "privacy": "private",
               "sourceRange": {
                 "start": {
-                  "line": 140,
+                  "line": 170,
                   "column": 4
                 },
                 "end": {
-                  "line": 265,
+                  "line": 295,
                   "column": 5
                 }
               },
@@ -4279,11 +4719,11 @@
           "metadata": {},
           "sourceRange": {
             "start": {
-              "line": 4,
+              "line": 6,
               "column": 2
             },
             "end": {
-              "line": 267,
+              "line": 297,
               "column": 3
             }
           },

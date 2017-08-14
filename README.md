@@ -115,6 +115,7 @@ metadata.style = `
 `;
 ```
 ### Create custom widgets
+> A widget is an element nested in a ``<h2-field>``. Metaui provides four internal widgets(``<h2-text>``、``<h2-text-area>``、``<h2-select-list``、``<h2-radio-group>``, maybe more in the future). But in fact, you can use almost all ``<h2-*>`` components as your widget. Also, you can create your own widgets.
 - Create your polymer element.
   ```html
   <link rel="import" href="h2-widget-base.html">
@@ -162,13 +163,18 @@ metadata.style = `
   > Notice: Your must maintenance the ``value`` property of your widget. 
   > And don't forget to import your element in your index page.
   
-- Configure in the metadata.
+- Configure in the metadata. [See more about FieldMeta][4] 
   ```
-  metadata = {
-    elememt: "your-widget-name"
+  fieldMeta = {
+    elememt: "your-widget-name",
+    label: "<labelForName>",
+    name: "<someName>",
+    required: true,
+    editable: true
   }
   ```
 
 [1]: https://www.polymer-project.org/2.0/start/install-2-0#use-bower
 [2]: https://www.webcomponents.org/element/isuwang/metaui
 [3]: https://ws4.sinaimg.cn/large/006tNc79gy1fifwg803isj30mw0do3zs.jpg
+[4]: https://www.webcomponents.org/element/isuwang/metaui/elements/h2-field
