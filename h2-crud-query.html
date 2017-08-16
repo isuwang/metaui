@@ -39,7 +39,7 @@
                             class="conditions__item"
                             editable
                             context="{{ context }}"
-                            value="[[ getValueByKey(context,fieldMeta.name) ]]"
+                            value="[[ getValueOrElse(context,fieldMeta.srcKey, fieldMeta.name) ]]"
                             metadata="{{ fieldMeta }}">
                     </h2-field>
                 </template>

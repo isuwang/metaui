@@ -42,7 +42,7 @@ metadata = {
 |candidates|string|否| 候选值，下拉选项中的值，json串，如 "[{value: 1,label: '男'}, {value: 2,label: '女'}]"
 |candidateLabel|string|否|组件显示字段名，针对下拉组件、radio-group组件等，“label”
 |candidateValue|string|否| 组件值字段名，针对下拉组件、radio-group组件等，“value”
-|alias|string|否|别名，如果配置了此字段，提交表单时已这个字段作为key保存
+|srcKey|string|否|当一个字段的值是来源于另外一个字段，则通过srcKey配置值来源字段的字段名，如 "id"
 |metaType|MetaType或string|否|元数据类型，如果缺少metaType，默认渲染的组件是<h2-text>；在表格元数据中定义操作列时，可以省略操作的元数据，如 metaType:"ACTION" [See h2-grid](#/elements/h2-grid)|
 
 ### MetaType定义

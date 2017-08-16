@@ -204,7 +204,7 @@ value = [
                                           metadata="[[ fieldMeta ]]"
                                           editable="[[ orElse(editable, metadata.editable, fieldMeta.editable) ]]"
                                           context="[[ model ]]"
-                                          value="[[ getValueByKey(model,fieldMeta.name) ]]">
+                                          value="[[ getValueOrElse(model,fieldMeta.srcKey, fieldMeta.name) ]]">
                                 </h2-field>
                             </template>
 

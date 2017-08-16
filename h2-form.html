@@ -91,7 +91,7 @@ metadata = {
                         id="[[ getEditorId(fieldMeta.name) ]]"
                         editable
                         context="{{ __context }}"
-                        value="[[ getValueByKey(context,fieldMeta.name) ]]"
+                        value="[[ getValueOrElse(context,fieldMeta.srcKey, fieldMeta.name) ]]"
                         on-value-changed="_onValueChange"
                         on-field-attached="_onFieldAttached"
                         metadata="[[ fieldMeta ]]">
@@ -303,8 +303,9 @@ metadata = {
         _requestBody() {
           let requestBody = {};
           this.metadata.fields
+              .filter(fieldMeta => !!fieldMeta.name)
               .forEach(fieldMeta => {
-                requestBody[fieldMeta.alias || fieldMeta.name] = this.__context[fieldMeta.name]
+                requestBody[fieldMeta.name] = this.__context[fieldMeta.srcKey || fieldMeta.name]
               });
 
           // Execute the hook before submit.

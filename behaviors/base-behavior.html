@@ -67,6 +67,16 @@
       return (model && (key in model)) ? model[key] : JSON.parse(defVal);
     },
 
+    /**
+     * 等价于 model[key1 || key2 || ...]
+     * @param {Object} model
+     * @param {...String} keys
+     * @returns {*}
+     */
+    getValueOrElse(model, ...keys) {
+      const key = this.orElse(...keys);
+      return this.getValueByKey(model, key);
+    },
 
     /**
      * 通过路径获取对象字段值
@@ -127,14 +137,14 @@
      * this.elementRender(model, {render});
      * ```
      * @param {Object} model
-     * @param {{render: {(model) => {}}, name: {String}}} param
+     * @param {{render: {(model) => {}}, name: {String}, srcKey: {String}} param
      * @returns {*}
      */
-    elementRender(model, {render, name} = {}) {
+    elementRender(model, {render, name, srcKey} = {}) {
       if (this.isFunction(render)) {
         return render(model);
       }
-      return this.getValueByKey(model, name);
+      return this.getValueByKey(model, srcKey || name);
     },
 
     /**

@@ -35,12 +35,12 @@
 
         __baseContextChange(obj) {
           if(this.context) {
-            this.value = this.context[this.metadata.name];
+            this.value = this.context[this.metadata.srcKey || this.metadata.name];
           }
         }
 
         __baseValueChange(val) {
-          this.set(`context.${this.metadata.name}`, this.value);
+          this.set(`context.${this.metadata.srcKey || this.metadata.name}`, this.value);
         }
 
         validate() {
