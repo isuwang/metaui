@@ -23,12 +23,12 @@ metadata = {
 |字段名|类型|Required|描述|
 |:--|:--|:--|:--|
 |name|string|是|字段名，如“orderNo”
-|label|string|是|字段名，如“订单号”
-|require|boolean|是|是否必填
-|mutil|boolean|是|是否多选
-|editable|boolean|是 | 是否可编辑
-|validate| boolean|是| 是否需要校验
-|visible| boolean|是| 界面是否可见，仅对表单中的字段有效
+|label|string|是|字段名，如“订单号”，缺省值：name字段的值
+|require|boolean|否|是否必填，缺省值：false
+|mutil|boolean|否|是否多选，缺省值：false
+|editable|boolean|否| 是否可编辑，缺省值：false
+|validate| boolean|否| 是否需要校验，缺省值：false
+|visible| boolean|否| 界面是否可见，仅对表单中的字段有效，缺省值：false
 |element|string|否|ui元素，缺省时，提供默认ui：h2-text
 |format|string|否| 显示格式，用于日期显示，如“yyyy-MM-dd”
 |length|number|否 | 字符长度
