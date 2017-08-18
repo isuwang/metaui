@@ -45,7 +45,7 @@ metadata = {
 |formUrl|string|是|表单提交的url|
 |fields|array.<FieldMeta>|是|字段元数据|
 |confirm|string|否|表单提交前确认提示|
-|isSubmitForbidden|boolean|否|是否禁用提交按钮|
+|hideSubmitBtn|boolean|否|是否禁用提交按钮|
 |style|string|否|组件自定义样式|
 
 ### [See FieldMeta](#/elements/h2-field)
@@ -100,7 +100,7 @@ metadata = {
         </div>
 
         <div class="btns">
-            <template is="dom-if" if="[[ !metadata.isSubmitForbidden ]]">
+            <template is="dom-if" if="[[ !metadata.hideSubmitBtn ]]">
                 <paper-button raised on-click="submit">保存</paper-button>
             </template>
         </div>

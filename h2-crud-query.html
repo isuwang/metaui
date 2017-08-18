@@ -33,7 +33,7 @@
         </style>
         <div class="container">
             <div class="conditions">
-                <template is="dom-repeat" items="[[ metadata.fields ]]" as="fieldMeta">
+                <template is="dom-repeat" items="[[ metadata.fields ]]" as="fieldMeta" filter="_filterVisible">
                     <h2-field
                             id="{{ getEditorId(fieldMeta.name) }}"
                             class="conditions__item"
@@ -153,7 +153,7 @@
          * Reset the query conditions and submit a new query form.
          */
         reset() {
-          this.metadata.fields.forEach(field => {
+          this.metadata.fields.filter(field => !!field.visible).forEach(field => {
             this.root.querySelector(`#${this.getEditorId(field.name)}`).value = undefined;
           });
 

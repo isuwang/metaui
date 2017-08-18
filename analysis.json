@@ -1314,7 +1314,7 @@
               "column": 8
             },
             "end": {
-              "line": 315,
+              "line": 316,
               "column": 9
             }
           },
@@ -3201,7 +3201,7 @@
       "tagname": "h2-crud"
     },
     {
-      "description": "```\n<h2-field editable metadata=\"{{ metadata }}\"></h2-field>\n```\n```\nmetadata = {\n  element: \"h2-text\",\n  name: \"name\",\n  label: \"Please input your name here: \",\n  required: true,\n  editable: true,\n  prompt: \"Please input your name!\"\n}\n```\n### metadata定义 (FieldMeta)\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|name|string|是|字段名，如“orderNo”\n|label|string|是|字段名，如“订单号”\n|require|boolean|是|是否必填\n|mutil|boolean|是|是否多选\n|editable|boolean|是 | 是否可编辑\n|validate| boolean|是| 是否需要校验\n|visible| boolean|是| 界面是否可见，仅对表单中的字段有效\n|element|string|否|ui元素，缺省时，提供默认ui：h2-text\n|format|string|否| 显示格式，用于日期显示，如“yyyy-MM-dd”\n|length|number|否 | 字符长度\n|maxLength|number|否| string允许的最大长度\n|minLength|number|否 | string允许的最小长度\n|regexp|string|否|正则匹配\n|prompt|string|否|校验失败时的提示语，如“请输入备注”\n|min|number|否|数字最小值\n|max|number|否|数字最大值\n|placeholder|string|否| placeholder\n|candidates|string|否| 候选值，下拉选项中的值，json串，如 \"[{value: 1,label: '男'}, {value: 2,label: '女'}]\"\n|candidateLabel|string|否|组件显示字段名，针对下拉组件、radio-group组件等，“label”\n|candidateValue|string|否| 组件值字段名，针对下拉组件、radio-group组件等，“value”\n|alias|string|否|别名，如果配置了此字段，提交表单时已这个字段作为key保存\n|metaType|MetaType或string|否|元数据类型，如果缺少metaType，默认渲染的组件是<h2-text>；在表格元数据中定义操作列时，可以省略操作的元数据，如 metaType:\"ACTION\" [See h2-grid](#/elements/h2-grid)|\n\n### MetaType定义\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|type|string|是|数据类型：BOOLEAN、BYTE、SHORT、INTEGER、LONG、DOUBLE、STRING、LIST、MAP、SET、STRUCT、ACTION|\n|metadata|object|是| 如果type是list，map，set中的一种，则metadata是这些嵌套类型的元数据|",
+      "description": "```\n<h2-field editable metadata=\"{{ metadata }}\"></h2-field>\n```\n```\nmetadata = {\n  element: \"h2-text\",\n  name: \"name\",\n  label: \"Please input your name here: \",\n  required: true,\n  editable: true,\n  prompt: \"Please input your name!\"\n}\n```\n### metadata定义 (FieldMeta)\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|name|string|是|字段名，如“orderNo”\n|label|string|是|字段名，如“订单号”，缺省值：name字段的值\n|require|boolean|否|是否必填，缺省值：false\n|mutil|boolean|否|是否多选，缺省值：false\n|editable|boolean|否| 是否可编辑，缺省值：false\n|validate| boolean|否| 是否需要校验，缺省值：false\n|visible| boolean|否| 界面是否可见，仅对表单中的字段有效，缺省值：false\n|element|string|否|ui元素，缺省时，提供默认ui：h2-text\n|format|string|否| 显示格式，用于日期显示，如“yyyy-MM-dd”\n|length|number|否 | 字符长度\n|maxLength|number|否| string允许的最大长度\n|minLength|number|否 | string允许的最小长度\n|regexp|string|否|正则匹配\n|prompt|string|否|校验失败时的提示语，如“请输入备注”\n|min|number|否|数字最小值\n|max|number|否|数字最大值\n|placeholder|string|否| placeholder\n|candidates|string|否| 候选值，下拉选项中的值，json串，如 \"[{value: 1,label: '男'}, {value: 2,label: '女'}]\"\n|candidateLabel|string|否|组件显示字段名，针对下拉组件、radio-group组件等，“label”\n|candidateValue|string|否| 组件值字段名，针对下拉组件、radio-group组件等，“value”\n|srcKey|string|否|当一个字段的值是来源于另外一个字段，则通过srcKey配置值来源字段的字段名，如 \"id\"\n|metaType|MetaType或string|否|元数据类型，如果缺少metaType，默认渲染的组件是<h2-text>；在表格元数据中定义操作列时，可以省略操作的元数据，如 metaType:\"ACTION\" [See h2-grid](#/elements/h2-grid)|\n\n### MetaType定义\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|type|string|是|数据类型：BOOLEAN、BYTE、SHORT、INTEGER、LONG、DOUBLE、STRING、LIST、MAP、SET、STRUCT、ACTION|\n|metadata|object|是| 如果type是list，map，set中的一种，则metadata是这些嵌套类型的元数据|",
       "summary": "",
       "path": "h2-field.html",
       "properties": [
@@ -3422,7 +3422,7 @@
       "tagname": "h2-field"
     },
     {
-      "description": "A component for form.\n\n```\n<h2-form metadata=\"{{ metadata }}\"></h2-form>\n```\n```\ncontext = {\n    foo: \"foo\",\n    bar: \"bar\"\n}\nmetadata = {\n    formUrl: \"/url-to-send-form\",\n    title: \"Form Title\",\n    confirm: \"Sure to submit?\",\n    fields: [\n      {\n        name: \"foo\",\n        label: \"foo\",\n        element: \"h2-text\",\n        required: true,\n        editable: true,\n        visible: true\n      },\n      {\n        name: \"bar\",\n        label: \"bar\",\n        required: true,\n        editable: true,\n        visible: true\n      },\n    ],\n}\n```\n### metadata定义 (FormMeta)\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|title|string|是|表单头|\n|formUrl|string|是|表单提交的url|\n|fields|array.<FieldMeta>|是|字段元数据|\n|confirm|string|否|表单提交前确认提示|\n|isSubmitForbidden|boolean|否|是否禁用提交按钮|\n|style|string|否|组件自定义样式|\n\n### [See FieldMeta](#/elements/h2-field)",
+      "description": "A component for form.\n\n```\n<h2-form metadata=\"{{ metadata }}\"></h2-form>\n```\n```\ncontext = {\n    foo: \"foo\",\n    bar: \"bar\"\n}\nmetadata = {\n    formUrl: \"/url-to-send-form\",\n    title: \"Form Title\",\n    confirm: \"Sure to submit?\",\n    fields: [\n      {\n        name: \"foo\",\n        label: \"foo\",\n        element: \"h2-text\",\n        required: true,\n        editable: true,\n        visible: true\n      },\n      {\n        name: \"bar\",\n        label: \"bar\",\n        required: true,\n        editable: true,\n        visible: true\n      },\n    ],\n}\n```\n### metadata定义 (FormMeta)\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|title|string|是|表单头|\n|formUrl|string|是|表单提交的url|\n|fields|array.<FieldMeta>|是|字段元数据|\n|confirm|string|否|表单提交前确认提示|\n|hideSubmitBtn|boolean|否|是否禁用提交按钮|\n|style|string|否|组件自定义样式|\n\n### [See FieldMeta](#/elements/h2-field)",
       "summary": "",
       "path": "h2-form.html",
       "properties": [
@@ -3766,7 +3766,7 @@
               "column": 8
             },
             "end": {
-              "line": 315,
+              "line": 316,
               "column": 9
             }
           },
@@ -3788,7 +3788,7 @@
           "column": 6
         },
         "end": {
-          "line": 316,
+          "line": 317,
           "column": 7
         }
       },
@@ -4174,6 +4174,796 @@
       },
       "slots": [],
       "tagname": "h2-action"
+    },
+    {
+      "description": "使用方式：\n        <h2-crud metadata=\"{{md}}\"></h2-crud>\n        <meta-constructor src=\"/domain/organizaion\" metadata=\"{{md}}\" option=\"[[ option ]]\" on-return=\"{{onReturn}}\"></meta-constructor>\n        <meta-constructor src=\"/domain/organizaion\" meta-type=\"struct\" option=\"[[ option ]]\"></meta-constructor>\n        <meta-constructor src=\"/domain/organizaion\" meta-type=\"grid\" option=\"[[ option ]]\"></meta-constructor>\n        <meta-constructor src=\"/domain/organizaion\" meta-type=\"form\" option=\"[[ option ]]\" metadata=\"{{formMeta}}\"></meta-constructor>\n        <meta-constructor src=\"/domain/organizaion\" meta-type=\"action\" option=\"[[ option ]]\"></meta-constructor>\n        <meta-constructor src=\"/domain/organizaion\" meta-type=\"field\" option=\"[[ option ]]\"></meta-constructor>",
+      "summary": "",
+      "path": "utils/meta-constructor.html",
+      "properties": [
+        {
+          "name": "option",
+          "type": "Object",
+          "description": "For example:\n{\n  methodName: \"addOrganization\",\n  structName: \"com.isuwang.soa.admin.domain.TOrganization\",\n  fieldName: \"id\"\n}\n\nIf metaType is \"domain\", methodName is the query method.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 36,
+              "column": 12
+            },
+            "end": {
+              "line": 41,
+              "column": 13
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "{}"
+        },
+        {
+          "name": "src",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 42,
+              "column": 12
+            },
+            "end": {
+              "line": 45,
+              "column": 13
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"__srcChange\""
+            }
+          }
+        },
+        {
+          "name": "metaType",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 51,
+              "column": 12
+            },
+            "end": {
+              "line": 54,
+              "column": 13
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"domain\""
+        },
+        {
+          "name": "metadata",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 55,
+              "column": 12
+            },
+            "end": {
+              "line": 58,
+              "column": 13
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "onReturn",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 59,
+              "column": 12
+            },
+            "end": {
+              "line": 61,
+              "column": 13
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "data",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 62,
+              "column": 12
+            },
+            "end": {
+              "line": 65,
+              "column": 13
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "getDomainMeta",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 74,
+              "column": 8
+            },
+            "end": {
+              "line": 76,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data",
+              "type": "!Object",
+              "description": "data of meta-constructor"
+            },
+            {
+              "name": "queryMethodName",
+              "type": "!String"
+            }
+          ],
+          "return": {
+            "type": "{query: *, result: *, actions: Array}"
+          }
+        },
+        {
+          "name": "getNoActionGridMeta",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 83,
+              "column": 8
+            },
+            "end": {
+              "line": 85,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data",
+              "type": "!Object",
+              "description": "data of meta-constructor"
+            },
+            {
+              "name": "methodName",
+              "type": "!String"
+            }
+          ],
+          "return": {
+            "type": "{grids: Array.<{Object}>}"
+          }
+        },
+        {
+          "name": "getGridMeta",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 92,
+              "column": 8
+            },
+            "end": {
+              "line": 94,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data",
+              "type": "!Object",
+              "description": "data of meta-constructor"
+            },
+            {
+              "name": "methodName",
+              "type": "!String"
+            }
+          ],
+          "return": {
+            "type": "{grids: Array, actions: Object}"
+          }
+        },
+        {
+          "name": "getStructMeta",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 101,
+              "column": 8
+            },
+            "end": {
+              "line": 103,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data",
+              "type": "!Object",
+              "description": "data of meta-constructor"
+            },
+            {
+              "name": "structName",
+              "type": "!String"
+            }
+          ],
+          "return": {
+            "type": "{name: String, label: String, fields: Array}"
+          }
+        },
+        {
+          "name": "getActionMeta",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 110,
+              "column": 8
+            },
+            "end": {
+              "line": 112,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data",
+              "type": "!Object",
+              "description": "data of meta-constructor"
+            },
+            {
+              "name": "methodName",
+              "type": "!String"
+            }
+          ],
+          "return": {
+            "type": "{actionId: String, actionName: String, operType: String, group: String, modelSrc: String, formMeta: Object}"
+          }
+        },
+        {
+          "name": "getFormMeta",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 119,
+              "column": 8
+            },
+            "end": {
+              "line": 121,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data",
+              "type": "!Object",
+              "description": "data of meta-constructor"
+            },
+            {
+              "name": "methodName",
+              "type": "!String"
+            }
+          ],
+          "return": {
+            "type": "{confirm: String, title: String, formUrl: String, hideSubmitBtn: Boolean, fields: Array}"
+          }
+        },
+        {
+          "name": "getFieldMeta",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 129,
+              "column": 8
+            },
+            "end": {
+              "line": 135,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data",
+              "type": "!Object",
+              "description": "data of meta-constructor"
+            },
+            {
+              "name": "structName",
+              "type": "!String"
+            },
+            {
+              "name": "fieldName",
+              "type": "!String"
+            }
+          ],
+          "return": {
+            "type": "{grids: Array.<{Object}>}"
+          }
+        },
+        {
+          "name": "__srcChange",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "start": {
+              "line": 137,
+              "column": 8
+            },
+            "end": {
+              "line": 173,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "assembleDomainMeta",
+          "description": "组装domainMeta",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 180,
+              "column": 8
+            },
+            "end": {
+              "line": 192,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "{serviceMeta, fieldsInStruct}"
+            },
+            {
+              "name": "queryMethod = this.__getMethod(serviceMeta, this.option.methodName)"
+            }
+          ],
+          "return": {
+            "type": "{query: *, result: *, actions: Array}"
+          }
+        },
+        {
+          "name": "assembleStructMeta",
+          "description": "组装StructMeta, require field  `structName` in option",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 201,
+              "column": 8
+            },
+            "end": {
+              "line": 215,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "{serviceMeta, fieldsInStruct}"
+            },
+            {
+              "name": "rawStructMeta = this.__getStruct(serviceMeta, this.option.structName)"
+            }
+          ],
+          "return": {
+            "type": "{name: String, label: String, fields: Array}"
+          }
+        },
+        {
+          "name": "assembleNoActionGridMeta",
+          "description": "组装GridMeta, require field  `methodName` in option",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 223,
+              "column": 8
+            },
+            "end": {
+              "line": 250,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "{serviceMeta, fieldsInStruct}"
+            },
+            {
+              "name": "methodMeta = this.__getMethod(serviceMeta, this.option.methodName)"
+            }
+          ],
+          "return": {
+            "type": "{grids: Array}"
+          }
+        },
+        {
+          "name": "assembleGridMeta",
+          "description": "组装GridMeta, require field  `methodName` in option",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 258,
+              "column": 8
+            },
+            "end": {
+              "line": 282,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "{serviceMeta, fieldsInStruct}"
+            },
+            {
+              "name": "methodMeta = this.__getMethod(serviceMeta, this.option.methodName)"
+            }
+          ],
+          "return": {
+            "type": "{grids: Array, actions: Object}"
+          }
+        },
+        {
+          "name": "assembleActionMeta",
+          "description": "组装ActionMeta, require field  `methodName` in option",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 290,
+              "column": 8
+            },
+            "end": {
+              "line": 308,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "{serviceMeta, fieldsInStruct}"
+            },
+            {
+              "name": "methodMeta = this.__getMethod(serviceMeta, this.option.methodName)"
+            }
+          ],
+          "return": {
+            "type": "{actionId: String, actionName: String, operType: String, group: String, modelSrc: String, formMeta: Object}"
+          }
+        },
+        {
+          "name": "assembleFormMeta",
+          "description": "组装FormMeta, require field  `methodName` in option",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 316,
+              "column": 8
+            },
+            "end": {
+              "line": 354,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "{serviceMeta, fieldsInStruct}"
+            },
+            {
+              "name": "methodMeta = this.__getMethod(serviceMeta, this.option.methodName)"
+            }
+          ],
+          "return": {
+            "type": "{confirm: String, title: String, formUrl: String, hideSubmitBtn: Boolean, fields: Array}"
+          }
+        },
+        {
+          "name": "assembleFieldMeta",
+          "description": "组装FieldMeta， require field  `structName` & `fieldName` in option",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 363,
+              "column": 8
+            },
+            "end": {
+              "line": 432,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "{serviceMeta, fieldsInStruct}"
+            },
+            {
+              "name": "rawFieldMeta = this.__getField(serviceMeta, this.option.structName, this.option.fieldName)"
+            },
+            {
+              "name": "fieldEntity = this.__getFieldEntity(fieldsInStruct, this.option.structName, this.option.fieldName)"
+            }
+          ],
+          "return": {
+            "type": "*"
+          }
+        },
+        {
+          "name": "__getFieldEntity",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "start": {
+              "line": 435,
+              "column": 8
+            },
+            "end": {
+              "line": 455,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "fieldsInStruct"
+            },
+            {
+              "name": "structName"
+            },
+            {
+              "name": "fieldName"
+            }
+          ]
+        },
+        {
+          "name": "__getMethod",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "start": {
+              "line": 457,
+              "column": 8
+            },
+            "end": {
+              "line": 462,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "serviceMeta"
+            },
+            {
+              "name": "methodName"
+            }
+          ]
+        },
+        {
+          "name": "__getStruct",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "start": {
+              "line": 464,
+              "column": 8
+            },
+            "end": {
+              "line": 469,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "serviceMeta"
+            },
+            {
+              "name": "structName"
+            }
+          ]
+        },
+        {
+          "name": "__getField",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "start": {
+              "line": 471,
+              "column": 8
+            },
+            "end": {
+              "line": 477,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "serviceMeta"
+            },
+            {
+              "name": "structName"
+            },
+            {
+              "name": "fieldName"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 17,
+          "column": 6
+        },
+        "end": {
+          "line": 478,
+          "column": 7
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "name": "MetaConstructor",
+      "attributes": [
+        {
+          "name": "option",
+          "description": "For example:\n{\n  methodName: \"addOrganization\",\n  structName: \"com.isuwang.soa.admin.domain.TOrganization\",\n  fieldName: \"id\"\n}\n\nIf metaType is \"domain\", methodName is the query method.",
+          "sourceRange": {
+            "start": {
+              "line": 36,
+              "column": 12
+            },
+            "end": {
+              "line": 41,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "src",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 42,
+              "column": 12
+            },
+            "end": {
+              "line": 45,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "meta-type",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 51,
+              "column": 12
+            },
+            "end": {
+              "line": 54,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "metadata",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 55,
+              "column": 12
+            },
+            "end": {
+              "line": 58,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "on-return",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 59,
+              "column": 12
+            },
+            "end": {
+              "line": 61,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "data",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 62,
+              "column": 12
+            },
+            "end": {
+              "line": 65,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        }
+      ],
+      "events": [
+        {
+          "type": "CustomEvent",
+          "name": "metadata-changed",
+          "description": "Fired when the `metadata` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "data-changed",
+          "description": "Fired when the `data` property changes.",
+          "metadata": {}
+        }
+      ],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [],
+      "tagname": "meta-constructor"
     }
   ],
   "metadata": {
@@ -4547,16 +5337,44 @@
               }
             },
             {
+              "name": "getValueOrElse",
+              "description": "等价于 model[key1 || key2 || ...]",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 75,
+                  "column": 4
+                },
+                "end": {
+                  "line": 78,
+                  "column": 5
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "model",
+                  "type": "Object"
+                },
+                {
+                  "name": "...keys"
+                }
+              ],
+              "return": {
+                "type": "*"
+              }
+            },
+            {
               "name": "getValueByPath",
               "description": "通过路径获取对象字段值",
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 77,
+                  "line": 87,
                   "column": 4
                 },
                 "end": {
-                  "line": 89,
+                  "line": 99,
                   "column": 5
                 }
               },
@@ -4588,11 +5406,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 94,
+                  "line": 104,
                   "column": 4
                 },
                 "end": {
-                  "line": 112,
+                  "line": 122,
                   "column": 5
                 }
               },
@@ -4605,11 +5423,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 117,
+                  "line": 127,
                   "column": 4
                 },
                 "end": {
-                  "line": 122,
+                  "line": 132,
                   "column": 5
                 }
               },
@@ -4622,11 +5440,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 132,
+                  "line": 142,
                   "column": 4
                 },
                 "end": {
-                  "line": 137,
+                  "line": 147,
                   "column": 5
                 }
               },
@@ -4637,7 +5455,7 @@
                   "type": "Object"
                 },
                 {
-                  "name": "{render, name} = {}"
+                  "name": "{render, name, srcKey} = {}"
                 }
               ]
             },
@@ -4647,11 +5465,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 143,
+                  "line": 153,
                   "column": 4
                 },
                 "end": {
-                  "line": 156,
+                  "line": 166,
                   "column": 5
                 }
               },
@@ -4669,11 +5487,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 164,
+                  "line": 174,
                   "column": 4
                 },
                 "end": {
-                  "line": 168,
+                  "line": 178,
                   "column": 5
                 }
               },
@@ -4698,11 +5516,11 @@
               "privacy": "private",
               "sourceRange": {
                 "start": {
-                  "line": 170,
+                  "line": 180,
                   "column": 4
                 },
                 "end": {
-                  "line": 295,
+                  "line": 305,
                   "column": 5
                 }
               },
@@ -4723,7 +5541,7 @@
               "column": 2
             },
             "end": {
-              "line": 297,
+              "line": 307,
               "column": 3
             }
           },

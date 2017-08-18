@@ -155,15 +155,14 @@ metadata = {
           }
         }
 
-        //TODO
         static defaultElements({type} = {}) {
           // more default elements will support in the future.
           switch (type) {
-            case "ACTION_META":
+            case "ACTION":
               return "h2-action";
-            case "FORM_META":
+            case "FORM":
               return "h2-form";
-            case "GRID_META":
+            case "GRID":
               return "h2-grid";
             default:
               return "h2-text";

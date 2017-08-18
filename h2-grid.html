@@ -199,7 +199,7 @@ value = [
                 <tr class="grid-row">
                     <template is="dom-repeat" items="[[ metadata.grids ]]" as="fieldMeta">
                         <td class="grid-column">
-                            <template is="dom-if" if="[[ !isEqual(fieldMeta.metaType, 'ACTION') ]]">
+                            <template is="dom-if" if="[[ !isEqual(fieldMeta.metaType.type, 'ACTION') ]]">
                                 <h2-field class="field"
                                           metadata="[[ fieldMeta ]]"
                                           editable="[[ orElse(editable, metadata.editable, fieldMeta.editable) ]]"
@@ -208,7 +208,7 @@ value = [
                                 </h2-field>
                             </template>
 
-                            <template is="dom-if" if="[[ isEqual(fieldMeta.metaType,'ACTION') ]]">
+                            <template is="dom-if" if="[[ isEqual(fieldMeta.metaType.type,'ACTION') ]]">
                                 <div class="grid-actions">
                                     <template is="dom-repeat" items="[[ _noGroupActions(model.actions) ]]"
                                               as="actionMeta">
