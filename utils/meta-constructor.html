@@ -440,7 +440,7 @@
         __getFieldEntity(fieldsInStruct, structName, fieldName) {
           const fields = fieldsInStruct[structName];
           if (!fields) {
-            console.warn(`Struct【${structName}】may probably not config in database.`);
+//            console.warn(`Struct【${structName}】may probably not config in database.`);
             return {
               name: fieldName,
               label: fieldName
@@ -449,7 +449,7 @@
 
           const found = fields.find(f => f.name === fieldName);
           if (!found) {
-            console.warn(`Field【${structName}.${fieldName}】may probably not config in database.`);
+//            console.warn(`Field【${structName}.${fieldName}】may probably not config in database.`);
             return {
               name: fieldName,
               label: fieldName
