@@ -11,7 +11,7 @@
                 box-shadow: rgba(0, 0, 0, 0.24) -2px 5px 12px 0px, rgba(0, 0, 0, 0.12) 0px 0px 12px 0px;
             }
         </style>
-        <img src="{{getImgUrl(1)}}" height="20px">
+        <img src$="[[importPath]]img/loading-4.gif" height="20px">
         <slot></slot>
     </template>
 
@@ -19,21 +19,12 @@
 
 <script>
 
-    (function() {
+    class H2Loading extends Polymer.mixinBehaviors([Polymer.IronOverlayBehavior], Polymer.Elements) {
+      static get is() {
+        return "h2-loading";
+      }
+    }
 
-        Polymer({
-
-            is: 'h2-loading',
-
-            behaviors: [
-                Polymer.IronOverlayBehavior
-            ],
-            getImgUrl:function(e){
-                return this.importPath + "img/loading-4.gif"
-            }
-
-        });
-
-    })();
+    customElements.define(H2Loading.is, H2Loading);
 
 </script>
