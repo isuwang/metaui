@@ -4,6 +4,53 @@
     {
       "description": "",
       "summary": "",
+      "path": "h2-loading.html",
+      "properties": [],
+      "methods": [],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 21,
+          "column": 4
+        },
+        "end": {
+          "line": 25,
+          "column": 5
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "name": "H2Loading",
+      "attributes": [],
+      "events": [],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [
+        {
+          "description": "",
+          "name": "",
+          "range": {
+            "file": "h2-loading.html",
+            "start": {
+              "line": 14,
+              "column": 8
+            },
+            "end": {
+              "line": 14,
+              "column": 21
+            }
+          }
+        }
+      ],
+      "tagname": "h2-loading"
+    },
+    {
+      "description": "",
+      "summary": "",
       "path": "h2-tip-dialog.html",
       "properties": [
         {
@@ -470,74 +517,6 @@
         }
       ],
       "tagname": "h2-dialog"
-    },
-    {
-      "description": "",
-      "summary": "",
-      "path": "h2-loading.html",
-      "properties": [],
-      "methods": [
-        {
-          "name": "getImgUrl",
-          "description": "",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 30,
-              "column": 12
-            },
-            "end": {
-              "line": 32,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "e"
-            }
-          ]
-        }
-      ],
-      "staticMethods": [],
-      "demos": [],
-      "metadata": {},
-      "sourceRange": {
-        "start": {
-          "line": 23,
-          "column": 16
-        },
-        "end": {
-          "line": 34,
-          "column": 9
-        }
-      },
-      "privacy": "public",
-      "superclass": "HTMLElement",
-      "attributes": [],
-      "events": [],
-      "styling": {
-        "cssVariables": [],
-        "selectors": []
-      },
-      "slots": [
-        {
-          "description": "",
-          "name": "",
-          "range": {
-            "file": "h2-loading.html",
-            "start": {
-              "line": 14,
-              "column": 8
-            },
-            "end": {
-              "line": 14,
-              "column": 21
-            }
-          }
-        }
-      ],
-      "tagname": "h2-loading"
     },
     {
       "description": "A component works like a dropdown menu.\n\n```\n<h2-action-group name=\"GroupName\">\n    <h2-action metadata=\"{{ metadata }}\"></h2-action>\n    <h2-action metadata=\"{{ metadata1 }}\"></h2-action>\n</h2-action-group>\n\n```\n```\nmetadata = {\n  actionId: \"action-0\",\n  actionName: \"Action0\",\n  operType: 1,\n  formMeta: {\n    formUrl: \"/url-to-send-form\",\n    confirm: \"Sure to submit?\",\n    fields: [\n      {\n        element: \"h2-text\",\n        name: \"name\",\n        label:\"Name\"\n      },\n      {\n        element: \"h2-text\",\n        name: \"phone\",\n        label:\"Phone\"\n      },\n    ],\n  }\n}\nmetadata1 = {\n  actionId: \"action-1\",\n  actionName: \"Action1\",\n  operType: 1,\n  formMeta: {\n    formUrl: \"/url-to-send-form\",\n    confirm: \"Sure to submit?\",\n    fields: [\n      {\n        element: \"h2-text\",\n        name: \"name\",\n        label:\"Name\"\n      },\n      {\n        element: \"h2-text\",\n        name: \"phone\",\n        label:\"Phone\"\n      },\n    ],\n  }\n};\n\n```\n### [See h2-action](#/elements/h2-action)",
@@ -1914,11 +1893,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 27,
+              "line": 28,
               "column": 12
             },
             "end": {
-              "line": 29,
+              "line": 30,
               "column": 13
             }
           },
@@ -1931,11 +1910,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 22,
+          "line": 23,
           "column": 8
         },
         "end": {
-          "line": 31,
+          "line": 32,
           "column": 9
         }
       },
@@ -2148,11 +2127,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 27,
+              "line": 28,
               "column": 8
             },
             "end": {
-              "line": 29,
+              "line": 30,
               "column": 9
             }
           },
@@ -2165,11 +2144,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 22,
+          "line": 23,
           "column": 6
         },
         "end": {
-          "line": 31,
+          "line": 32,
           "column": 7
         }
       },
@@ -2267,11 +2246,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 31,
+              "line": 32,
               "column": 8
             },
             "end": {
-              "line": 33,
+              "line": 34,
               "column": 9
             }
           },
@@ -2284,11 +2263,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 26,
+          "line": 27,
           "column": 6
         },
         "end": {
-          "line": 35,
+          "line": 36,
           "column": 7
         }
       },
@@ -3201,7 +3180,7 @@
       "tagname": "h2-crud"
     },
     {
-      "description": "```\n<h2-field editable metadata=\"{{ metadata }}\"></h2-field>\n```\n```\nmetadata = {\n  element: \"h2-text\",\n  name: \"name\",\n  label: \"Please input your name here: \",\n  required: true,\n  editable: true,\n  prompt: \"Please input your name!\"\n}\n```\n### metadata定义 (FieldMeta)\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|name|string|是|字段名，如“orderNo”\n|label|string|是|字段名，如“订单号”，缺省值：name字段的值\n|require|boolean|否|是否必填，缺省值：false\n|mutil|boolean|否|是否多选，缺省值：false\n|editable|boolean|否| 是否可编辑，缺省值：false\n|validate| boolean|否| 是否需要校验，缺省值：false\n|visible| boolean|否| 界面是否可见，仅对表单中的字段有效，缺省值：false\n|element|string|否|ui元素，缺省时，提供默认ui：h2-text\n|format|string|否| 显示格式，用于日期显示，如“yyyy-MM-dd”\n|length|number|否 | 字符长度\n|maxLength|number|否| string允许的最大长度\n|minLength|number|否 | string允许的最小长度\n|regexp|string|否|正则匹配\n|prompt|string|否|校验失败时的提示语，如“请输入备注”\n|min|number|否|数字最小值\n|max|number|否|数字最大值\n|placeholder|string|否| placeholder\n|candidates|string|否| 候选值，下拉选项中的值，json串，如 \"[{value: 1,label: '男'}, {value: 2,label: '女'}]\"\n|candidateLabel|string|否|组件显示字段名，针对下拉组件、radio-group组件等，“label”\n|candidateValue|string|否| 组件值字段名，针对下拉组件、radio-group组件等，“value”\n|srcKey|string|否|当一个字段的值是来源于另外一个字段，则通过srcKey配置值来源字段的字段名，如 \"id\"\n|metaType|MetaType或string|否|元数据类型，如果缺少metaType，默认渲染的组件是<h2-text>；在表格元数据中定义操作列时，可以省略操作的元数据，如 metaType:\"ACTION\" [See h2-grid](#/elements/h2-grid)|\n\n### MetaType定义\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|type|string|是|数据类型：BOOLEAN、BYTE、SHORT、INTEGER、LONG、DOUBLE、STRING、LIST、MAP、SET、STRUCT、ACTION|\n|metadata|object|是| 如果type是list，map，set中的一种，则metadata是这些嵌套类型的元数据|",
+      "description": "```\n<h2-field editable metadata=\"{{ metadata }}\"></h2-field>\n```\n```\nmetadata = {\n  element: \"h2-text\",\n  name: \"name\",\n  label: \"Please input your name here: \",\n  required: true,\n  editable: true,\n  prompt: \"Please input your name!\"\n}\n```\n### metadata定义 (FieldMeta)\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|name|string|是|字段名，如“orderNo”\n|label|string|是|字段名，如“订单号”，缺省值：name字段的值\n|require|boolean|否|是否必填，缺省值：false\n|mutil|boolean|否|是否多选，缺省值：false\n|editable|boolean|否| 是否可编辑，缺省值：false\n|validate| boolean|否| 是否需要校验，缺省值：false\n|visible| boolean|否| 界面是否可见，仅对表单中的字段有效，缺省值：false\n|disabled|boolean|否|是否禁用组件，缺省值：false\n|element|string|否|ui元素，缺省时，提供默认ui：h2-text\n|format|string|否| 显示格式，用于日期显示，如“yyyy-MM-dd”\n|length|number|否 | 字符长度\n|maxLength|number|否| string允许的最大长度\n|minLength|number|否 | string允许的最小长度\n|regexp|string|否|正则匹配\n|prompt|string|否|校验失败时的提示语，如“请输入备注”\n|min|number|否|数字最小值\n|max|number|否|数字最大值\n|placeholder|string|否| placeholder\n|candidates|string|否| 候选值，下拉选项中的值，json串，如 \"[{value: 1,label: '男'}, {value: 2,label: '女'}]\"\n|candidateLabel|string|否|组件显示字段名，针对下拉组件、radio-group组件等，“label”\n|candidateValue|string|否| 组件值字段名，针对下拉组件、radio-group组件等，“value”\n|srcKey|string|否|当一个字段的值是来源于另外一个字段，则通过srcKey配置值来源字段的字段名，如 \"id\"\n|metaType|MetaType或string|否|元数据类型，如果缺少metaType，默认渲染的组件是<h2-text>；在表格元数据中定义操作列时，可以省略操作的元数据，如 metaType:\"ACTION\" [See h2-grid](#/elements/h2-grid)|\n\n### MetaType定义\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|type|string|是|数据类型：BOOLEAN、BYTE、SHORT、INTEGER、LONG、DOUBLE、STRING、LIST、MAP、SET、STRUCT、ACTION|\n|metadata|object|是| 如果type是list，map，set中的一种，则metadata是这些嵌套类型的元数据|",
       "summary": "",
       "path": "h2-field.html",
       "properties": [
@@ -3212,11 +3191,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 69,
+              "line": 70,
               "column": 12
             },
             "end": {
-              "line": 72,
+              "line": 73,
               "column": 13
             }
           },
@@ -3232,11 +3211,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 73,
+              "line": 74,
               "column": 12
             },
             "end": {
-              "line": 75,
+              "line": 76,
               "column": 13
             }
           },
@@ -3251,11 +3230,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 76,
+              "line": 77,
               "column": 12
             },
             "end": {
-              "line": 78,
+              "line": 79,
               "column": 13
             }
           },
@@ -3271,11 +3250,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 90,
+              "line": 91,
               "column": 8
             },
             "end": {
-              "line": 99,
+              "line": 100,
               "column": 9
             }
           },
@@ -3292,11 +3271,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 105,
+              "line": 106,
               "column": 8
             },
             "end": {
-              "line": 108,
+              "line": 109,
               "column": 9
             }
           },
@@ -3312,11 +3291,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 110,
+              "line": 111,
               "column": 8
             },
             "end": {
-              "line": 137,
+              "line": 138,
               "column": 9
             }
           },
@@ -3329,11 +3308,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 139,
+              "line": 140,
               "column": 8
             },
             "end": {
-              "line": 144,
+              "line": 145,
               "column": 9
             }
           },
@@ -3346,11 +3325,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 146,
+              "line": 147,
               "column": 8
             },
             "end": {
-              "line": 155,
+              "line": 156,
               "column": 9
             }
           },
@@ -3368,7 +3347,7 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 62,
+          "line": 63,
           "column": 6
         },
         "end": {
@@ -3385,11 +3364,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 69,
+              "line": 70,
               "column": 12
             },
             "end": {
-              "line": 72,
+              "line": 73,
               "column": 13
             }
           },
@@ -3401,11 +3380,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 76,
+              "line": 77,
               "column": 12
             },
             "end": {
-              "line": 78,
+              "line": 79,
               "column": 13
             }
           },
@@ -4599,7 +4578,7 @@
               "column": 8
             },
             "end": {
-              "line": 250,
+              "line": 254,
               "column": 9
             }
           },
@@ -4622,11 +4601,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 258,
+              "line": 262,
               "column": 8
             },
             "end": {
-              "line": 282,
+              "line": 289,
               "column": 9
             }
           },
@@ -4649,11 +4628,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 290,
+              "line": 297,
               "column": 8
             },
             "end": {
-              "line": 308,
+              "line": 315,
               "column": 9
             }
           },
@@ -4676,11 +4655,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 316,
+              "line": 323,
               "column": 8
             },
             "end": {
-              "line": 354,
+              "line": 361,
               "column": 9
             }
           },
@@ -4703,7 +4682,7 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 363,
+              "line": 370,
               "column": 8
             },
             "end": {
@@ -4969,233 +4948,6 @@
   "metadata": {
     "polymer": {
       "behaviors": [
-        {
-          "description": "Some ajax methods base on fetch api.",
-          "summary": "",
-          "path": "behaviors/ajax-behavior.html",
-          "properties": [],
-          "methods": [
-            {
-              "name": "query",
-              "description": "GET 请求\n\n例子：\n```javascript\n1. 直接传递一个Request 实例\n const req = new Request('/test?foo=1&bar=2', {method: 'GET'});\n this.query(req, console.log );\n\n2. 直接传递一个url\n this.query('/test', console.log);\n\n3. 直接传递一个包含url、data内容的对象\n this.query({\n      url: '/test',\n      data: { foo:1, bar:2 },\n      handleAs: 'json'\n  }, console.log, console.log );\n```\n******************************************************",
-              "privacy": "public",
-              "sourceRange": {
-                "start": {
-                  "line": 41,
-                  "column": 4
-                },
-                "end": {
-                  "line": 64,
-                  "column": 5
-                }
-              },
-              "metadata": {},
-              "params": [
-                {
-                  "name": "input",
-                  "type": "(String|Request|Object)",
-                  "description": "     支持3种类型： String|Request|Object\n     1. Request实例\n     2. String：请求url\n     3: Object： 对象结构要求 { url , data, handleAs}\n         url：必填项\n         data：可选\n         handleAs：string, 可选，默认值是\"json\"， 取值范围: text|json|blob|formData|arrayBuffers"
-                },
-                {
-                  "name": "succCallback",
-                  "type": "Function",
-                  "description": "callback whenever query success"
-                },
-                {
-                  "name": "failCallback",
-                  "type": "Function",
-                  "description": "callback whenever query fail"
-                }
-              ]
-            },
-            {
-              "name": "post",
-              "description": "POST 请求\n\n```javascript\n1. 直接传递一个Request 实例\n const req = new Request('/test?foo=1&bar=2', {method: 'POST'});\n this.post(req, console.log );\n\n2. 直接传递一个url\n this.post('/test', console.log);\n\n3. 直接传递一个包含url、data内容的对象\n this.post({\n      url: '/test',\n      data: { foo:1, bar:2 }\n  }, console.log, console.log );\n\n 4. 上传文件\n const formData = new FormData();\n formData.append('file1', new File([], 'filename'));\n this.post({\n     url: '/upload',\n     data: formData\n }, console.log, console.log );\n\n 5. 发送json格式的数据\n this.post({\n     url: '/upload',\n     data: {foo:1,bar:2},\n     sendAsJson: true\n }, console.log, console.log );\n```\n******************************************************",
-              "privacy": "public",
-              "sourceRange": {
-                "start": {
-                  "line": 114,
-                  "column": 4
-                },
-                "end": {
-                  "line": 139,
-                  "column": 5
-                }
-              },
-              "metadata": {},
-              "params": [
-                {
-                  "name": "input",
-                  "type": "(String|Request|Object)",
-                  "description": "     支持3种类型： String|Request|Object\n     1. Request实例\n     2. String：请求url\n     3: Object： 对象结构要求 { url , data, handleAs, sendAsJson}\n         url：必填项\n         data：可选\n         handleAs：string, 可选，默认值是\"json\"， 取值范围: text|json|blob|formData|arrayBuffer\n         sendAsJson：boolean 可选，默认值是false"
-                },
-                {
-                  "name": "succCallback",
-                  "type": "Function",
-                  "description": "callback whenever post success"
-                },
-                {
-                  "name": "failCallback",
-                  "type": "Function",
-                  "description": "callback whenever post fail"
-                }
-              ],
-              "return": {
-                "type": "*"
-              }
-            },
-            {
-              "name": "__get",
-              "description": "",
-              "privacy": "private",
-              "sourceRange": {
-                "start": {
-                  "line": 142,
-                  "column": 4
-                },
-                "end": {
-                  "line": 153,
-                  "column": 5
-                }
-              },
-              "metadata": {},
-              "params": [
-                {
-                  "name": "handleAs"
-                },
-                {
-                  "name": "{url, data}"
-                },
-                {
-                  "name": "succCallback"
-                },
-                {
-                  "name": "failCallback"
-                }
-              ]
-            },
-            {
-              "name": "__post",
-              "description": "",
-              "privacy": "private",
-              "sourceRange": {
-                "start": {
-                  "line": 155,
-                  "column": 4
-                },
-                "end": {
-                  "line": 178,
-                  "column": 5
-                }
-              },
-              "metadata": {},
-              "params": [
-                {
-                  "name": "handleAs"
-                },
-                {
-                  "name": "{url, data, sendAsJson}"
-                },
-                {
-                  "name": "succCallback"
-                },
-                {
-                  "name": "failCallback"
-                }
-              ]
-            },
-            {
-              "name": "__fetch",
-              "description": "",
-              "privacy": "private",
-              "sourceRange": {
-                "start": {
-                  "line": 180,
-                  "column": 4
-                },
-                "end": {
-                  "line": 203,
-                  "column": 5
-                }
-              },
-              "metadata": {},
-              "params": [
-                {
-                  "name": "handleAs"
-                },
-                {
-                  "name": "request"
-                },
-                {
-                  "name": "succCallback"
-                },
-                {
-                  "name": "failCallback"
-                }
-              ]
-            },
-            {
-              "name": "__consume",
-              "description": "",
-              "privacy": "private",
-              "sourceRange": {
-                "start": {
-                  "line": 205,
-                  "column": 4
-                },
-                "end": {
-                  "line": 218,
-                  "column": 5
-                }
-              },
-              "metadata": {},
-              "params": [
-                {
-                  "name": "reader"
-                }
-              ]
-            },
-            {
-              "name": "__throwUrlNotFoundError",
-              "description": "",
-              "privacy": "private",
-              "sourceRange": {
-                "start": {
-                  "line": 220,
-                  "column": 4
-                },
-                "end": {
-                  "line": 222,
-                  "column": 5
-                }
-              },
-              "metadata": {},
-              "params": []
-            }
-          ],
-          "staticMethods": [],
-          "demos": [],
-          "metadata": {},
-          "sourceRange": {
-            "start": {
-              "line": 6,
-              "column": 2
-            },
-            "end": {
-              "line": 223,
-              "column": 4
-            }
-          },
-          "privacy": "public",
-          "name": "AjaxBehaviorImpl",
-          "attributes": [],
-          "events": [],
-          "styling": {
-            "cssVariables": [],
-            "selectors": []
-          },
-          "slots": []
-        },
         {
           "description": "",
           "summary": "",
@@ -5547,6 +5299,233 @@
           },
           "privacy": "public",
           "name": "BaseBehavior",
+          "attributes": [],
+          "events": [],
+          "styling": {
+            "cssVariables": [],
+            "selectors": []
+          },
+          "slots": []
+        },
+        {
+          "description": "Some ajax methods base on fetch api.",
+          "summary": "",
+          "path": "behaviors/ajax-behavior.html",
+          "properties": [],
+          "methods": [
+            {
+              "name": "query",
+              "description": "GET 请求\n\n例子：\n```javascript\n1. 直接传递一个Request 实例\n const req = new Request('/test?foo=1&bar=2', {method: 'GET'});\n this.query(req, console.log );\n\n2. 直接传递一个url\n this.query('/test', console.log);\n\n3. 直接传递一个包含url、data内容的对象\n this.query({\n      url: '/test',\n      data: { foo:1, bar:2 },\n      handleAs: 'json'\n  }, console.log, console.log );\n```\n******************************************************",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 42,
+                  "column": 4
+                },
+                "end": {
+                  "line": 65,
+                  "column": 5
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "input",
+                  "type": "(String|Request|Object)",
+                  "description": "     支持3种类型： String|Request|Object\n     1. Request实例\n     2. String：请求url\n     3: Object： 对象结构要求 { url , data, handleAs}\n         url：必填项\n         data：可选\n         handleAs：string, 可选，默认值是\"json\"， 取值范围: text|json|blob|formData|arrayBuffers"
+                },
+                {
+                  "name": "succCallback",
+                  "type": "Function",
+                  "description": "callback whenever query success"
+                },
+                {
+                  "name": "failCallback",
+                  "type": "Function",
+                  "description": "callback whenever query fail"
+                }
+              ]
+            },
+            {
+              "name": "post",
+              "description": "POST 请求\n\n```javascript\n1. 直接传递一个Request 实例\n const req = new Request('/test?foo=1&bar=2', {method: 'POST'});\n this.post(req, console.log );\n\n2. 直接传递一个url\n this.post('/test', console.log);\n\n3. 直接传递一个包含url、data内容的对象\n this.post({\n      url: '/test',\n      data: { foo:1, bar:2 }\n  }, console.log, console.log );\n\n 4. 上传文件\n const formData = new FormData();\n formData.append('file1', new File([], 'filename'));\n this.post({\n     url: '/upload',\n     data: formData\n }, console.log, console.log );\n\n 5. 发送json格式的数据\n this.post({\n     url: '/upload',\n     data: {foo:1,bar:2},\n     sendAsJson: true\n }, console.log, console.log );\n```\n******************************************************",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 115,
+                  "column": 4
+                },
+                "end": {
+                  "line": 140,
+                  "column": 5
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "input",
+                  "type": "(String|Request|Object)",
+                  "description": "     支持3种类型： String|Request|Object\n     1. Request实例\n     2. String：请求url\n     3: Object： 对象结构要求 { url , data, handleAs, sendAsJson}\n         url：必填项\n         data：可选\n         handleAs：string, 可选，默认值是\"json\"， 取值范围: text|json|blob|formData|arrayBuffer\n         sendAsJson：boolean 可选，默认值是false"
+                },
+                {
+                  "name": "succCallback",
+                  "type": "Function",
+                  "description": "callback whenever post success"
+                },
+                {
+                  "name": "failCallback",
+                  "type": "Function",
+                  "description": "callback whenever post fail"
+                }
+              ],
+              "return": {
+                "type": "*"
+              }
+            },
+            {
+              "name": "__get",
+              "description": "",
+              "privacy": "private",
+              "sourceRange": {
+                "start": {
+                  "line": 143,
+                  "column": 4
+                },
+                "end": {
+                  "line": 154,
+                  "column": 5
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "handleAs"
+                },
+                {
+                  "name": "{url, data}"
+                },
+                {
+                  "name": "succCallback"
+                },
+                {
+                  "name": "failCallback"
+                }
+              ]
+            },
+            {
+              "name": "__post",
+              "description": "",
+              "privacy": "private",
+              "sourceRange": {
+                "start": {
+                  "line": 156,
+                  "column": 4
+                },
+                "end": {
+                  "line": 179,
+                  "column": 5
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "handleAs"
+                },
+                {
+                  "name": "{url, data, sendAsJson}"
+                },
+                {
+                  "name": "succCallback"
+                },
+                {
+                  "name": "failCallback"
+                }
+              ]
+            },
+            {
+              "name": "__fetch",
+              "description": "",
+              "privacy": "private",
+              "sourceRange": {
+                "start": {
+                  "line": 181,
+                  "column": 4
+                },
+                "end": {
+                  "line": 204,
+                  "column": 5
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "handleAs"
+                },
+                {
+                  "name": "request"
+                },
+                {
+                  "name": "succCallback"
+                },
+                {
+                  "name": "failCallback"
+                }
+              ]
+            },
+            {
+              "name": "__consume",
+              "description": "",
+              "privacy": "private",
+              "sourceRange": {
+                "start": {
+                  "line": 206,
+                  "column": 4
+                },
+                "end": {
+                  "line": 219,
+                  "column": 5
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "reader"
+                }
+              ]
+            },
+            {
+              "name": "__throwUrlNotFoundError",
+              "description": "",
+              "privacy": "private",
+              "sourceRange": {
+                "start": {
+                  "line": 221,
+                  "column": 4
+                },
+                "end": {
+                  "line": 223,
+                  "column": 5
+                }
+              },
+              "metadata": {},
+              "params": []
+            }
+          ],
+          "staticMethods": [],
+          "demos": [],
+          "metadata": {},
+          "sourceRange": {
+            "start": {
+              "line": 7,
+              "column": 2
+            },
+            "end": {
+              "line": 224,
+              "column": 4
+            }
+          },
+          "privacy": "public",
+          "name": "AjaxBehaviorImpl",
           "attributes": [],
           "events": [],
           "styling": {
