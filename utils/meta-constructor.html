@@ -429,6 +429,11 @@
             }
           });
 
+          // 适配H5中disabled的用法
+          if (fieldMeta.disabled === false) {
+            delete fieldMeta.disabled;
+          }
+
           return fieldMeta;
         }
 
