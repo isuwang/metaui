@@ -434,7 +434,13 @@
           if (fieldMeta.disabled === false) {
             delete fieldMeta.disabled;
           }
+          if (fieldMeta.maxLength === 0) {
+             delete fieldMeta.maxLength;
+          }
 
+          if (fieldMeta.length === 0) {
+              delete fieldMeta.length;
+          }
           return fieldMeta;
         }
 
