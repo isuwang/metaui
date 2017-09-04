@@ -33,7 +33,7 @@
 
 |注释key|对应元数据字段|取值|描述
 |:----|:----|:---|:----|
-|m.type||query-action, domain-action, entity-action|
+|m.type||domain-action, entity-action|domain-action：domain作用域的操作，比如添加记录，entity-action：实体作用域的操作，比如删除或修改一个记录|
 | m.id |ActionMeta.actionId|默认值：方法名称|操作id，建议跟权限名相同
 | m.name |ActionMeta.actionName||操作名称
 |m.operType|ActionMeta.operType|"1"：直接表单提交，"2"：弹窗|
