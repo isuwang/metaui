@@ -42,7 +42,7 @@ metadata = {
         label: "Addr"
       },
       {
-        metaType:"ACTION",
+        metaType: {type: "ACTION"},
         name: "actions",
         label: "Actions"
       }
