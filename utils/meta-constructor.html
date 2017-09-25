@@ -3,15 +3,16 @@
 <link rel="import" href="../behaviors/ajax-behavior.html">
 
 <!--
-   使用方式：
-        <h2-crud metadata="{{md}}"></h2-crud>
-        <meta-constructor src="/domain/organizaion" metadata="{{md}}" option="[[ option ]]" on-return="{{onReturn}}"></meta-constructor>
-        <meta-constructor src="/domain/organizaion" meta-type="struct" option="[[ option ]]"></meta-constructor>
-        <meta-constructor src="/domain/organizaion" meta-type="grid" option="[[ option ]]"></meta-constructor>
-        <meta-constructor src="/domain/organizaion" meta-type="form" option="[[ option ]]" metadata="{{formMeta}}"></meta-constructor>
-        <meta-constructor src="/domain/organizaion" meta-type="action" option="[[ option ]]"></meta-constructor>
-        <meta-constructor src="/domain/organizaion" meta-type="field" option="[[ option ]]"></meta-constructor>
-
+使用方式：
+```
+<meta-constructor src="/domain/organizaion" metadata="{{md}}" option="[[ option ]]" on-return="{{onReturn()}}"></meta-constructor>
+<meta-constructor src="/domain/organizaion" meta-type="struct" option="[[ option ]]"></meta-constructor>
+<meta-constructor src="/domain/organizaion" meta-type="grid" option="[[ option ]]"></meta-constructor>
+<meta-constructor src="/domain/organizaion" meta-type="form" option="[[ option ]]" metadata="{{formMeta}}"></meta-constructor>
+<meta-constructor src="/domain/organizaion" meta-type="action" option="[[ option ]]"></meta-constructor>
+<meta-constructor src="/domain/organizaion" meta-type="field" option="[[ option ]]"></meta-constructor>
+<h2-crud metadata="{{md}}"></h2-crud>
+```
 -->
 <dom-module id="meta-constructor">
     <script>
