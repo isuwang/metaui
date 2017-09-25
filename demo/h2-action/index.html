@@ -87,18 +87,20 @@
           fields: [
             {
               name: "name",
-              label:"Name",
+              label: "Name",
               required: true,
-              editable:false,
-              visible:true
+              editable: false,
+              visible: true
             },
             {
               name: "phone",
               label:"Phone",
               required: true,
-              editable:true,
-              visible:true
-            },
+              editable: true,
+              visible: true,
+              regexp: "\\d{12}",
+              prompt: "Invalid input!"
+            }
           ],
         }
       };
@@ -118,8 +120,8 @@
         name: "WahsonLeung"
       };
       action2.metadata = {
-        actionId: "hide-record",
-        actionName: "Hide Record",
+        actionId: "add-record",
+        actionName: "Add Record",
         operType: 2,
         formMeta: {
           formUrl: "/url-to-send-form",
