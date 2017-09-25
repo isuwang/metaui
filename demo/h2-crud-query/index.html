@@ -44,22 +44,24 @@
     <script>
       action.metadata = {
         formUrl: "/query.do",
-        paging: true,
         fields: [
           {
             name: "username",
             label: "用户名",
             editable: true,
+            visible: true
           },
           {
             name: "phone",
             label: "联系电话",
             editable: true,
+            visible: true
           },
           {
             name: "sex",
             label: "性别",
             editable: true,
+            visible: true,
             element: "h2-select-list",
             candidates: [
               {

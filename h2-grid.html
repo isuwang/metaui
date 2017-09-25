@@ -26,7 +26,9 @@ metadata = {
       label: "Col3"
     },
     {
-      metaType:"ACTION",
+      metaType: {
+        type: "ACTION"
+        },
       name: "actions",
       label: "Actions",
     }
@@ -41,12 +43,10 @@ metadata = {
         confirm: "Sure to submit?",
         fields: [
           {
-            element: "h2-text",
             name: "name",
             label:"Name"
           },
           {
-            element: "h2-text",
             name: "phone",
             label:"Phone"
           },
@@ -63,14 +63,12 @@ metadata = {
         confirm: "Sure to submit?",
         fields: [
           {
-            element: "h2-text",
             name: "name",
             label:"Name",
             visible:true,
             editable:true
           },
           {
-            element: "h2-text",
             name: "phone",
             label:"Phone",
             visible:true,

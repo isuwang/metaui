@@ -2246,11 +2246,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 32,
+              "line": 37,
               "column": 8
             },
             "end": {
-              "line": 34,
+              "line": 39,
               "column": 9
             }
           },
@@ -2263,11 +2263,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 27,
+          "line": 32,
           "column": 6
         },
         "end": {
-          "line": 36,
+          "line": 41,
           "column": 7
         }
       },
@@ -2388,7 +2388,7 @@
       "tagname": "h2-radio-group"
     },
     {
-      "description": "## A component for table.\n\n```html\n<h2-grid metadata=\"{{ metadata }}\" value=\"{{ value }}\"></h2-grid>\n```\n```\nmetadata = {\n  title: \"I am the title!\",\n  grids: [\n    {\n      name: \"col1\",\n      label: \"Col1\"\n    },\n    {\n      name: \"col2\",\n      label: \"Col2\"\n    },\n    {\n      name: \"col3\",\n      label: \"Col3\"\n    },\n    {\n      metaType:\"ACTION\",\n      name: \"actions\",\n      label: \"Actions\",\n    }\n  ],\n  actions: {\n    \"action-1\": {\n      actionId: \"action-1\",\n      actionName: \"Action1\",\n      operType: 1,\n      formMeta: {\n        formUrl: \"/url-to-send-form\",\n        confirm: \"Sure to submit?\",\n        fields: [\n          {\n            element: \"h2-text\",\n            name: \"name\",\n            label:\"Name\"\n          },\n          {\n            element: \"h2-text\",\n            name: \"phone\",\n            label:\"Phone\"\n          },\n        ],\n      }\n    },\n    \"action-2\": {\n      actionId: \"action-2\",\n      actionName: \"Action2\",\n      operType: 2,\n      formMeta: {\n        title: \"Dialog Title\",\n        formUrl: \"/url-to-send-form\",\n        confirm: \"Sure to submit?\",\n        fields: [\n          {\n            element: \"h2-text\",\n            name: \"name\",\n            label:\"Name\",\n            visible:true,\n            editable:true\n          },\n          {\n            element: \"h2-text\",\n            name: \"phone\",\n            label:\"Phone\",\n            visible:true,\n            editable:true\n          },\n        ],\n      }\n    }\n  }\n}\n\nvalue = [\n  {\n    col1: \"foo\",\n    col2: \"bar\",\n    col3: \"foobar\",\n    actions:[\"action-1\",\"action-2\"]\n  },\n  {\n    col1: \"foo\",\n    col2: \"bar\",\n    col3: \"foobar\",\n    actions:[\"action-1\"]\n  },\n  {\n    col1: \"foo\",\n    col2: \"bar\",\n    col3: \"foobar\",\n    actions:[\"action-2\"]\n  },\n  {\n    col1: \"foo\",\n    col2: \"bar\",\n    col3: \"foobar\",\n    actions:[\"action-1\",\"action-2\"]\n  }\n]\n```\n### metadata定义 (GridMeta)\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|grids|``array.<FieldMeta>``|是|表格单元格元数据|\n|actions|``map.<string, ActionMeta>``|是|操作集|\n|title|string|否|表格标题|\n|editable|boolean|否|是否可编辑|\n|noPaging|boolean|否|是否取消分页|\n\n### [See FieldMeta](#/elements/h2-field)\n### [See ActionMeta](#/elements/h2-action)",
+      "description": "## A component for table.\n\n```html\n<h2-grid metadata=\"{{ metadata }}\" value=\"{{ value }}\"></h2-grid>\n```\n```\nmetadata = {\n  title: \"I am the title!\",\n  grids: [\n    {\n      name: \"col1\",\n      label: \"Col1\"\n    },\n    {\n      name: \"col2\",\n      label: \"Col2\"\n    },\n    {\n      name: \"col3\",\n      label: \"Col3\"\n    },\n    {\n      metaType: {\n        type: \"ACTION\"\n        },\n      name: \"actions\",\n      label: \"Actions\",\n    }\n  ],\n  actions: {\n    \"action-1\": {\n      actionId: \"action-1\",\n      actionName: \"Action1\",\n      operType: 1,\n      formMeta: {\n        formUrl: \"/url-to-send-form\",\n        confirm: \"Sure to submit?\",\n        fields: [\n          {\n            name: \"name\",\n            label:\"Name\"\n          },\n          {\n            name: \"phone\",\n            label:\"Phone\"\n          },\n        ],\n      }\n    },\n    \"action-2\": {\n      actionId: \"action-2\",\n      actionName: \"Action2\",\n      operType: 2,\n      formMeta: {\n        title: \"Dialog Title\",\n        formUrl: \"/url-to-send-form\",\n        confirm: \"Sure to submit?\",\n        fields: [\n          {\n            name: \"name\",\n            label:\"Name\",\n            visible:true,\n            editable:true\n          },\n          {\n            name: \"phone\",\n            label:\"Phone\",\n            visible:true,\n            editable:true\n          },\n        ],\n      }\n    }\n  }\n}\n\nvalue = [\n  {\n    col1: \"foo\",\n    col2: \"bar\",\n    col3: \"foobar\",\n    actions:[\"action-1\",\"action-2\"]\n  },\n  {\n    col1: \"foo\",\n    col2: \"bar\",\n    col3: \"foobar\",\n    actions:[\"action-1\"]\n  },\n  {\n    col1: \"foo\",\n    col2: \"bar\",\n    col3: \"foobar\",\n    actions:[\"action-2\"]\n  },\n  {\n    col1: \"foo\",\n    col2: \"bar\",\n    col3: \"foobar\",\n    actions:[\"action-1\",\"action-2\"]\n  }\n]\n```\n### metadata定义 (GridMeta)\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|grids|``array.<FieldMeta>``|是|表格单元格元数据|\n|actions|``map.<string, ActionMeta>``|是|操作集|\n|title|string|否|表格标题|\n|editable|boolean|否|是否可编辑|\n|noPaging|boolean|否|是否取消分页|\n\n### [See FieldMeta](#/elements/h2-field)\n### [See ActionMeta](#/elements/h2-action)",
       "summary": "",
       "path": "h2-grid.html",
       "properties": [
@@ -2399,11 +2399,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 257,
+              "line": 255,
               "column": 12
             },
             "end": {
-              "line": 260,
+              "line": 258,
               "column": 13
             }
           },
@@ -2419,11 +2419,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 262,
+              "line": 260,
               "column": 12
             },
             "end": {
-              "line": 264,
+              "line": 262,
               "column": 13
             }
           },
@@ -2438,11 +2438,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 265,
+              "line": 263,
               "column": 12
             },
             "end": {
-              "line": 268,
+              "line": 266,
               "column": 13
             }
           },
@@ -2460,11 +2460,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 272,
+              "line": 270,
               "column": 8
             },
             "end": {
-              "line": 276,
+              "line": 274,
               "column": 9
             }
           },
@@ -2481,11 +2481,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 278,
+              "line": 276,
               "column": 8
             },
             "end": {
-              "line": 293,
+              "line": 291,
               "column": 9
             }
           },
@@ -2502,11 +2502,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 295,
+              "line": 293,
               "column": 8
             },
             "end": {
-              "line": 301,
+              "line": 299,
               "column": 9
             }
           },
@@ -2528,11 +2528,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 246,
+          "line": 244,
           "column": 6
         },
         "end": {
-          "line": 302,
+          "line": 300,
           "column": 7
         }
       },
@@ -2545,11 +2545,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 257,
+              "line": 255,
               "column": 12
             },
             "end": {
-              "line": 260,
+              "line": 258,
               "column": 13
             }
           },
@@ -2561,11 +2561,11 @@
           "description": "Data for the grid.",
           "sourceRange": {
             "start": {
-              "line": 262,
+              "line": 260,
               "column": 12
             },
             "end": {
-              "line": 264,
+              "line": 262,
               "column": 13
             }
           },
@@ -2577,11 +2577,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 265,
+              "line": 263,
               "column": 12
             },
             "end": {
-              "line": 268,
+              "line": 266,
               "column": 13
             }
           },
@@ -2601,11 +2601,11 @@
           "range": {
             "file": "h2-grid.html",
             "start": {
-              "line": 186,
+              "line": 184,
               "column": 8
             },
             "end": {
-              "line": 186,
+              "line": 184,
               "column": 35
             }
           }
@@ -4686,7 +4686,7 @@
               "column": 8
             },
             "end": {
-              "line": 432,
+              "line": 444,
               "column": 9
             }
           },
@@ -4712,11 +4712,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 435,
+              "line": 447,
               "column": 8
             },
             "end": {
-              "line": 455,
+              "line": 467,
               "column": 9
             }
           },
@@ -4739,11 +4739,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 457,
+              "line": 469,
               "column": 8
             },
             "end": {
-              "line": 462,
+              "line": 474,
               "column": 9
             }
           },
@@ -4763,11 +4763,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 464,
+              "line": 476,
               "column": 8
             },
             "end": {
-              "line": 469,
+              "line": 481,
               "column": 9
             }
           },
@@ -4787,11 +4787,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 471,
+              "line": 483,
               "column": 8
             },
             "end": {
-              "line": 477,
+              "line": 489,
               "column": 9
             }
           },
@@ -4818,7 +4818,7 @@
           "column": 6
         },
         "end": {
-          "line": 478,
+          "line": 490,
           "column": 7
         }
       },

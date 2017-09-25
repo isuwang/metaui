@@ -18,295 +18,291 @@
 
   <custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
-    .centered {
-      min-width: 500px;
-    }
-
-    demo-snippet {
-      --demo-snippet-code: {
-        max-height: 500px;
+      .centered {
+        min-width: 800px;
       }
-    }
-  </style>
+
+      demo-snippet {
+        --demo-snippet-code: {
+          max-height: 500px;
+        }
+      }
+    </style>
   </custom-style>
 
 </head>
 
 <body unresolved class="centered">
-  <h3>Simple Grid</h3>
-  <demo-snippet>
-    <template>
-      <style is="custom-style">
-      </style>
-      <h2-grid id="grid"></h2-grid>
-      <script>
-        grid.metadata = {
-          title: "I am the title!",
-          grids: [
-            {
-              name: "col1",
-              label: "Col1"
-            },
-            {
-              name: "col2",
-              label: "Col2"
-            },
-            {
-              name: "col3",
-              label: "Col3"
-            },
-            {
-              metaType:"ACTION",
-              name: "actions",
-              label: "Actions",
-            }
-          ],
-          actions: {
-            "action-1": {
-              actionId: "action-1",
-              actionName: "Action1",
-              operType: 1,
-              formMeta: {
-                formUrl: "/url-to-send-form",
-                confirm: "Sure to submit?",
-                fields: [
-                  {
-                    element: "h2-text",
-                    name: "name",
-                    label:"Name"
-                  },
-                  {
-                    element: "h2-text",
-                    name: "phone",
-                    label:"Phone"
-                  },
-                ],
-              }
-            },
-            "action-2": {
-              actionId: "action-2",
-              actionName: "Action2",
-              operType: 2,
-              formMeta: {
-                title: "Dialog Title",
-                formUrl: "/url-to-send-form",
-                confirm: "Sure to submit?",
-                fields: [
-                  {
-                    element: "h2-text",
-                    name: "name",
-                    label:"Name",
-                    visible:true,
-                    editable:true
-                  },
-                  {
-                    element: "h2-text",
-                    name: "phone",
-                    label:"Phone",
-                    visible:true,
-                    editable:true
-                  },
-                ],
-              }
-            }
-          },
-          style: `.grid-column {font-size: 16px;}`
-        };
-
-        grid.value = [
+<h3>Simple Grid</h3>
+<demo-snippet>
+  <template>
+    <style is="custom-style">
+    </style>
+    <h2-grid id="grid"></h2-grid>
+    <script>
+      grid.metadata = {
+        title: "I am the title!",
+        grids: [
           {
-            col1: "foo",
-            col2: "bar",
-            col3: "foobar",
-            actions:["action-1","action-2"]
+            name: "col1",
+            label: "Col1"
           },
           {
-            col1: "foo",
-            col2: "bar",
-            col3: "foobar",
-            actions:["action-1"]
+            name: "col2",
+            label: "Col2"
           },
           {
-            col1: "foo",
-            col2: "bar",
-            col3: "foobar",
-            actions:["action-2"]
+            name: "col3",
+            label: "Col3"
           },
           {
-            col1: "foo",
-            col2: "bar",
-            col3: "foobar",
-            actions:["action-1","action-2"]
+            metaType: {type: "ACTION"},
+            name: "actions",
+            label: "Actions",
           }
-        ];
-
-      </script>
-    </template>
-  </demo-snippet>
-
-  <h3>Editable Grid, with a readonly column(Col3)</h3>
-  <demo-snippet>
-    <template>
-      <style is="custom-style">
-      </style>
-      <h2-grid id="grid1" editable></h2-grid>
-      <script>
-        grid1.metadata = {
-          title: "I am the title!",
-          grids: [
-            {
-              name: "col1",
-              label: "Col1"
-            },
-            {
-              name: "col2",
-              label: "Col2"
-            },
-            {
-              name: "col3",
-              label: "Col3",
-              editable: false
-            },
-            {
-              metaType:"ACTION",
-              name: "actions",
-              label: "Actions",
-            }
-          ],
-          actions: {
-            "action-1": {
-              actionId: "action-1",
-              actionName: "Action1",
-              operType: 1,
-              formMeta: {
-                formUrl: "/url-to-send-form",
-                confirm: "Sure to submit?",
-                fields: [
-                  {
-                    element: "h2-text",
-                    name: "col1",
-                    label: "Col1"
-                  },
-                  {
-                    element: "h2-text",
-                    name: "col2",
-                    label: "Col2"
-                  },
-                  {
-                    element: "h2-text",
-                    name: "col3",
-                    label: "Col3"
-                  }
-                ],
-              }
+        ],
+        actions: {
+          "action-1": {
+            actionId: "action-1",
+            actionName: "Action1",
+            operType: 1,
+            formMeta: {
+              formUrl: "/url-to-send-form",
+              confirm: "Sure to submit?",
+              fields: [
+                {
+                  name: "name",
+                  label: "Name"
+                },
+                {
+                  name: "phone",
+                  label: "Phone"
+                },
+              ],
             }
           },
-          style: `.grid-column { width: 100px;}`
-        };
-
-        grid1.value = [
-          {
-            col1: "foo",
-            col2: "bar",
-            col3: "foobar",
-            actions:["action-1"]
-          }
-        ];
-
-      </script>
-    </template>
-  </demo-snippet>
-
-  <h3>Editable Grid (Config `editable:true` in metadata)</h3>
-  <demo-snippet>
-    <template>
-      <style is="custom-style">
-      </style>
-      <h2-grid id="grid2"></h2-grid>
-      <script>
-        grid2.metadata = {
-          title: "I am the title!",
-          editable: true,
-          grids: [
-            {
-              name: "col1",
-              label: "Col1"
-            },
-            {
-              name: "col2",
-              label: "Col2"
-            },
-            {
-              name: "col3",
-              label: "Col3"
+          "action-2": {
+            actionId: "action-2",
+            actionName: "Action2",
+            operType: 2,
+            formMeta: {
+              title: "Dialog Title",
+              formUrl: "/url-to-send-form",
+              confirm: "Sure to submit?",
+              fields: [
+                {
+                  name: "name",
+                  label: "Name",
+                  visible: true,
+                  editable: true
+                },
+                {
+                  name: "phone",
+                  label: "Phone",
+                  visible: true,
+                  editable: true
+                },
+              ],
             }
-          ],
-          style: `.grid-row { height: 40px;}`
-        };
+          }
+        },
+        style: `.grid-column {font-size: 16px;}`
+      };
 
-        grid2.value = [
+      grid.value = [
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar",
+          actions: ["action-1", "action-2"]
+        },
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar",
+          actions: ["action-1"]
+        },
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar",
+          actions: ["action-2"]
+        },
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar",
+          actions: ["action-1", "action-2"]
+        }
+      ];
+
+    </script>
+  </template>
+</demo-snippet>
+
+<h3>Editable Grid, with a readonly column(Col3)</h3>
+<demo-snippet>
+  <template>
+    <style is="custom-style">
+    </style>
+    <h2-grid id="grid1" editable></h2-grid>
+    <script>
+      grid1.metadata = {
+        title: "I am the title!",
+        grids: [
           {
-            col1: "foo",
-            col2: "bar",
-            col3: "foobar"
+            name: "col1",
+            label: "Col1"
           },
           {
-            col1: "foo",
-            col2: "bar",
-            col3: "foobar"
-          }
-        ];
-
-      </script>
-    </template>
-  </demo-snippet>
-
-  <h3>Editable Column</h3>
-  <demo-snippet>
-    <template>
-      <style is="custom-style">
-      </style>
-      <h2-grid id="grid3"></h2-grid>
-      <script>
-        grid3.metadata = {
-          title: "I am the title!",
-          grids: [
-            {
-              name: "col1",
-              label: "Col1",
-              editable: true,
-              validate: true,
-              required:true,
-              prompt: "Pls input col1!"
-            },
-            {
-              name: "col2",
-              label: "Col2"
-            },
-            {
-              name: "col3",
-              label: "Col3"
-            }
-          ],
-          style: `.grid-column {padding: 20px 10px; font-size: 16px;}`
-        };
-
-        grid3.value = [
-          {
-            col1: "foo",
-            col2: "bar",
-            col3: "foobar"
+            name: "col2",
+            label: "Col2"
           },
           {
-            col1: "foo",
-            col2: "bar",
-            col3: "foobar"
+            name: "col3",
+            label: "Col3",
+            editable: false
+          },
+          {
+            metaType: {type: "ACTION"},
+            name: "actions",
+            label: "Actions",
           }
-        ];
+        ],
+        actions: {
+          "action-1": {
+            actionId: "action-1",
+            actionName: "Action1",
+            operType: 1,
+            formMeta: {
+              formUrl: "/url-to-send-form",
+              confirm: "Sure to submit?",
+              fields: [
+                {
+                  element: "h2-text",
+                  name: "col1",
+                  label: "Col1"
+                },
+                {
+                  element: "h2-text",
+                  name: "col2",
+                  label: "Col2"
+                },
+                {
+                  element: "h2-text",
+                  name: "col3",
+                  label: "Col3"
+                }
+              ],
+            }
+          }
+        },
+        style: `.grid-column { width: 100px;}`
+      };
 
-      </script>
-    </template>
-  </demo-snippet>
+      grid1.value = [
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar",
+          actions: ["action-1"]
+        }
+      ];
+
+    </script>
+  </template>
+</demo-snippet>
+
+<h3>Editable Grid (Config `editable:true` in metadata)</h3>
+<demo-snippet>
+  <template>
+    <style is="custom-style">
+    </style>
+    <h2-grid id="grid2"></h2-grid>
+    <script>
+      grid2.metadata = {
+        title: "I am the title!",
+        editable: true,
+        grids: [
+          {
+            name: "col1",
+            label: "Col1"
+          },
+          {
+            name: "col2",
+            label: "Col2"
+          },
+          {
+            name: "col3",
+            label: "Col3"
+          }
+        ],
+        style: `.grid-row { height: 40px;}`
+      };
+
+      grid2.value = [
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar"
+        },
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar"
+        }
+      ];
+
+    </script>
+  </template>
+</demo-snippet>
+
+<h3>Editable Column</h3>
+<demo-snippet>
+  <template>
+    <style is="custom-style">
+    </style>
+    <h2-grid id="grid3"></h2-grid>
+    <script>
+      grid3.metadata = {
+        title: "I am the title!",
+        grids: [
+          {
+            name: "col1",
+            label: "Col1",
+            editable: true,
+            validate: true,
+            required: true,
+            prompt: "Pls input col1!"
+          },
+          {
+            name: "col2",
+            label: "Col2"
+          },
+          {
+            name: "col3",
+            label: "Col3"
+          }
+        ],
+        style: `.grid-column {padding: 20px 10px; font-size: 16px;}`
+      };
+
+      grid3.value = [
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar"
+        },
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar"
+        }
+      ];
+
+    </script>
+  </template>
+</demo-snippet>
 </body>
 
 </html>
