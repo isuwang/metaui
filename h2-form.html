@@ -286,7 +286,7 @@ metadata = {
 
         _validate() {
           // return true if there's no field
-          if (!this.metadata.fields || this.metadata.fields.length == 0) return true;
+          if (!this.metadata.fields || this.metadata.fields.length === 0) return true;
 
           return this.metadata.fields
               .filter(fieldMeta => fieldMeta.visible && (fieldMeta.required || !!fieldMeta.validate))

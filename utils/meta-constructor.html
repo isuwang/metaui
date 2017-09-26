@@ -338,9 +338,9 @@
           formMeta.hideSubmitBtn = Boolean(map["m.form.hideSubmitBtn"]);
           const args = methodMeta.request.fields;
 
-          // 1. 方法没有入参
-          // 2. 方法有且仅有一个入参，且入参类型是STRUCT
-          // 3. 其他情况
+          // 1. 方法没有入参， 如void doSomething()
+          // 2. 方法有且仅有一个入参，且入参类型是STRUCT，如 void doSomething(TRequest request)
+          // 3. 其他情况 ，如 void doSomething(int id, String name)
           let fields = null;
           if (!args || args.length === 0) {
             fields = [];
@@ -354,8 +354,7 @@
                 )
             );
           } else {
-            fields = args.map(f => this.assembleFieldMeta({serviceMeta, fieldsInStruct}, f,
-                this.__getFieldEntity(fieldsInStruct, undefined, f.name))); // TODO need a better value to replace undefined
+            fields = args.map(f => this.assembleFieldMeta({serviceMeta, fieldsInStruct}, f, {}));
           }
 
           formMeta.fields = fields;
