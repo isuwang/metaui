@@ -106,7 +106,7 @@
 
       if (!document.body.querySelector("#h2-loading")) {
         this.async(function () {
-          var loadingDiv = document.body.querySelector("h2-loading") || document.createElement("h2-loading");
+          const loadingDiv = document.body.querySelector("h2-loading") || document.createElement("h2-loading");
           loadingDiv.setAttribute("id", "h2-loading");
           loadingDiv.noCancelOnOutsideClick = true;
           loadingDiv.noCancelOnEscKey = true;
@@ -116,7 +116,7 @@
         }, 100);
       } else {
         this.async(function () {
-          var loadingDiv = document.body.querySelector("#h2-loading");
+          const loadingDiv = document.body.querySelector("#h2-loading");
           loadingDiv.open();
         }, 100);
       }
@@ -305,5 +305,8 @@
       } else return obj;
     },
 
+    throwNotFoundError(string) {
+      throw new TypeError(string + " should not be undefined.")
+    }
   }
 </script>

@@ -52,7 +52,7 @@
       } else if (Object.prototype.isPrototypeOf(input)) {
 
         ({
-          url = this.__throwUrlNotFoundError(),
+          url = this.throwNotFoundError("url"),
           data = {},
           handleAs = "json"
         } = input);
@@ -127,7 +127,7 @@
       } else if (Object.prototype.isPrototypeOf(input)) {
 
         ({
-          url = this.__throwUrlNotFoundError(),
+          url = this.throwNotFoundError("url"),
           data = {},
           handleAs = "json",
           sendAsJson = false,
@@ -217,10 +217,6 @@
           return pump();
         });
       }
-    },
-
-    __throwUrlNotFoundError(){
-      throw new Error("url not found");
     }
   };
 

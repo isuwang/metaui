@@ -5,491 +5,504 @@
 <!--
 使用方式：
 ```
-<meta-constructor src="/domain/organizaion" metadata="{{md}}" option="[[ option ]]" on-return="{{onReturn()}}"></meta-constructor>
-<meta-constructor src="/domain/organizaion" meta-type="struct" option="[[ option ]]"></meta-constructor>
-<meta-constructor src="/domain/organizaion" meta-type="grid" option="[[ option ]]"></meta-constructor>
-<meta-constructor src="/domain/organizaion" meta-type="form" option="[[ option ]]" metadata="{{formMeta}}"></meta-constructor>
-<meta-constructor src="/domain/organizaion" meta-type="action" option="[[ option ]]"></meta-constructor>
-<meta-constructor src="/domain/organizaion" meta-type="field" option="[[ option ]]"></meta-constructor>
+<meta-constructor src="/dapeng/metadata" metadata="{{md}}" option="[[ option ]]" on-return="{{onReturn()}}"></meta-constructor>
+<meta-constructor src="/dapeng/metadata" meta-type="struct" option="[[ option ]]"></meta-constructor>
+<meta-constructor src="/dapeng/metadata" meta-type="grid" option="[[ option ]]"></meta-constructor>
+<meta-constructor src="/dapeng/metadata" meta-type="form" option="[[ option ]]" metadata="{{formMeta}}"></meta-constructor>
+<meta-constructor src="/dapeng/metadata" meta-type="action" option="[[ option ]]"></meta-constructor>
+<meta-constructor src="/dapeng/metadata" meta-type="field" option="[[ option ]]"></meta-constructor>
 <h2-crud metadata="{{md}}"></h2-crud>
 ```
 -->
 <dom-module id="meta-constructor">
-    <script>
-      class MetaConstructor extends Polymer.mixinBehaviors([AjaxBehavior, BaseBehavior], Polymer.Element) {
-        static get is() {
-          return "meta-constructor";
-        }
+  <script>
+    class MetaConstructor extends Polymer.mixinBehaviors([AjaxBehavior, BaseBehavior], Polymer.Element) {
+      static get is() {
+        return "meta-constructor";
+      }
 
-        static get properties() {
-          return {
-            /**
-             * For example:
-             * {
+      static get properties() {
+        return {
+          /**
+           * For example:
+           * {
              *   methodName: "addOrganization",
              *   structName: "com.isuwang.soa.admin.domain.TOrganization",
              *   fieldName: "id"
              * }
-             *
-             * If metaType is "domain", methodName is the query method.
-             *
-             * @type {methodName:String, structName:String, fieldName:String}
-             */
-            option: {
-              type: Object,
-              value: function () {
-                return {};
-              }
-            },
-            src: {
-              type: String,
-              observer: "__srcChange"
-            },
-            /**
-             *
-             * @type string in  domain|grid|struct|action|form|field
-             * @default "domain"
-             */
-            metaType: {
-              type: String,
-              value: "domain"
-            },
-            metadata: {
-              type: Object,
-              notify: true
-            },
-            onReturn: {
-              type: Object
-            },
-            data: {
-              type: Object,
-              notify: true
+           *
+           * If metaType is "domain", methodName is the query method.
+           *
+           * @type {methodName:String, structName:String, fieldName:String}
+           */
+          option: {
+            type: Object,
+            value: function () {
+              return {};
             }
+          },
+          src: {
+            type: String,
+            observer: "__srcChange"
+          },
+          /**
+           *
+           * @type string in  domain|grid|struct|action|form|field
+           * @default "domain"
+           */
+          metaType: {
+            type: String,
+            value: "domain"
+          },
+          metadata: {
+            type: Object,
+            notify: true
+          },
+          onReturn: {
+            type: Object
+          },
+          data: {
+            type: Object,
+            notify: true
+          }
+        };
+      }
+
+      /**
+       * @param {!Object} data  data of meta-constructor
+       * @param {!String} queryMethodName
+       * @returns {{query: *, result: *, actions: Array}}
+       */
+      getDomainMeta(data, queryMethodName) {
+        return this.assembleDomainMeta(data, this.__getMethod(data.serviceMeta, queryMethodName));
+      }
+
+      /**
+       * @param {!Object} data  data of meta-constructor
+       * @param {!String} methodName
+       * @returns {{grids: Array.<{Object}>}}
+       */
+      getNoActionGridMeta(data, methodName) {
+        return this.assembleNoActionGridMeta(data, this.__getMethod(data.serviceMeta, methodName));
+      }
+
+      /**
+       * @param {!Object} data  data of meta-constructor
+       * @param {!String} methodName
+       * @returns {{grids: Array, actions: Object}}
+       */
+      getGridMeta(data, methodName) {
+        return this.assembleGridMeta(data, this.__getMethod(data.serviceMeta, methodName));
+      }
+
+      /**
+       * @param {!Object} data  data of meta-constructor
+       * @param {!String} structName
+       * @returns {{name: String, label: String, fields: Array}}
+       */
+      getStructMeta(data, structName) {
+        return this.assembleStructMeta(data, this.__getStruct(data.serviceMeta, structName))
+      }
+
+      /**
+       * @param {!Object} data  data of meta-constructor
+       * @param {!String} methodName
+       * @returns {{actionId: String, actionName: String, operType: String, group: String, modelSrc: String, formMeta: Object}}
+       */
+      getActionMeta(data, methodName) {
+        return this.assembleActionMeta(data, this.__getMethod(data.serviceMeta, methodName));
+      }
+
+      /**
+       * @param {!Object} data  data of meta-constructor
+       * @param {!String} methodName
+       * @returns {{confirm: String, title: String, formUrl: String, hideSubmitBtn: Boolean, fields: Array}}
+       */
+      getFormMeta(data, methodName) {
+        return this.assembleFormMeta(data, this.__getMethod(data.serviceMeta, methodName));
+      }
+
+      /**
+       * @param {!Object} data  data of meta-constructor
+       * @param {!String} structName
+       * @param {!String} fieldName
+       * @returns {{grids:Array<{Object}>}}
+       */
+      getFieldMeta(data, structName, fieldName) {
+        return this.assembleFieldMeta(
+          data,
+          this.__getField(data.serviceMeta, structName, fieldName),
+          this.__getFieldEntity(data.fieldsInStruct, structName, fieldName)
+        );
+      }
+
+      __srcChange() {
+        const {
+          serviceName = this.throwNotFoundError("serviceName"),
+          version = this.throwNotFoundError("version")
+        } = this.option;
+
+        this.post({url: this.src, data: {serviceName, version}}, (data) => {
+          let metadata = null;
+          switch (this.metaType) {
+            case "domain":
+              metadata = this.assembleDomainMeta(data);
+              break;
+            case "grid":
+              metadata = this.assembleGridMeta(data);
+              break;
+            case "struct":
+              metadata = this.assembleStructMeta(data);
+              break;
+            case "action":
+              metadata = this.assembleActionMeta(data);
+              break;
+            case "form":
+              metadata = this.assembleFormMeta(data);
+              break;
+            case "field":
+              metadata = this.assembleFieldMeta(data);
+              break;
+            default:
+              throw new TypeError(`Unknown meta-type【${this.metaType}】`);
+          }
+
+          if (this.isFunction(this.onReturn) && metadata) {
+            this.metadata = this.onReturn(metadata);
+          } else {
+            this.metadata = metadata;
+          }
+
+          this.data = data;
+        }, err => {
+          console.warn(err);
+        });
+      }
+
+      /**
+       * 组装domainMeta
+       * @param {Object} {serviceMeta,fieldsInStruct}
+       * @returns {{query: *, result: *, actions: Array}}
+       */
+      assembleDomainMeta({serviceMeta, fieldsInStruct},
+                         queryMethod = this.__getMethod(serviceMeta, this.option.methodName)) {
+        const typedMethods = serviceMeta.methods.filter(m => !!m.annotations && !!m.annotations.find(an => an.key === "m.type"));
+
+        const domainMethods = typedMethods.filter(({annotations}) =>
+          annotations.find(an => an.key === "m.type" && an.value === "domain-action"));
+
+        const query = this.assembleFormMeta({serviceMeta, fieldsInStruct}, queryMethod);
+        const result = this.assembleGridMeta({serviceMeta, fieldsInStruct}, queryMethod);
+        const actions = domainMethods.map(dm => this.assembleActionMeta({serviceMeta, fieldsInStruct}, dm));
+
+        return {query, result, actions};
+      }
+
+
+      /**
+       * 组装StructMeta, require field  `structName` in option
+       * @param {Object} {serviceMeta,fieldsInStruct}
+       * @param {Object=} rawStructMeta
+       * @returns {{name: String, label: String, fields: Array}}
+       */
+      assembleStructMeta({serviceMeta, fieldsInStruct},
+                         rawStructMeta = this.__getStruct(serviceMeta, this.option.structName)) {
+        const fields = rawStructMeta.fields.map(f =>
+          this.assembleFieldMeta(
+            {serviceMeta, fieldsInStruct},
+            f,
+            this.__getFieldEntity(fieldsInStruct, `${rawStructMeta.namespace}.${rawStructMeta.name}`, f.name)
+          )
+        );
+
+        const name = rawStructMeta.name;
+        const label = rawStructMeta.name;
+
+        return {fields, name, label};
+      }
+
+      /**
+       * 组装GridMeta, require field  `methodName` in option
+       * @param {Object} {serviceMeta,fieldsInStruct}
+       * @param {Object=} methodMeta
+       * @returns {{grids:Array}}
+       */
+      assembleNoActionGridMeta({serviceMeta, fieldsInStruct},
+                               methodMeta = this.__getMethod(serviceMeta, this.option.methodName)) {
+        const resDataType = methodMeta.response.fields[0].dataType;
+        let targetStructName = null;
+        if (resDataType.kind === "LIST") {
+          if (resDataType.valueType) {
+            targetStructName = resDataType.valueType.qualifiedName;
+          }
+        } else if (resDataType.kind === "STRUCT") {
+          const resStruct = this.__getStruct(serviceMeta, resDataType.qualifiedName);
+          if (resStruct) {
+            const listField = resStruct.fields.find(field => field.dataType.kind === "LIST");
+            if (listField && listField.dataType.valueType) {
+              targetStructName = listField.dataType.valueType.qualifiedName;
+            }
+          }
+
+        } else {
+          throw new TypeError(`Method【${serviceMeta.namespace}.${serviceMeta.name}#${methodMeta.name}】must return a list or struct`);
+        }
+
+        const struct = this.__getStruct(serviceMeta, targetStructName);
+        const grids = struct.fields.map(f =>
+          this.assembleFieldMeta(
+            {serviceMeta, fieldsInStruct},
+            f,
+            this.__getFieldEntity(fieldsInStruct, `${struct.namespace}.${struct.name}`, f.name)
+          )
+        ).filter(field => !!field.visible);
+
+        return {grids};
+      }
+
+      /**
+       * 组装GridMeta, require field  `methodName` in option
+       * @param {Object} {serviceMeta,fieldsInStruct}
+       * @param {Object=} methodMeta
+       * @returns {{grids:Array, actions: Object}}
+       */
+      assembleGridMeta({serviceMeta, fieldsInStruct},
+                       methodMeta = this.__getMethod(serviceMeta, this.option.methodName)) {
+        const gridMeta = this.assembleNoActionGridMeta({serviceMeta, fieldsInStruct}, methodMeta);
+        const actionArr = serviceMeta.methods.filter(m => !!m.annotations)
+          .filter(({annotations}) => annotations.find(an => an.key === "m.type" && an.value === "entity-action"))
+          .map(m => this.assembleActionMeta({serviceMeta, fieldsInStruct}, m));
+
+        if (actionArr && actionArr.length > 0) {
+          // if there's no field named actions, append one.
+          const actionField = gridMeta.grids.find(row => row.name === "actions");
+          if (!actionField) {
+            gridMeta.grids.push({name: "actions", label: "操作", metaType: {type: "ACTION"}});
+          } else {
+            actionField.metaType = {type: "ACTION"};
+          }
+        }
+
+        const actions = {};
+
+        for (let ac of actionArr) {
+          actions[ac.actionId] = ac;
+        }
+
+        gridMeta.actions = actions;
+
+        return gridMeta;
+
+      }
+
+      /**
+       * 组装ActionMeta, require field  `methodName` in option
+       * @param {Object} {serviceMeta,fieldsInStruct}
+       * @param {Object=} methodMeta
+       * @returns {{actionId:String, actionName: String, operType: String, group: String, modelSrc: String, formMeta: Object}}
+       */
+      assembleActionMeta({serviceMeta, fieldsInStruct},
+                         methodMeta = this.__getMethod(serviceMeta, this.option.methodName)) {
+        const annotations = methodMeta.annotations;
+        if (!annotations || annotations.length === 0)
+          throw new TypeError(`Annotations not defined in method【${serviceMeta.name}#${methodMeta.name}】`);
+
+        const map = {}, actionMeta = {};
+        for (let an of annotations) {
+          map[an.key] = an.value;
+        }
+
+        actionMeta.actionId = map["m.id"] || `${serviceMeta.name}-${methodMeta.name}`;
+        actionMeta.actionName = map["m.name"] || methodMeta.name;
+        actionMeta.operType = map["m.operType"] || "1";
+        actionMeta.group = map["m.group"];
+        actionMeta.modelSrc = map["m.modelSrc"];
+        actionMeta.formMeta = this.assembleFormMeta({serviceMeta, fieldsInStruct}, methodMeta);
+        return actionMeta;
+      }
+
+      /**
+       * 组装FormMeta, require field  `methodName` in option
+       * @param {Object} {serviceMeta,fieldsInStruct}
+       * @param {Object=} methodMeta
+       * @returns {{confirm:String, title: String, formUrl:String, hideSubmitBtn:Boolean, fields:Array}}
+       */
+      assembleFormMeta({serviceMeta, fieldsInStruct},
+                       methodMeta = this.__getMethod(serviceMeta, this.option.methodName)) {
+        const annotations = methodMeta.annotations;
+
+        if (!annotations || annotations.length === 0)
+          throw new TypeError(`Annotations not defined in method【${serviceMeta.name}#${methodMeta.name}】`);
+        const map = {}, formMeta = {};
+        for (let an of annotations) {
+          map[an.key] = an.value;
+        }
+        formMeta.confirm = map["m.form.confirm"];
+        formMeta.title = map["m.form.title"] || methodMeta.name;
+        formMeta.formUrl = map["m.form.url"] || "/metadata/form_url/not_config.do";
+        formMeta.hideSubmitBtn = Boolean(map["m.form.hideSubmitBtn"]);
+        const args = methodMeta.request.fields;
+
+        // 1. 方法没有入参， 如void doSomething()
+        // 2. 方法有且仅有一个入参，且入参类型是STRUCT，如 void doSomething(TRequest request)
+        // 3. 其他情况 ，如 void doSomething(int id, String name)
+        let fields = null;
+        if (!args || args.length === 0) {
+          fields = [];
+        } else if (args.length === 1 && "STRUCT" === args[0].dataType.kind) {
+          const struct = this.__getStruct(serviceMeta, args[0].dataType.qualifiedName);
+          fields = struct.fields.map(f =>
+            this.assembleFieldMeta(
+              {serviceMeta, fieldsInStruct},
+              f,
+              this.__getFieldEntity(fieldsInStruct, `${struct.namespace}.${struct.name}`, f.name)
+            )
+          );
+        } else {
+          fields = args.map(f => this.assembleFieldMeta({serviceMeta, fieldsInStruct}, f, {}));
+        }
+
+        formMeta.fields = fields;
+        return formMeta;
+      }
+
+      /**
+       * 组装FieldMeta， require field  `structName` & `fieldName` in option
+       * @param {Object} {serviceMeta,fieldsInStruct}
+       * @param {Object=} rawFieldMeta
+       * @param {Object=} fieldEntity
+       * @returns {*}
+       */
+      assembleFieldMeta({
+                          serviceMeta,
+                          fieldsInStruct
+                        },
+                        rawFieldMeta = this.__getField(serviceMeta, this.option.structName, this.option.fieldName),
+                        fieldEntity = this.__getFieldEntity(fieldsInStruct, this.option.structName, this.option.fieldName)) {
+
+        const fieldMeta = Object.assign({}, fieldEntity);
+
+        if (fieldMeta.candidates) {
+          try {
+            fieldMeta.candidates = JSON.parse(fieldMeta.candidates);
+          } catch (e) {
+            // json syntax error occured.
+            console.error(
+              `${e.message} of Field[ ${fieldMeta.name} ]'s [candidates value], the invalid value is ${fieldMeta.candidates}
+            `);
+            fieldMeta.candidates = [];
+          }
+        }
+        // fieldMeta.metaType
+        const metaType = {};
+        // default type
+        metaType.type = rawFieldMeta.dataType.kind;
+
+        switch (rawFieldMeta.dataType.kind) {
+          case "LIST":
+          case "SET":
+            const unitType = rawFieldMeta.dataType.valueType;
+            if (["LIST", "SET", "MAP"].indexOf(unitType.kind) > -1) {
+              throw new TypeError(`暂时不支持多层嵌套集合的结构 Field【${rawFieldMeta.name}】`)
+            }
+            if (unitType.kind === "STRUCT") {
+              const struct = this.__getStruct(serviceMeta, unitType.qualifiedName);
+              metaType.type = "STRUCT";
+              metaType.metadata = this.assembleStructMeta({serviceMeta, fieldsInStruct}, struct);
+            }
+            break;
+          case "MAP":
+            // TODO handle map
+            break;
+          case "STRUCT":
+            metaType.type = "STRUCT";
+            const struct = this.__getStruct(serviceMeta, rawFieldMeta.dataType.qualifiedName);
+            metaType.metadata = this.assembleStructMeta({serviceMeta, fieldsInStruct}, struct);
+            break;
+          default:
+            break;
+        }
+
+        fieldMeta.metaType = metaType;
+
+        rawFieldMeta.annotations && rawFieldMeta.annotations.forEach(an => {
+          const key = an.key.substring(an.key.indexOf('.') + 1);
+          // 对布尔值进行转换
+          switch (key) {
+            case "required":
+            case "mutil":
+            case "editable":
+            case "validate":
+            case "visible":
+            case "disabled":
+              fieldMeta[key] = an.value === "true";
+              break;
+            default:
+              fieldMeta[key] = an.value;
+              break;
+          }
+        });
+
+        // 适配H5中disabled的用法
+        if (fieldMeta.disabled === false) {
+          delete fieldMeta.disabled;
+        }
+        if (fieldMeta.maxLength === 0) {
+          delete fieldMeta.maxLength;
+        }
+
+        if (fieldMeta.length === 0) {
+          delete fieldMeta.length;
+        }
+        return fieldMeta;
+      }
+
+
+      __getFieldEntity(fieldsInStruct, structName, fieldName) {
+        const fields = fieldsInStruct[structName];
+        if (!fields) {
+//            console.warn(`Struct【${structName}】may probably not config in database.`);
+          return {
+            name: fieldName,
+            label: fieldName
           };
         }
 
-        /**
-         * @param {!Object} data  data of meta-constructor
-         * @param {!String} queryMethodName
-         * @returns {{query: *, result: *, actions: Array}}
-         */
-        getDomainMeta(data, queryMethodName) {
-          return this.assembleDomainMeta(data, this.__getMethod(data.serviceMeta, queryMethodName));
-        }
-
-        /**
-         * @param {!Object} data  data of meta-constructor
-         * @param {!String} methodName
-         * @returns {{grids: Array.<{Object}>}}
-         */
-        getNoActionGridMeta(data, methodName) {
-          return this.assembleNoActionGridMeta(data, this.__getMethod(data.serviceMeta, methodName));
-        }
-
-        /**
-         * @param {!Object} data  data of meta-constructor
-         * @param {!String} methodName
-         * @returns {{grids: Array, actions: Object}}
-         */
-        getGridMeta(data, methodName) {
-          return this.assembleGridMeta(data, this.__getMethod(data.serviceMeta, methodName));
-        }
-
-        /**
-         * @param {!Object} data  data of meta-constructor
-         * @param {!String} structName
-         * @returns {{name: String, label: String, fields: Array}}
-         */
-        getStructMeta(data, structName) {
-          return this.assembleStructMeta(data, this.__getStruct(data.serviceMeta, structName))
-        }
-
-        /**
-         * @param {!Object} data  data of meta-constructor
-         * @param {!String} methodName
-         * @returns {{actionId: String, actionName: String, operType: String, group: String, modelSrc: String, formMeta: Object}}
-         */
-        getActionMeta(data, methodName) {
-          return this.assembleActionMeta(data, this.__getMethod(data.serviceMeta, methodName));
-        }
-
-        /**
-         * @param {!Object} data  data of meta-constructor
-         * @param {!String} methodName
-         * @returns {{confirm: String, title: String, formUrl: String, hideSubmitBtn: Boolean, fields: Array}}
-         */
-        getFormMeta(data, methodName) {
-          return this.assembleFormMeta(data, this.__getMethod(data.serviceMeta, methodName));
-        }
-
-        /**
-         * @param {!Object} data  data of meta-constructor
-         * @param {!String} structName
-         * @param {!String} fieldName
-         * @returns {{grids:Array<{Object}>}}
-         */
-        getFieldMeta(data, structName, fieldName) {
-          return this.assembleFieldMeta(
-              data,
-              this.__getField(data.serviceMeta, structName, fieldName),
-              this.__getFieldEntity(data.fieldsInStruct, structName, fieldName)
-          );
-        }
-
-        __srcChange() {
-          this.post(this.src, (data) => {
-            let metadata = null;
-            switch (this.metaType) {
-              case "domain":
-                metadata = this.assembleDomainMeta(data);
-                break;
-              case "grid":
-                metadata = this.assembleGridMeta(data);
-                break;
-              case "struct":
-                metadata = this.assembleStructMeta(data);
-                break;
-              case "action":
-                metadata = this.assembleActionMeta(data);
-                break;
-              case "form":
-                metadata = this.assembleFormMeta(data);
-                break;
-              case "field":
-                metadata = this.assembleFieldMeta(data);
-                break;
-              default:
-                throw new TypeError(`Unknown meta-type【${this.metaType}】`);
-            }
-
-            if (this.isFunction(this.onReturn) && metadata) {
-              this.metadata = this.onReturn(metadata);
-            } else {
-              this.metadata = metadata;
-            }
-
-            this.data = data;
-          }, err => {
-            console.warn(err);
-          });
-        }
-
-        /**
-         * 组装domainMeta
-         * @param {Object} {serviceMeta,fieldsInStruct}
-         * @returns {{query: *, result: *, actions: Array}}
-         */
-        assembleDomainMeta({serviceMeta, fieldsInStruct},
-                           queryMethod = this.__getMethod(serviceMeta, this.option.methodName)) {
-          const typedMethods = serviceMeta.methods.filter(m => !!m.annotations && !!m.annotations.find(an => an.key === "m.type"));
-
-          const domainMethods = typedMethods.filter(({annotations}) =>
-              annotations.find(an => an.key === "m.type" && an.value === "domain-action"));
-
-          const query = this.assembleFormMeta({serviceMeta, fieldsInStruct}, queryMethod);
-          const result = this.assembleGridMeta({serviceMeta, fieldsInStruct}, queryMethod);
-          const actions = domainMethods.map(dm => this.assembleActionMeta({serviceMeta, fieldsInStruct}, dm));
-
-          return {query, result, actions};
-        }
-
-
-        /**
-         * 组装StructMeta, require field  `structName` in option
-         * @param {Object} {serviceMeta,fieldsInStruct}
-         * @param {Object=} rawStructMeta
-         * @returns {{name: String, label: String, fields: Array}}
-         */
-        assembleStructMeta({serviceMeta, fieldsInStruct},
-                           rawStructMeta = this.__getStruct(serviceMeta, this.option.structName)) {
-          const fields = rawStructMeta.fields.map(f =>
-              this.assembleFieldMeta(
-                  {serviceMeta, fieldsInStruct},
-                  f,
-                  this.__getFieldEntity(fieldsInStruct, `${rawStructMeta.namespace}.${rawStructMeta.name}`, f.name)
-              )
-          );
-
-          const name = rawStructMeta.name;
-          const label = rawStructMeta.name;
-
-          return {fields, name, label};
-        }
-
-        /**
-         * 组装GridMeta, require field  `methodName` in option
-         * @param {Object} {serviceMeta,fieldsInStruct}
-         * @param {Object=} methodMeta
-         * @returns {{grids:Array}}
-         */
-        assembleNoActionGridMeta({serviceMeta, fieldsInStruct},
-                                 methodMeta = this.__getMethod(serviceMeta, this.option.methodName)) {
-          const resDataType = methodMeta.response.fields[0].dataType;
-          let targetStructName = null;
-          if (resDataType.kind === "LIST") {
-            if (resDataType.valueType) {
-              targetStructName = resDataType.valueType.qualifiedName;
-            }
-          } else if (resDataType.kind === "STRUCT") {
-            const resStruct = this.__getStruct(serviceMeta, resDataType.qualifiedName);
-            if (resStruct) {
-              const listField = resStruct.fields.find(field => field.dataType.kind === "LIST");
-              if (listField && listField.dataType.valueType) {
-                targetStructName = listField.dataType.valueType.qualifiedName;
-              }
-            }
-
-          } else {
-            throw new TypeError(`Method【${serviceMeta.namespace}.${serviceMeta.name}#${methodMeta.name}】must return a list or struct`);
-          }
-
-          const struct = this.__getStruct(serviceMeta, targetStructName);
-          const grids = struct.fields.map(f =>
-              this.assembleFieldMeta(
-                  {serviceMeta, fieldsInStruct},
-                  f,
-                  this.__getFieldEntity(fieldsInStruct, `${struct.namespace}.${struct.name}`, f.name)
-              )
-          ).filter(field => !!field.visible);
-
-          return {grids};
-        }
-
-        /**
-         * 组装GridMeta, require field  `methodName` in option
-         * @param {Object} {serviceMeta,fieldsInStruct}
-         * @param {Object=} methodMeta
-         * @returns {{grids:Array, actions: Object}}
-         */
-        assembleGridMeta({serviceMeta, fieldsInStruct},
-                         methodMeta = this.__getMethod(serviceMeta, this.option.methodName)) {
-          const gridMeta = this.assembleNoActionGridMeta({serviceMeta, fieldsInStruct}, methodMeta);
-          const actionArr = serviceMeta.methods.filter(m => !!m.annotations)
-              .filter(({annotations}) => annotations.find(an => an.key === "m.type" && an.value === "entity-action"))
-              .map(m => this.assembleActionMeta({serviceMeta, fieldsInStruct}, m));
-
-          if (actionArr && actionArr.length > 0) {
-            // if there's no field named actions, append one.
-            const actionField = gridMeta.grids.find(row => row.name === "actions");
-            if (!actionField) {
-              gridMeta.grids.push({name: "actions", label: "操作", metaType: {type: "ACTION"}});
-            } else {
-              actionField.metaType = {type: "ACTION"};
-            }
-          }
-
-          const actions = {};
-
-          for (let ac of actionArr) {
-            actions[ac.actionId] = ac;
-          }
-
-          gridMeta.actions = actions;
-
-          return gridMeta;
-
-        }
-
-        /**
-         * 组装ActionMeta, require field  `methodName` in option
-         * @param {Object} {serviceMeta,fieldsInStruct}
-         * @param {Object=} methodMeta
-         * @returns {{actionId:String, actionName: String, operType: String, group: String, modelSrc: String, formMeta: Object}}
-         */
-        assembleActionMeta({serviceMeta, fieldsInStruct},
-                           methodMeta = this.__getMethod(serviceMeta, this.option.methodName)) {
-          const annotations = methodMeta.annotations;
-          if (!annotations || annotations.length === 0)
-            throw new TypeError(`Annotations not defined in method【${serviceMeta.name}#${methodMeta.name}】`);
-
-          const map = {}, actionMeta = {};
-          for (let an of annotations) {
-            map[an.key] = an.value;
-          }
-
-          actionMeta.actionId = map["m.id"] || `${serviceMeta.name}-${methodMeta.name}`;
-          actionMeta.actionName = map["m.name"] || methodMeta.name;
-          actionMeta.operType = map["m.operType"] || "1";
-          actionMeta.group = map["m.group"];
-          actionMeta.modelSrc = map["m.modelSrc"];
-          actionMeta.formMeta = this.assembleFormMeta({serviceMeta, fieldsInStruct}, methodMeta);
-          return actionMeta;
-        }
-
-        /**
-         * 组装FormMeta, require field  `methodName` in option
-         * @param {Object} {serviceMeta,fieldsInStruct}
-         * @param {Object=} methodMeta
-         * @returns {{confirm:String, title: String, formUrl:String, hideSubmitBtn:Boolean, fields:Array}}
-         */
-        assembleFormMeta({serviceMeta, fieldsInStruct},
-                         methodMeta = this.__getMethod(serviceMeta, this.option.methodName)) {
-          const annotations = methodMeta.annotations;
-
-          if (!annotations || annotations.length === 0)
-            throw new TypeError(`Annotations not defined in method【${serviceMeta.name}#${methodMeta.name}】`);
-          const map = {}, formMeta = {};
-          for (let an of annotations) {
-            map[an.key] = an.value;
-          }
-          formMeta.confirm = map["m.form.confirm"];
-          formMeta.title = map["m.form.title"] || methodMeta.name;
-          formMeta.formUrl = map["m.form.url"] || "/metadata/form_url/not_config.do";
-          formMeta.hideSubmitBtn = Boolean(map["m.form.hideSubmitBtn"]);
-          const args = methodMeta.request.fields;
-
-          // 1. 方法没有入参， 如void doSomething()
-          // 2. 方法有且仅有一个入参，且入参类型是STRUCT，如 void doSomething(TRequest request)
-          // 3. 其他情况 ，如 void doSomething(int id, String name)
-          let fields = null;
-          if (!args || args.length === 0) {
-            fields = [];
-          } else if (args.length === 1 && "STRUCT" === args[0].dataType.kind) {
-            const struct = this.__getStruct(serviceMeta, args[0].dataType.qualifiedName);
-            fields = struct.fields.map(f =>
-                this.assembleFieldMeta(
-                    {serviceMeta, fieldsInStruct},
-                    f,
-                    this.__getFieldEntity(fieldsInStruct, `${struct.namespace}.${struct.name}`, f.name)
-                )
-            );
-          } else {
-            fields = args.map(f => this.assembleFieldMeta({serviceMeta, fieldsInStruct}, f, {}));
-          }
-
-          formMeta.fields = fields;
-          return formMeta;
-        }
-
-        /**
-         * 组装FieldMeta， require field  `structName` & `fieldName` in option
-         * @param {Object} {serviceMeta,fieldsInStruct}
-         * @param {Object=} rawFieldMeta
-         * @param {Object=} fieldEntity
-         * @returns {*}
-         */
-        assembleFieldMeta({
-                            serviceMeta,
-                            fieldsInStruct
-                          },
-                          rawFieldMeta = this.__getField(serviceMeta, this.option.structName, this.option.fieldName),
-                          fieldEntity = this.__getFieldEntity(fieldsInStruct, this.option.structName, this.option.fieldName)) {
-
-          const fieldMeta = Object.assign({}, fieldEntity);
-
-          if (fieldMeta.candidates) {
-            fieldMeta.candidates = JSON.parse(fieldMeta.candidates);
-          }
-          // fieldMeta.metaType
-          const metaType = {};
-          // default type
-          metaType.type = rawFieldMeta.dataType.kind;
-
-          switch (rawFieldMeta.dataType.kind) {
-            case "LIST":
-            case "SET":
-              const unitType = rawFieldMeta.dataType.valueType;
-              if (["LIST", "SET", "MAP"].indexOf(unitType.kind) > -1) {
-                throw new TypeError(`暂时不支持多层嵌套集合的结构 Field【${rawFieldMeta.name}】`)
-              }
-              if (unitType.kind === "STRUCT") {
-                const struct = this.__getStruct(serviceMeta, unitType.qualifiedName);
-                metaType.type = "STRUCT";
-                metaType.metadata = this.assembleStructMeta({serviceMeta, fieldsInStruct}, struct);
-              }
-              break;
-            case "MAP":
-              // TODO handle map
-              break;
-            case "STRUCT":
-              metaType.type = "STRUCT";
-              const struct = this.__getStruct(serviceMeta, rawFieldMeta.dataType.qualifiedName);
-              metaType.metadata = this.assembleStructMeta({serviceMeta, fieldsInStruct}, struct);
-              break;
-            default:
-              break;
-          }
-
-          fieldMeta.metaType = metaType;
-
-          rawFieldMeta.annotations && rawFieldMeta.annotations.forEach(an => {
-            const key = an.key.substring(an.key.indexOf('.') + 1);
-            // 对布尔值进行转换
-            switch (key) {
-              case "required":
-              case "mutil":
-              case "editable":
-              case "validate":
-              case "visible":
-              case "disabled":
-                fieldMeta[key] = an.value === "true";
-                break;
-              default:
-                fieldMeta[key] = an.value;
-                break;
-            }
-          });
-
-          // 适配H5中disabled的用法
-          if (fieldMeta.disabled === false) {
-            delete fieldMeta.disabled;
-          }
-          if (fieldMeta.maxLength === 0) {
-             delete fieldMeta.maxLength;
-          }
-
-          if (fieldMeta.length === 0) {
-              delete fieldMeta.length;
-          }
-          return fieldMeta;
-        }
-
-
-        __getFieldEntity(fieldsInStruct, structName, fieldName) {
-          const fields = fieldsInStruct[structName];
-          if (!fields) {
-//            console.warn(`Struct【${structName}】may probably not config in database.`);
-            return {
-              name: fieldName,
-              label: fieldName
-            };
-          }
-
-          const found = fields.find(f => f.name === fieldName);
-          if (!found) {
+        const found = fields.find(f => f.name === fieldName);
+        if (!found) {
 //            console.warn(`Field【${structName}.${fieldName}】may probably not config in database.`);
-            return {
-              name: fieldName,
-              label: fieldName
-            };
-          }
-
-          return found;
+          return {
+            name: fieldName,
+            label: fieldName
+          };
         }
 
-        __getMethod(serviceMeta, methodName) {
-          const found = serviceMeta.methods.find(m => m.name === methodName);
-          if (!found)
-            throw new TypeError(`Method【${methodName}】not found in ${serviceMeta.namespace}.${serviceMeta.name}`);
-          return found;
-        }
-
-        __getStruct(serviceMeta, structName) {
-          const found = serviceMeta.structDefinitions.find(struct => `${struct.namespace}.${struct.name}` === structName);
-          if (!found)
-            throw new TypeError(`Struct【${structName}】not found in ${serviceMeta.namespace}.${serviceMeta.name}`);
-          return found;
-        }
-
-        __getField(serviceMeta, structName, fieldName) {
-          const struct = this.__getStruct(serviceMeta, structName);
-          const found = struct.fields.find(field => field.name === fieldName);
-          if (!found)
-            throw new TypeError(`Field【${fieldName}】not found in ${structName.namespace}.${structName.name}`);
-          return found;
-        }
+        return found;
       }
 
-      customElements.define(MetaConstructor.is, MetaConstructor);
-    </script>
+      __getMethod(serviceMeta, methodName) {
+        const found = serviceMeta.methods.find(m => m.name === methodName);
+        if (!found)
+          throw new TypeError(`Method【${methodName}】not found in ${serviceMeta.namespace}.${serviceMeta.name}`);
+        return found;
+      }
+
+      __getStruct(serviceMeta, structName) {
+        const found = serviceMeta.structDefinitions.find(struct => `${struct.namespace}.${struct.name}` === structName);
+        if (!found)
+          throw new TypeError(`Struct【${structName}】not found in ${serviceMeta.namespace}.${serviceMeta.name}`);
+        return found;
+      }
+
+      __getField(serviceMeta, structName, fieldName) {
+        const struct = this.__getStruct(serviceMeta, structName);
+        const found = struct.fields.find(field => field.name === fieldName);
+        if (!found)
+          throw new TypeError(`Field【${fieldName}】not found in ${structName.namespace}.${structName.name}`);
+        return found;
+      }
+    }
+
+    customElements.define(MetaConstructor.is, MetaConstructor);
+  </script>
 </dom-module>
