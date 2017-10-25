@@ -5,172 +5,183 @@
 <link rel="import" href="./behaviors/tip-behavior.html">
 
 <dom-module id="h2-tip-dialog">
-    <template>
-        <style>
+  <template>
+    <style>
 
-            :host .tip-dialog {
+      :host .tip-dialog {
 
-                min-height: 25px;
-                min-width: 125px;
-                /*padding: 15px 20px;*/
-                color: #000066;
+        min-height: 25px;
+        min-width: 125px;
+        /*padding: 15px 20px;*/
+        color: #000066;
 
-            }
+      }
 
-            :host #tip {
-                text-align: center;
-                vertical-align: middle;
-                box-sizing: border-box;
-            }
+      :host #tip {
+        text-align: center;
+        vertical-align: middle;
+        box-sizing: border-box;
+      }
 
-            :host .msg {
-                background: blue;
-                color: #fff;
-            }
+      :host .msg {
+        background: blue;
+        color: #fff;
+      }
 
-            :host .alert {
-                background: #ffff00;
-                color: red;
-            }
+      :host .alert {
+        background: #ffff00;
+        color: red;
+      }
 
-            :host .success {
-                background: #00b300;
-                color: #fff;
-            }
+      :host .success {
+        background: #00b300;
+        color: #fff;
+      }
 
-            :host .error {
-                background: #f60;
-                color: #fff;
-            }
+      :host .error {
+        background: #f60;
+        color: #fff;
+      }
 
-            :host #operate-panl {
-                width: 250px;
-                height: 50px;
-                text-align: center;
-            }
+      :host #operate-panl {
+        width: 250px;
+        height: 50px;
+        text-align: center;
+      }
 
-            :host #tip {
-                text-align: center;
-                vertical-align: middle;
-                padding: 20px 8px;
-                font-size: 15px;
-                min-height: 60px;
-                min-width: 200px;
-                margin-top: 0px;
-            }
+      :host #tip {
+        text-align: center;
+        vertical-align: middle;
+        padding: 20px 8px;
+        font-size: 15px;
+        min-height: 60px;
+        min-width: 200px;
+        margin-top: 0px;
+      }
 
-            #remark-input {
-                width: 200px;
-                border-radius: 3px;
-                text-align: center;
-                margin-left: 20px;
-                height: 28px;
-            }
+      #remark-input {
+        width: 200px;
+        border-radius: 3px;
+        text-align: center;
+        margin-left: 20px;
+        height: 28px;
+      }
 
-            :host .remark-panl {
-                text-align: center;
-            }
+      :host .remark-panl {
+        text-align: center;
+      }
 
-            :host paper-button {
-                background-color: var(--google-grey-300);
-            }
+      :host paper-button {
+        background-color: var(--google-grey-300);
+      }
 
-            :host paper-button:hover {
-                background-color: var(--paper-light-blue-200);
-            }
+      :host paper-button:hover {
+        background-color: var(--paper-light-blue-200);
+      }
 
-            :host dom-if {
-                display: none;
-            }
-        </style>
-        <paper-dialog id="tip-dialog" attached="attachedHandler" modal="[[_isConfirm(type)]]">
-            <div id="tip" class$="{{type}}">{{message}}</div>
-            <template is="dom-if" if="{{_isPrompt(type)}}">
-                <div class="remark-panl">
-                    <iron-input bind-value="{{remark}}" maxlength="10">
-                        <input type="text" class="input-size" id="remark-input">
-                    </iron-input>
-                </div>
-            </template>
-            <template is="dom-if" if="{{_isConfirm(type)}}">
-                <div id="operate-panl">
-                    <paper-button type="true" on-click="confirmFn">[[yesBtn]]</paper-button>
-                    <paper-button on-click="cancelFn">[[noBtn]]</paper-button>
-                </div>
-            </template>
+      :host dom-if {
+        display: none;
+      }
+    </style>
+    <paper-dialog id="tip-dialog" attached="attachedHandler" modal="[[_isConfirm(type)]]">
+      <div id="tip" class$="{{type}}">{{message}}</div>
+      <template is="dom-if" if="{{_isPrompt(type)}}">
+        <div class="remark-panl">
+          <iron-input bind-value="{{remark}}" maxlength="10">
+            <input type="text" class="input-size" id="remark-input">
+          </iron-input>
+        </div>
+      </template>
+      <template is="dom-if" if="{{_isConfirm(type)}}">
+        <div id="operate-panl">
+          <paper-button type="true" on-click="confirmFn">[[yesBtn]]</paper-button>
+          <paper-button on-click="cancelFn">[[noBtn]]</paper-button>
+        </div>
+      </template>
 
-        </paper-dialog>
-    </template>
+    </paper-dialog>
+  </template>
 </dom-module>
 
 <script>
-    class H2TipDialog extends Polymer.Element {
-        static get is() {
-            return "h2-tip-dialog";
-        }
-        static get properties() {
-            return {
-
-                message: {
-                    type: String,
-                    value: 'hello',
-                    observer: '_watcherMessage'
-                },
-                type: {
-                    type: String,
-                    value: 'alert'
-
-                },
-                remark: {
-                    type: String,
-                    notify: true,
-                    reflectToAttribute: true
-                },
-                yesBtn: {//确认按钮文字
-                    type: String,
-                    value: function () {
-                        return "确定"
-                    }
-                },
-                noBtn: {//取消按钮文字
-                    type: String,
-                    value: function () {
-                        return "取消"
-                    }
-                }
-            };
-        }
-        _watcherMessage (message) {
-            if (message) {
-                this.root.querySelector('#tip').innerHTML = message;
-            }
-        }
-        cancelFn () {
-            //this.fire("cancel-handler");
-            this.dispatchEvent(new CustomEvent("cancel-handler", {
-                bubbles: true, composed: true
-            }));
-        }
-        _isConfirm (type) {
-            return 'confirm' == type || 'prompt' == type;
-        }
-        _isPrompt (type) {
-            return 'prompt' == type;
-        }
-        confirmFn () {
-            if (this.type == 'confirm') {
-                //this.fire("confirm-handler");
-                this.dispatchEvent(new CustomEvent("confirm-handler", {
-                    bubbles: true, composed: true
-                }));
-            } else if (this.type == 'prompt') {
-                //this.fire("confirm-handler", {"remark": this.remark});
-                this.dispatchEvent(new CustomEvent("confirm-handler", {
-                    bubbles: true, composed: true, remark: this.remark
-                }));
-            }
-        }
-
+  /**
+   * @customElement
+   * @polymer
+   */
+  class H2TipDialog extends Polymer.Element {
+    static get is() {
+      return "h2-tip-dialog";
     }
-    customElements.define(H2TipDialog.is, H2TipDialog);
+
+    static get properties() {
+      return {
+
+        message: {
+          type: String,
+          value: 'hello',
+          observer: '_watcherMessage'
+        },
+        type: {
+          type: String,
+          value: 'alert'
+
+        },
+        remark: {
+          type: String,
+          notify: true,
+          reflectToAttribute: true
+        },
+        yesBtn: {//确认按钮文字
+          type: String,
+          value: function () {
+            return "确定"
+          }
+        },
+        noBtn: {//取消按钮文字
+          type: String,
+          value: function () {
+            return "取消"
+          }
+        }
+      };
+    }
+
+    _watcherMessage(message) {
+      if (message) {
+        this.root.querySelector('#tip').innerHTML = message;
+      }
+    }
+
+    cancelFn() {
+      //this.fire("cancel-handler");
+      this.dispatchEvent(new CustomEvent("cancel-handler", {
+        bubbles: true, composed: true
+      }));
+    }
+
+    _isConfirm(type) {
+      return 'confirm' == type || 'prompt' == type;
+    }
+
+    _isPrompt(type) {
+      return 'prompt' == type;
+    }
+
+    confirmFn() {
+      if (this.type == 'confirm') {
+        //this.fire("confirm-handler");
+        this.dispatchEvent(new CustomEvent("confirm-handler", {
+          bubbles: true, composed: true
+        }));
+      } else if (this.type == 'prompt') {
+        //this.fire("confirm-handler", {"remark": this.remark});
+        this.dispatchEvent(new CustomEvent("confirm-handler", {
+          bubbles: true, composed: true, remark: this.remark
+        }));
+      }
+    }
+
+  }
+
+  customElements.define(H2TipDialog.is, H2TipDialog);
 </script>
