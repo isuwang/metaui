@@ -359,7 +359,8 @@
             )
           );
         } else {
-          fields = args.map(f => this.assembleFieldMeta({serviceMeta, fieldsInStruct}, f, {}));
+          fields = args.map(f => this.assembleFieldMeta({serviceMeta, fieldsInStruct}, f,
+            this.__getFieldEntity(fieldsInStruct, null, f.name)));
         }
 
         formMeta.fields = fields;
