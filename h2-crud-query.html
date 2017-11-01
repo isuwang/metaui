@@ -111,12 +111,12 @@
 
       static get observers() {
         return [
-          '_pagingChange(paging.start)'
+          '_pagingChange(paging.start, metadata.noPaging)'
         ];
       }
 
       _pagingChange() {
-        if (this.paging) {
+        if (this.paging || this.metadata.noPaging) {
           this.async(this.submit.bind(this), 0);
         }
       }
