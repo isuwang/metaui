@@ -842,7 +842,7 @@
       "tagname": "h2-action-group"
     },
     {
-      "description": "",
+      "description": "## A component for querying form.\n\n```html\n<h2-crud-query metadata=\"{{ metadata }}\"></h2-crud-query>\n```\n```\nmetadata = {\n  fields: [\n    {\n      name: \"col1\",\n      label: \"Col1\"\n    },\n    {\n      name: \"col2\",\n      label: \"Col2\"\n    },\n    {\n      name: \"col3\",\n      label: \"Col3\"\n    }\n  ],\n  noPaging: true\n}\n\n```\n### metadata定义 (FormMeta)\n|字段名|类型|Required|描述|\n|:--|:--|:--|:--|\n|fields|array.<FieldMeta>|是|字段元数据|\n|noPaging|boolean|否|是否取消分页|\n\n### [See FieldMeta](https://www.webcomponents.org/element/isuwang/metaui/elements/h2-field)",
       "summary": "",
       "path": "h2-crud-query.html",
       "properties": [
@@ -920,11 +920,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 81,
+              "line": 114,
               "column": 10
             },
             "end": {
-              "line": 83,
+              "line": 116,
               "column": 11
             }
           },
@@ -1002,11 +1002,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 76,
+              "line": 109,
               "column": 10
             },
             "end": {
-              "line": 79,
+              "line": 112,
               "column": 11
             }
           },
@@ -1023,11 +1023,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 91,
+              "line": 124,
               "column": 10
             },
             "end": {
-              "line": 93,
+              "line": 126,
               "column": 11
             }
           },
@@ -1042,11 +1042,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 95,
+              "line": 128,
               "column": 10
             },
             "end": {
-              "line": 100,
+              "line": 133,
               "column": 11
             }
           },
@@ -1062,11 +1062,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 104,
+              "line": 137,
               "column": 10
             },
             "end": {
-              "line": 107,
+              "line": 140,
               "column": 11
             }
           },
@@ -1206,11 +1206,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 135,
+              "line": 168,
               "column": 6
             },
             "end": {
-              "line": 152,
+              "line": 185,
               "column": 7
             }
           },
@@ -1307,11 +1307,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 117,
+              "line": 150,
               "column": 6
             },
             "end": {
-              "line": 121,
+              "line": 154,
               "column": 7
             }
           },
@@ -1324,11 +1324,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 123,
+              "line": 156,
               "column": 6
             },
             "end": {
-              "line": 129,
+              "line": 162,
               "column": 7
             }
           },
@@ -1341,11 +1341,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 157,
+              "line": 190,
               "column": 6
             },
             "end": {
-              "line": 166,
+              "line": 199,
               "column": 7
             }
           },
@@ -1363,11 +1363,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 62,
+          "line": 95,
           "column": 4
         },
         "end": {
-          "line": 167,
+          "line": 200,
           "column": 5
         }
       },
@@ -1398,11 +1398,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 81,
+              "line": 114,
               "column": 10
             },
             "end": {
-              "line": 83,
+              "line": 116,
               "column": 11
             }
           },
@@ -1468,11 +1468,11 @@
           "description": "The result of the query.",
           "sourceRange": {
             "start": {
-              "line": 76,
+              "line": 109,
               "column": 10
             },
             "end": {
-              "line": 79,
+              "line": 112,
               "column": 11
             }
           },
@@ -1484,11 +1484,11 @@
           "description": "The paging condition.\n`start`: the number of the first page.\n`limit`: the maximum number of a page.",
           "sourceRange": {
             "start": {
-              "line": 91,
+              "line": 124,
               "column": 10
             },
             "end": {
-              "line": 93,
+              "line": 126,
               "column": 11
             }
           },
@@ -1500,11 +1500,11 @@
           "description": "If true, a new query form will be submitted after reset() is called.",
           "sourceRange": {
             "start": {
-              "line": 104,
+              "line": 137,
               "column": 10
             },
             "end": {
-              "line": 107,
+              "line": 140,
               "column": 11
             }
           },
@@ -1538,11 +1538,11 @@
           "range": {
             "file": "h2-crud-query.html",
             "start": {
-              "line": 53,
+              "line": 86,
               "column": 4
             },
             "end": {
-              "line": 53,
+              "line": 86,
               "column": 57
             }
           }
@@ -4659,7 +4659,7 @@
               "column": 6
             },
             "end": {
-              "line": 366,
+              "line": 367,
               "column": 7
             }
           },
@@ -4682,11 +4682,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 375,
+              "line": 376,
               "column": 6
             },
             "end": {
-              "line": 457,
+              "line": 458,
               "column": 7
             }
           },
@@ -4712,11 +4712,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 460,
+              "line": 461,
               "column": 6
             },
             "end": {
-              "line": 480,
+              "line": 481,
               "column": 7
             }
           },
@@ -4739,11 +4739,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 482,
+              "line": 483,
               "column": 6
             },
             "end": {
-              "line": 487,
+              "line": 488,
               "column": 7
             }
           },
@@ -4763,11 +4763,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 489,
+              "line": 490,
               "column": 6
             },
             "end": {
-              "line": 494,
+              "line": 495,
               "column": 7
             }
           },
@@ -4787,11 +4787,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 496,
+              "line": 497,
               "column": 6
             },
             "end": {
-              "line": 502,
+              "line": 503,
               "column": 7
             }
           },
@@ -4818,7 +4818,7 @@
           "column": 4
         },
         "end": {
-          "line": 503,
+          "line": 504,
           "column": 5
         }
       },

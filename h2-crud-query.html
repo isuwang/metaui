@@ -2,7 +2,40 @@
 <link rel="import" href="../polymer/lib/utils/async.html">
 <link rel="import" href="./h2-form.html">
 <link rel="import" href="./h2-field.html">
+<!--
+## A component for querying form.
 
+```html
+<h2-crud-query metadata="{{ metadata }}"></h2-crud-query>
+```
+```
+metadata = {
+  fields: [
+    {
+      name: "col1",
+      label: "Col1"
+    },
+    {
+      name: "col2",
+      label: "Col2"
+    },
+    {
+      name: "col3",
+      label: "Col3"
+    }
+  ],
+  noPaging: true
+}
+
+```
+### metadata定义 (FormMeta)
+|字段名|类型|Required|描述|
+|:--|:--|:--|:--|
+|fields|array.<FieldMeta>|是|字段元数据|
+|noPaging|boolean|否|是否取消分页|
+
+### [See FieldMeta](https://www.webcomponents.org/element/isuwang/metaui/elements/h2-field)
+-->
 <dom-module id="h2-crud-query">
   <template>
     <style>

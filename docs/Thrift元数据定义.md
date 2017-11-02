@@ -56,11 +56,11 @@
   struct QueryRequest {
         1: i32 field1
         2: optional string field2
-  } ( m.ref = "waybill.QueryRequest" )
+  }
 
   struct TWaybillEx {
     // ...
-  } ( m.ref = "waybill.TWaybillEx" )
+  }
 
   struct QueryResponse {
         1: base_model.TPageResponse pageResponse
@@ -74,10 +74,6 @@
 
   ```
 - 元数据字典
-|注释key|对应元数据字段|取值|描述
-|:----|:----|:-----|:---|
-|m.ref||[domain].[entity]|数据库字段元数据查询条件|
-
 |注释key|对应元数据字段|取值|描述
 |:----|:----|:-----|:---|
 |m.name|FieldMeta.name|应与实体字段名相同|字段名，如“orderNo”
@@ -104,16 +100,9 @@
 
 ## 数据库定义
 ```mysql
-DROP DATABASE
-IF EXISTS metadb;
-CREATE DATABASE
-IF NOT EXISTS metadb DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
-
-DROP TABLE IF EXISTS `metadb`.`fields`;
 CREATE TABLE `metadb`.`fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `domain` varchar(50) NOT NULL COMMENT '领域，如orderdb',
-  `entity` varchar(50) NOT NULL COMMENT '实体，如TOrder',
+  `struct_name` varchar(200) NOT NULL COMMENT '实体名',
   `name` varchar(50) NOT NULL COMMENT '字段名，如"orderNo"',
   `element` varchar(50) DEFAULT NULL COMMENT '替换元素，如 "paper-input" ',
   `label` varchar(50) NOT NULL COMMENT '字段名，如"订单号"',
@@ -141,6 +130,6 @@ CREATE TABLE `metadb`.`fields` (
   `updated_by` int(11) DEFAULT NULL,
   `disabled` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `field_unique` (`domain`,`entity`,`name`) COMMENT '字段唯一约束'
-) ENGINE=InnoDB AUTO_INCREMENT=262 DEFAULT CHARSET=utf8 COMMENT='字段元数据';
+  UNIQUE KEY `field_unique` (`struct_name`,`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=477 DEFAULT CHARSET=utf8 COMMENT='字段元数据';
 ```
