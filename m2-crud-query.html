@@ -1,0 +1,205 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/lib/utils/async.html">
+<link rel="import" href="./m2-form.html">
+<link rel="import" href="./m2-field.html">
+<!--
+## A component for querying form.
+
+```html
+<m2-crud-query metadata="{{ metadata }}"></m2-crud-query>
+```
+```
+metadata = {
+  fields: [
+    {
+      name: "col1",
+      label: "Col1"
+    },
+    {
+      name: "col2",
+      label: "Col2"
+    },
+    {
+      name: "col3",
+      label: "Col3"
+    }
+  ],
+  noPaging: true
+}
+
+```
+### metadata定义 (FormMeta)
+|字段名|类型|Required|描述|
+|:--|:--|:--|:--|
+|fields|array.<FieldMeta>|是|字段元数据|
+|noPaging|boolean|否|是否取消分页|
+
+### [See FieldMeta](https://www.webcomponents.org/element/isuwang/metaui/elements/m2-field)
+-->
+<dom-module id="m2-crud-query">
+  <template>
+    <style>
+      dom-repeat {
+        display: none;
+      }
+
+      .btns {
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px 10px 10px 10px;
+      }
+
+      .conditions__item {
+        grid-row: auto;
+      }
+
+      .conditions {
+        display: grid;
+        grid-template-columns: 16% 16% 16% 16% auto;
+        grid-column-gap: 5%;
+      }
+
+      .container {
+        display: grid;
+        grid-template-rows: auto 10%;
+      }
+    </style>
+    <div class="container">
+      <div class="conditions">
+        <template is="dom-repeat" items="[[ metadata.fields ]]" as="fieldMeta" filter="_filterVisible">
+          <m2-field
+                  id="{{ getEditorId(fieldMeta.name) }}"
+                  class="conditions__item"
+                  editable
+                  context="{{ context }}"
+                  value="[[ getValueOrElse(context,fieldMeta.srcKey, fieldMeta.name) ]]"
+                  metadata="{{ fieldMeta }}">
+          </m2-field>
+        </template>
+      </div>
+
+      <div class="btns">
+        <paper-button raised on-click="submit">查询</paper-button>
+        <paper-button raised on-click="reset">重置</paper-button>
+      </div>
+    </div>
+
+    <slot id="ext-condition" name="ext-condition"></slot>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     * @demo demo/m2-crud-query/index.html
+     */
+    class M2CrudQuery extends M2Form {
+      constructor() {
+        super();
+      }
+
+      static get is() {
+        return "m2-crud-query";
+      }
+
+      static get properties() {
+        return {
+          /**
+           * The result of the query.
+           */
+          result: {
+            type: Array,
+            notify: true
+          },
+
+          metadata: {
+            type: Object
+          },
+
+          /**
+           * The paging condition.
+           * `start`: the number of the first page.
+           * `limit`: the maximum number of a page.
+           * @type {{start:{Number}, limit: {Number}}}
+           */
+          paging: {
+            type: Object
+          },
+
+          _extQueryCondition: {
+            type: Object,
+            value: function () {
+              return {};
+            }
+          },
+          /**
+           * If true, a new query form will be submitted after reset() is called.
+           */
+          queryAfterReset: {
+            type: Boolean,
+            value: false
+          }
+        }
+      }
+
+      static get observers() {
+        return [
+          '_pagingChange(paging.start, metadata.noPaging)'
+        ];
+      }
+
+      _pagingChange() {
+        if (this.paging || this.metadata.noPaging) {
+          this.async(this.submit.bind(this), 0);
+        }
+      }
+
+      ready() {
+        super.ready();
+        this.addEventListener('query-domain', e => {
+          Object.assign(this._extQueryCondition, e.detail);
+          this.submit();
+        });
+      }
+
+      /**
+       * Submit the form.
+       * @override
+       */
+      submit() {
+        const param = this._requestBody();
+        Object.assign(param, this._extQueryCondition);
+
+        if (this.paging) {
+          const {start, limit} = this.paging;
+          param.start = start;
+          param.limit = limit;
+        }
+
+        this.query({
+            url: this.metadata.formUrl,
+            data: param
+          },
+          data => this.result = data,
+          err => this.hTip.error(err)
+        );
+      }
+
+      /**
+       * Reset the query conditions and submit a new query form.
+       */
+      reset() {
+        this.metadata.fields.filter(field => !!field.visible).forEach(field => {
+          this.root.querySelector(`#${this.getEditorId(field.name)}`).value = undefined;
+        });
+
+        this._extQueryCondition = {};
+        if (this.queryAfterReset) {
+          this.submit();
+        }
+      }
+    }
+
+    window.customElements.define(M2CrudQuery.is, M2CrudQuery);
+  </script>
+</dom-module>

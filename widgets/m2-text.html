@@ -1,0 +1,37 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../paper-input/paper-input.html">
+<link rel="import" href="./m2-widget-base.html">
+<dom-module id="m2-text">
+    <template>
+        <paper-input
+                id="input"
+                always-float-label
+                value="{{ value }}"
+                label="[[ metadata.label ]]"
+                auto-validate
+                required="[[ metadata.required]]"
+                error-message="[[ metadata.prompt ]]"
+                min="[[ metadata.min ]]"
+                minlength="[[ metadata.minLength ]]"
+                max="[[ metadata.max ]]"
+                maxlength="[[ metadata.maxLength ]]"
+                pattern="[[ metadata.regexp ]]"
+                disabled="[[ metadata.disabled]]"
+                readonly="[[ !metadata.editable ]]">
+        </paper-input>
+    </template>
+    <script>
+        class M2Text extends M2WidgetBase {
+            static get is() {
+              return "m2-text";
+            }
+
+            validate() {
+              return this.$.input.validate();
+            }
+
+        }
+
+        window.customElements.define(M2Text.is, M2Text);
+    </script>
+</dom-module>

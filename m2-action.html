@@ -1,0 +1,226 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../h2-elements/behaviors/ajax-behavior.html">
+<link rel="import" href="./m2-dialog.html">
+<link rel="import" href="./m2-form.html">
+
+<!--
+
+A magic component, which you can post a form or open a dialog.
+
+```
+// Immediately submit a form.
+<m2-action context="{{ context }}" metadata="{{ metadata }}"></m2-action>
+
+// Open a m2-dialog
+<m2-action context="{{ context }}" metadata="{{ metadata1 }}"></m2-action>
+
+```
+```
+context = {
+  name: "WahsonLeung",
+  phone: "15900000000"
+}
+
+metadata = {
+    actionId: "record-add",
+    actionName: "Add Record",
+    operType: 1,
+    formMeta: {
+    formUrl: "/url-to-send-form",
+    confirm: "Sure to submit?",
+    fields: [
+      {
+        name: "name",
+        label:"Name"
+      },
+      {
+        name: "phone",
+        label:"Phone"
+      },
+    ],
+}
+
+metadata1 = {
+    actionId: "record-add",
+    actionName: "Add Record",
+    operType: 2,
+    formMeta: {
+    formUrl: "/url-to-send-form",
+    confirm: "Sure to submit?",
+    fields: [
+      {
+        name: "name",
+        label:"Name"
+      },
+      {
+        name: "phone",
+        label:"Phone"
+      },
+    ],
+}
+```
+### metadata定义 (ActionMeta)
+|字段名|类型|Required|描述|
+|:--|:--|:--|:--|
+|actionId|string|是|操作的唯一标识|
+|actionName|string|是|操作名，如 “收货”
+|group|string|否|操作组，如 “更多”
+|operType|number|是|操作类型，1：表单，2.弹窗
+|formMeta|FormMeta|是|表单meta
+|modelSrc|string|否|弹窗的model请求url
+|modelQueryParams|``array.<string>``|否|弹窗的model请求参数
+
+### [See FormMeta](https://www.webcomponents.org/element/isuwang/metaui/elements/m2-form)
+-->
+<dom-module id="m2-action">
+    <template>
+        <style>
+            :host {
+                display: inline-block;
+                overflow: visible;
+            }
+
+            :host paper-button {
+                width: inherit;
+                height: inherit;
+                margin: 0;
+                background: #fff;
+            }
+        </style>
+        <paper-button raised on-tap="submitOrOpenDialog">[[ metadata.actionName ]]</paper-button>
+        <div id="form" hidden></div>
+    </template>
+    <script>
+      /**
+       * @customElement
+       * @polymer
+       * @demo demo/m2-action/index.html
+       */
+      class M2Action extends Polymer.mixinBehaviors([AjaxBehavior], Polymer.Element) {
+        constructor() {
+          super();
+        }
+
+        static get is() {
+          return "m2-action";
+        }
+
+        static get properties() {
+          return {
+            metadata: {
+              type: Object
+            },
+
+            context: {
+              type: Object,
+              observer: "__contextChange"
+            },
+
+            _dialog: {
+              type: Object
+            },
+
+            _form: {
+              type: Object
+            }
+          }
+        }
+
+        __contextChange() {
+          this._dialog = null;
+          this._form = null;
+        }
+        /**
+         * When metadata.modelSrc is defined, fetch the new context.
+         */
+        _fetchContext() {
+          if (!this.metadata.modelSrc) return;
+          // fetch model with modelSrc
+          const data = {};
+
+          if (this.metadata.modelQueryParams) {
+            this.metadata.modelQueryParams.forEach(param => (data[param] = this.context[param]));
+          }
+
+          this.query({
+            url: this.metadata.modelSrc,
+            data: data
+          }, (data) => {
+            this._refreshContext(data);
+          }, (err) => this.hTip.error(JSON.stringify(err)));
+
+        }
+
+        /**
+         * If metadata.operType == 1 then submit a form,
+         * else if metadata.operType == 2 then open a dialog.
+         */
+        submitOrOpenDialog() {
+          if (this.metadata.operType == 1) {
+            // If no <m2-form /> exists in #form component, then append one.
+            this._form = this._form || this.$.form.appendChild(this._createForm());
+            setTimeout(() => {
+              this._form.submit();
+            },0);
+
+          } else if (this.metadata.operType == 2) {
+            this._fetchContext();
+            this._createDialog();
+          }
+        }
+
+        _refreshContext(context) {
+          this.context = context;
+          this._form.set('context', context);
+        }
+
+        _createForm() {
+          const form = document.createElement('m2-form');
+          form.metadata = this.metadata.formMeta;
+          form.context = this.context || {};
+          form.addEventListener('m2-form-submitted', this._formSubmittedHandler.bind(this));
+          return form;
+        }
+
+        _createDialog() {
+          this._dialog = document.createElement('m2-dialog');
+          document.body.appendChild(this._dialog);
+          this._dialog.open();
+
+          // make sure the dialog is opened smoothly
+          setTimeout(() => {
+            const form = this._createForm();
+            form.slot = "container";
+            this._form = form;
+            this._dialog.appendChild(form);
+            this._dialog.addEventListener('m2-dialog-closed', e => {
+              this._form = null;
+              this._dialog = null;
+            });
+          }, 0);
+
+          return this._dialog;
+        }
+
+        _formSubmittedHandler(e) {
+
+          e.stopPropagation();
+
+          if (this._dialog) {
+            this._dialog.close();
+          }
+
+          /**
+           * @event form-submitted
+           * Fire when the form submitted, in fact the ``form-submitted`` transmits the event ``m2-form-submitted`` in m2-form.
+           */
+          this.dispatchEvent(new CustomEvent("form-submitted", {
+            bubbles: true, composed: true, detail: e.detail
+          }));
+        }
+
+      }
+      window.customElements.define(M2Action.is, M2Action);
+    </script>
+</dom-module>

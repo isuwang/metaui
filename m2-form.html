@@ -1,0 +1,322 @@
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../h2-elements/behaviors/ajax-behavior.html">
+<link rel="import" href="../h2-elements/behaviors/base-behavior.html">
+<link rel="import" href="../h2-elements/behaviors/tip-behavior.html">
+<link rel="import" href="./m2-field.html">
+
+<!--
+A component for form.
+
+```
+<m2-form metadata="{{ metadata }}"></m2-form>
+```
+```
+context = {
+    foo: "foo",
+    bar: "bar"
+}
+metadata = {
+    formUrl: "/url-to-send-form",
+    title: "Form Title",
+    confirm: "Sure to submit?",
+    fields: [
+      {
+        name: "foo",
+        label: "foo",
+        element: "h2-text",
+        required: true,
+        editable: true,
+        visible: true
+      },
+      {
+        name: "bar",
+        label: "bar",
+        required: true,
+        editable: true,
+        visible: true
+      },
+    ],
+}
+```
+### metadata定义 (FormMeta)
+|字段名|类型|Required|描述|
+|:--|:--|:--|:--|
+|title|string|是|表单头|
+|formUrl|string|是|表单提交的url|
+|fields|array.<FieldMeta>|是|字段元数据|
+|confirm|string|否|表单提交前确认提示|
+|hideSubmitBtn|boolean|否|是否禁用提交按钮|
+|style|string|否|组件自定义样式|
+
+### [See FieldMeta](https://www.webcomponents.org/element/isuwang/metaui/elements/m2-field)
+-->
+<dom-module id="m2-form">
+    <template>
+        <style id="localStyle">
+
+            dom-repeat {
+                display: none;
+            }
+
+            dom-if {
+                display: none;
+            }
+
+            .btns {
+                position: relative;
+                padding: 8px 8px 8px 24px;
+                margin: 0;
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .container {
+                display: grid;
+                grid-template-columns: 30% 30% auto;
+                grid-column-gap: 10px;
+                grid-row-gap: 10px;
+            }
+
+            .container__item:only-of-type {
+                grid-column: 1 / end;
+            }
+
+        </style>
+        <h2>[[metadata.title]]</h2>
+
+        <div class="container">
+            <template is="dom-repeat" items="[[ metadata.fields ]]" as="fieldMeta" filter="_filterVisible">
+                <m2-field
+                        class="container__item"
+                        id="[[ getEditorId(fieldMeta.name) ]]"
+                        editable
+                        context="{{ __context }}"
+                        value="[[ getValueOrElse(context,fieldMeta.srcKey, fieldMeta.name) ]]"
+                        on-value-changed="_onValueChange"
+                        on-field-attached="_onFieldAttached"
+                        metadata="[[ fieldMeta ]]">
+                </m2-field>
+            </template>
+        </div>
+
+        <div class="btns">
+            <template is="dom-if" if="[[ !metadata.hideSubmitBtn ]]">
+                <paper-button raised on-click="submit">保存</paper-button>
+            </template>
+        </div>
+    </template>
+    <script>
+      /**
+       * @customElement
+       * @polymer
+       * @demo demo/m2-form/index.html
+       */
+      class M2Form extends Polymer.mixinBehaviors([BaseBehavior, AjaxBehavior, TipBehavior], Polymer.Element) {
+
+        static get is() {
+          return "m2-form";
+        }
+
+        static get properties() {
+          return {
+            _subscriptionTable: {
+              type: Object,
+              value: function () {
+                return {};
+              }
+            },
+
+            /**
+             *
+             */
+            context: {
+              type: Object,
+              value: function () {
+                return {};
+              }
+            },
+
+            __context: {
+              type: Object,
+              computed: "redefine(context,'__context')"
+            },
+
+            metadata: {
+              type: Object,
+              observer: '__metadataChange'
+            },
+
+            /**
+             * A function or closure to replace the default submit action, it will be invoked after the  _validate() return true.
+             *
+             * When it was called, the request param will be accessed as argument.
+             *
+             * @type {Function}
+             */
+            onSubmit: {
+              type: Object
+            },
+
+            /**
+             * The callback called when form post error occurs.
+             * @type {Function}
+             */
+            onError: {
+              type: Object
+            },
+
+            /**
+             * The callback called when form post success.
+             * @type {Function}
+             */
+            onSuccess: {
+              type: Object
+            }
+          };
+        }
+
+        __metadataChange(metadata) {
+          if (metadata) {
+            return this.updateStyle(metadata.style);
+          }
+        }
+
+        /**
+         * Listen the value change of all watchFields in context.
+         *
+         * ```javascript
+         * watch(['foo','bar'], (context, whoChange) => {
+         *     console.log(`${whoChange} changed, newValue = ${context[whoChange]}`);
+         * })
+         * ```
+         * When watch() execute, the callback will be invoked to refresh the initial state,
+         * notice that the `whoChange` will be undefined at this invoke.
+         *
+         * @param {Array.<String>} watchFields - fields in context you want to listen when their value changes.
+         * @param {Function} callback - callback executed when the value of watchFields in context changes.
+         */
+        watch(watchFields, callback) {
+          if (this.isFunction(callback)) {
+            for (let field of watchFields) {
+              this._subscriptionTable[field] = this._subscriptionTable[field] || [];
+              this._subscriptionTable[field].push(callback);
+            }
+
+            setTimeout(() => callback(this.__context), 0);
+
+          } else {
+            console.warn(`Oops, ${callback} is not a function`);
+          }
+        }
+
+        _onFieldAttached(e) {
+          const fieldMeta = e.model.fieldMeta;
+          fieldMeta.onAttached && fieldMeta.onAttached.call(this, e.target, this);
+        }
+
+        _onValueChange(e) {
+
+          const {name: myFieldName} = e.model.fieldMeta;
+
+          // Nothing depends on me！
+          if (!this._subscriptionTable[myFieldName]) return;
+
+          this._subscriptionTable[myFieldName].forEach(fn => {
+            fn(this.__context, myFieldName);
+          });
+        }
+
+        /**
+         * Generate editor id by fieldName.
+         * @param {!String} fieldName
+         */
+        getEditorId(fieldName) {
+          return `${this.constructor.is}-${fieldName}-editor`;
+        }
+
+        /**
+         * Submit the form.
+         */
+        submit() {
+
+          if (!this._validate()) return;
+
+          if (this.isFunction(this.onSubmit)) {
+            return this.onSubmit(this._requestBody());
+          }
+
+          const _submit = () => {
+            this.post({
+              url: this.metadata.formUrl,
+              sendAsJson: this.metadata.sendAsJson,
+
+              data: this._requestBody()
+            }, (data) => {
+
+              /**
+               * @event m2-form-submitted fire when form submitted.
+               */
+              this.dispatchEvent(new CustomEvent("m2-form-submitted", {
+                bubbles: true, composed: true, detail: data
+              }));
+
+              this.isFunction(this.onSuccess) && this.onSuccess(data);
+
+            }, (err) => {
+              this.hTip.error(JSON.stringify(err));
+              this.isFunction(this.onError) && this.onError(err);
+            });
+
+          };
+
+          if (this.metadata.confirm) {
+            this.hTip.confirm(this.metadata.confirm, _submit);
+          } else {
+            _submit();
+          }
+        }
+
+        _filterVisible(item) {
+          return !!item.visible;
+        }
+
+        _getEditor(fieldName) {
+          return this.root.querySelector(`#${this.getEditorId(fieldName)}`);
+        }
+
+        _validate() {
+          // return true if there's no field
+          if (!this.metadata.fields || this.metadata.fields.length === 0) return true;
+
+          return this.metadata.fields
+              .filter(fieldMeta => fieldMeta.visible && (fieldMeta.required || !!fieldMeta.validate))
+              .every(fieldMeta => {
+                const editor = this._getEditor(fieldMeta.name);
+                if (!editor) {
+                  console.warn(`Editor for 【${fieldMeta.name}】 not found in <${this.constructor.is} />`);
+                }
+                // if the editor does not have a validator,return true
+                return editor && editor.validate ? editor.validate() : true;
+              });
+        }
+
+        _requestBody() {
+          let requestBody = {};
+          this.metadata.fields
+              .filter(fieldMeta => !!fieldMeta.name)
+              .forEach(fieldMeta => {
+                requestBody[fieldMeta.name] = this.__context[fieldMeta.srcKey || fieldMeta.name]
+              });
+
+          // Execute the hook before submit.
+          if (this.isFunction(this.metadata.beforeSubmit)) {
+            requestBody = this.metadata.beforeSubmit(requestBody);
+          }
+
+          return requestBody;
+        }
+      }
+
+      window.customElements.define(M2Form.is, M2Form);
+    </script>
+</dom-module>

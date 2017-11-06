@@ -1,6 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="../behaviors/base-behavior.html">
-<link rel="import" href="../behaviors/ajax-behavior.html">
+<link rel="import" href="../../h2-elements/behaviors/base-behavior.html">
+<link rel="import" href="../../h2-elements/h2-fetch.html">
 
 <!--
 使用方式：
@@ -11,12 +11,15 @@
 <meta-constructor src="/dapeng/metadata" meta-type="form" option="[[ option ]]" metadata="{{formMeta}}"></meta-constructor>
 <meta-constructor src="/dapeng/metadata" meta-type="action" option="[[ option ]]"></meta-constructor>
 <meta-constructor src="/dapeng/metadata" meta-type="field" option="[[ option ]]"></meta-constructor>
-<h2-crud metadata="{{md}}"></h2-crud>
+<m2-crud metadata="{{md}}"></m2-crud>
 ```
 -->
 <dom-module id="meta-constructor">
+  <template>
+    <h2-fetch></h2-fetch>
+  </template>
   <script>
-    class MetaConstructor extends Polymer.mixinBehaviors([AjaxBehavior, BaseBehavior], Polymer.Element) {
+    class MetaConstructor extends Polymer.mixinBehaviors([BaseBehavior], Polymer.Element) {
       static get is() {
         return "meta-constructor";
       }

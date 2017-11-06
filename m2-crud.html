@@ -1,0 +1,189 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./widgets/m2-widget-resources.html">
+<link rel="import" href="../h2-elements/behaviors/ajax-behavior.html">
+<link rel="import" href="../h2-elements/behaviors/base-behavior.html">
+<link rel="import" href="./m2-crud-query.html">
+<link rel="import" href="./m2-grid.html">
+<link rel="import" href="./m2-action.html">
+<link rel="import" href="./h2-pagination.html">
+
+<!--
+ # 由元数据驱动的增删改查组件
+```
+<m2-crud metadata="{{ metadata }}"
+         key-for-items="rows"
+         key-for-page-result="pageResponse.results"
+         result-descriptor="[[ _desc() ]]">
+</m2-crud>
+```
+```
+_desc() {
+    return (result) => {
+        result.rows[0].name = 'foo';
+        return result;
+    };
+}
+
+metadata = {
+    query: {
+        FormMeta & {
+            noPaging: Boolean     //  是否禁止分页
+        }
+    },
+    actions: {{Array<Action>}},
+    result: {{GridMeta}}
+}
+```
+### metadata定义 (DomainMeta)
+|字段名|类型|Required|描述|
+|:--|:--|:--|:--|
+|query|FormMeta|是|表格数据请求表单的元数据|
+|actions|``array.<ActionMeta>``|是|针对domain上的操作元数据
+|result|GridMeta|是|表格的元数据|
+
+### [See FormMeta][1]
+### [See ActionMeta][2]
+### [See GridMeta][3]
+
+[1]: https://www.webcomponents.org/element/isuwang/metaui/elements/m2-form
+[2]: https://www.webcomponents.org/element/isuwang/metaui/elements/m2-action
+[3]: https://www.webcomponents.org/element/isuwang/metaui/elements/m2-grid
+-->
+<dom-module id="m2-crud">
+  <template>
+    <style>
+      :host .crud-actions {
+        display: flex;
+        justify-content: flex-end;
+        border-top: 1px dashed;
+        padding: 10px;
+      }
+
+      :host .action-items {
+        margin-left: 10px;
+      }
+    </style>
+    <div class="crud-query">
+      <m2-crud-query id="query"
+                     query-after-reset
+                     metadata="{{ metadata.query }}"
+                     result="{{ rawResult }}"
+                     paging="[[ paging ]]"
+                     context="{{ context }}">
+        <slot name="ext-condition" slot="ext-condition"></slot>
+      </m2-crud-query>
+    </div>
+
+    <div class="crud-actions">
+      <template is="dom-repeat" items="[[ metadata.actions ]]" as="action">
+                    <span class="action-items">
+                        <m2-action metadata="[[ action ]]"></m2-action>
+                    </span>
+      </template>
+    </div>
+
+    <div class="crud-result">
+      <m2-grid metadata="{{ metadata.result }}"
+               value="[[ getValueByPath(finalResult, keyForItems) ]]">
+
+      </m2-grid>
+    </div>
+
+    <div class="crud-pagination">
+      <template is="dom-if" if="{{ !metadata.query.noPaging }}">
+        <h2-pagination paging="{{ paging }}"
+                       total="[[ getValueByPath(finalResult, keyForPageResult) ]]">
+
+        </h2-pagination>
+      </template>
+    </div>
+
+  </template>
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     * @demo demo/m2-crud/index.html
+     */
+    class M2Crud extends Polymer.mixinBehaviors([BaseBehavior, AjaxBehavior], Polymer.Element) {
+      constructor() {
+        super();
+      }
+
+      static get is() {
+        return "m2-crud";
+      }
+
+      static get properties() {
+        return {
+          /**
+           * a closure ``(result) => result``, will be invoked before result is access to dom.
+           * @callback resultDescriptor {{(result) => result}}
+           */
+          resultDescriptor: {
+            type: Object
+          },
+          /**
+           * The result response from server.
+           * @type  {{array}}
+           */
+          rawResult: {
+            type: Array,
+          },
+          /**
+           * The result is described by ``resultDescriptor``
+           * @type  {{array}}
+           */
+          finalResult: {
+            type: Array,
+            computed: '_resultDescriptor(rawResult)'
+          },
+
+          /**
+           * The metadata of m2-crud
+           */
+          metadata: {
+            type: Object,
+          },
+
+          /**
+           * The context of m2-crud
+           */
+          context: {
+            type: Object
+          },
+
+          /**
+           * The field name of the items in the responsed result.
+           */
+          keyForItems: {
+            type: String,
+            value: "rows"
+          },
+
+          /**
+           * The field name of the page result in the responsed result.
+           */
+          keyForPageResult: {
+            type: String,
+            value: "results"
+          }
+        }
+      }
+
+      _resultDescriptor(result) {
+        return Function.prototype.isPrototypeOf(this.resultDescriptor) ?
+          this.resultDescriptor(result) : result;
+      }
+
+      /**
+       * 查询页面数据
+       */
+      refresh() {
+        this.$.query.submit();
+      }
+    }
+
+    window.customElements.define(M2Crud.is, M2Crud);
+  </script>
+</dom-module>

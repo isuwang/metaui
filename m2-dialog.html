@@ -1,0 +1,139 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../neon-animation/web-animations.html">
+<link rel="import" href="../neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../neon-animation/animations/fade-out-animation.html">
+
+<!--
+    A component for dialog.
+```javascript
+<m2-dialog>
+    <div slot="container">
+        Put your Content here inside an element which with [slot=container]
+    </div>
+</m2-dialog>
+```
+-->
+<dom-module id="m2-dialog">
+    <template>
+        <style>
+            :host {
+                position: absolute;
+            }
+
+            :host paper-dialog {
+                min-width: 80%;
+                max-width: 80%;
+            }
+
+            :host .close-dialog {
+                width: 40px;
+                height: 40px;
+                position: absolute;
+                font-size: 20px;
+                right: -16px;
+                top: -16px;
+                background: white;
+                border: 1px solid #ededed;
+                border-radius: 50%;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+            }
+
+            :host .scrollable-container {
+                min-height: 800px;
+            }
+
+        </style>
+
+
+        <paper-dialog id="dialog"
+                      modal
+                      entry-animation="scale-up-animation"
+                      exit-animation="fade-out-animation">
+            <div class="close-dialog" on-tap="close">X</div>
+            <paper-dialog-scrollable>
+                <div class="scrollable-container">
+                    <slot name="container"></slot>
+                </div>
+            </paper-dialog-scrollable>
+        </paper-dialog>
+
+    </template>
+    <script>
+      /**
+       * @customElement
+       * @polymer
+       * @demo demo/m2-dialog/index.html
+       */
+      class M2Dialog extends Polymer.Element {
+
+        static get properties() {
+          return {
+            /** True to stop auto dismiss. */
+            stopAutoDismiss: {
+              type: Boolean,
+              value: false
+            }
+          };
+        }
+
+        static get is() {
+          return "m2-dialog";
+        }
+
+        connectedCallback() {
+          super.connectedCallback();
+
+          /**
+           * @listens iron-overlay-closed
+           */
+          this.addEventListener('iron-overlay-closed', e => {
+            // ignore 'iron-overlay-closed' event fired by other element
+            if (e.path[0] != this.$.dialog) return;
+            e.stopPropagation();
+            /**
+             * @event m2-dialog-closed
+             * Fired when the dialog closed.
+             */
+            this.dispatchEvent(new CustomEvent('m2-dialog-closed'), {
+              composed: true,
+              bubbles: true
+            });
+            if(!this.stopAutoDismiss) {
+              setTimeout(() => {
+                this.parentElement.removeChild(this);
+              }, 100);
+            }
+          });
+
+          /**
+           * @listens m2-dialog-dismiss
+           */
+          this.addEventListener('m2-dialog-dismiss', this.close);
+        }
+
+        /**
+         * Open the dialog.
+         */
+        open() {
+          this.$.dialog.open();
+        }
+
+        /**
+         * Close the dialog.
+         */
+        close() {
+          this.$.dialog.close();
+        }
+
+      }
+      window.customElements.define(M2Dialog.is, M2Dialog);
+    </script>
+</dom-module>

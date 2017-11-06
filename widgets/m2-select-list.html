@@ -1,0 +1,55 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../paper-listbox/paper-listbox.html">
+<link rel="import" href="../../paper-item/paper-item.html">
+<link rel="import" href="../../h2-elements/behaviors/base-behavior.html">
+<link rel="import" href="../../h2-elements/h2-select.html">
+<link rel="import" href="./m2-widget-base.html">
+<dom-module id="m2-select-list">
+  <template>
+    <style>
+      #dropdownMenu {
+        width: 100%;
+      }
+    </style>
+    <h2-select id="select"
+               label="[[ metadata.label ]]"
+               items="[[ metadata.candidates ]]"
+               attr-for-label="[[ metadata.candidateLabel ]]"
+               attr-for-value="[[ metadata.candidateValue ]]"
+               disabled="[[ metadata.disabled ]]"
+               selected="{{ value }}"></h2-select>
+
+    <!--<paper-dropdown-menu id="dropdownMenu"-->
+    <!--always-float-label-->
+    <!--dynamic-align-->
+    <!--required="[[ metadata.required ]]"-->
+    <!--error-message="[[ metadata.prompt ]]"-->
+    <!--disabled="[[ metadata.disabled ]]"-->
+    <!--label="[[ metadata.label ]]">-->
+    <!--<paper-listbox slot="dropdown-content" attr-for-selected="value" selected="{{ value }}">-->
+    <!--<template is="dom-repeat"-->
+    <!--items="[[ metadata.candidates ]]"-->
+    <!--as="selectItem">-->
+    <!--<paper-item value="[[ getValueByKey(selectItem, metadata.candidateValue) ]]">-->
+    <!--[[ getValueByKey(selectItem, metadata.candidateLabel) ]]-->
+    <!--</paper-item>-->
+    <!--</template>-->
+    <!--</paper-listbox>-->
+    <!--</paper-dropdown-menu>-->
+  </template>
+  <script>
+    class M2SelectList extends Polymer.mixinBehaviors([BaseBehavior], M2WidgetBase) {
+      static get is() {
+        return "m2-select-list";
+      }
+
+      validate() {
+        return this.metadata.required ? !!this.value : true;
+      }
+
+    }
+
+    window.customElements.define(M2SelectList.is, M2SelectList);
+  </script>
+</dom-module>

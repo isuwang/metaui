@@ -1,0 +1,310 @@
+<!doctype html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+  <title>m2-grid demo</title>
+
+  <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../../m2-grid.html">
+
+  <link rel="import" href="../../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../../iron-demo-helpers/demo-pages-shared-styles.html">
+
+  <custom-style>
+    <style is="custom-style" include="demo-pages-shared-styles">
+      .centered {
+        min-width: 800px;
+      }
+
+      demo-snippet {
+        --demo-snippet-code: {
+          max-height: 500px;
+        }
+      }
+    </style>
+  </custom-style>
+
+</head>
+
+<body unresolved class="centered">
+<h3>Simple Grid</h3>
+<demo-snippet>
+  <template>
+    <style is="custom-style">
+    </style>
+    <m2-grid id="grid"></m2-grid>
+    <script>
+      grid.metadata = {
+        title: "I am the title!",
+        grids: [
+          {
+            name: "col1",
+            label: "Col1"
+          },
+          {
+            name: "col2",
+            label: "Col2"
+          },
+          {
+            name: "col3",
+            label: "Col3"
+          },
+          {
+            metaType: {type: "ACTION"},
+            name: "actions",
+            label: "Actions",
+          }
+        ],
+        actions: {
+          "action-1": {
+            actionId: "action-1",
+            actionName: "Action1",
+            group:"GROUP",
+            operType: 1,
+            formMeta: {
+              formUrl: "/url-to-send-form",
+              confirm: "Sure to submit?",
+              fields: [
+                {
+                  name: "name",
+                  label: "Name"
+                },
+                {
+                  name: "phone",
+                  label: "Phone"
+                },
+              ],
+            }
+          },
+          "action-2": {
+            actionId: "action-2",
+            actionName: "Action2",
+            group:"GROUP",
+            operType: 2,
+            formMeta: {
+              title: "Dialog Title",
+              formUrl: "/url-to-send-form",
+              confirm: "Sure to submit?",
+              fields: [
+                {
+                  name: "name",
+                  label: "Name",
+                  visible: true,
+                  editable: true
+                },
+                {
+                  name: "phone",
+                  label: "Phone",
+                  visible: true,
+                  editable: true
+                },
+              ],
+            }
+          }
+        },
+        style: `.grid-column {font-size: 16px;}`
+      };
+
+      grid.value = [
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar",
+          actions: ["action-1", "action-2"]
+        },
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar",
+          actions: ["action-1"]
+        },
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar",
+          actions: ["action-2"]
+        },
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar",
+          actions: ["action-1", "action-2"]
+        }
+      ];
+
+    </script>
+  </template>
+</demo-snippet>
+
+<h3>Editable Grid, with a readonly column(Col3)</h3>
+<demo-snippet>
+  <template>
+    <style is="custom-style">
+    </style>
+    <m2-grid id="grid1" editable></m2-grid>
+    <script>
+      grid1.metadata = {
+        title: "I am the title!",
+        grids: [
+          {
+            name: "col1",
+            label: "Col1"
+          },
+          {
+            name: "col2",
+            label: "Col2"
+          },
+          {
+            name: "col3",
+            label: "Col3",
+            editable: false
+          },
+          {
+            metaType: {type: "ACTION"},
+            name: "actions",
+            label: "Actions",
+          }
+        ],
+        actions: {
+          "action-1": {
+            actionId: "action-1",
+            actionName: "Action1",
+            operType: 1,
+            formMeta: {
+              formUrl: "/url-to-send-form",
+              confirm: "Sure to submit?",
+              fields: [
+                {
+                  element: "h2-text",
+                  name: "col1",
+                  label: "Col1"
+                },
+                {
+                  element: "h2-text",
+                  name: "col2",
+                  label: "Col2"
+                },
+                {
+                  element: "h2-text",
+                  name: "col3",
+                  label: "Col3"
+                }
+              ],
+            }
+          }
+        },
+        style: `.grid-column { width: 100px;}`
+      };
+
+      grid1.value = [
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar",
+          actions: ["action-1"]
+        }
+      ];
+
+    </script>
+  </template>
+</demo-snippet>
+
+<h3>Editable Grid (Config `editable:true` in metadata)</h3>
+<demo-snippet>
+  <template>
+    <style is="custom-style">
+    </style>
+    <m2-grid id="grid2"></m2-grid>
+    <script>
+      grid2.metadata = {
+        title: "I am the title!",
+        editable: true,
+        grids: [
+          {
+            name: "col1",
+            label: "Col1"
+          },
+          {
+            name: "col2",
+            label: "Col2"
+          },
+          {
+            name: "col3",
+            label: "Col3"
+          }
+        ],
+        style: `.grid-row { height: 40px;}`
+      };
+
+      grid2.value = [
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar"
+        },
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar"
+        }
+      ];
+
+    </script>
+  </template>
+</demo-snippet>
+
+<h3>Editable Column</h3>
+<demo-snippet>
+  <template>
+    <style is="custom-style">
+    </style>
+    <m2-grid id="grid3"></m2-grid>
+    <script>
+      grid3.metadata = {
+        title: "I am the title!",
+        grids: [
+          {
+            name: "col1",
+            label: "Col1",
+            editable: true,
+            validate: true,
+            required: true,
+            prompt: "Pls input col1!"
+          },
+          {
+            name: "col2",
+            label: "Col2"
+          },
+          {
+            name: "col3",
+            label: "Col3"
+          }
+        ],
+        style: `.grid-column {padding: 20px 10px; font-size: 16px;}`
+      };
+
+      grid3.value = [
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar"
+        },
+        {
+          col1: "foo",
+          col2: "bar",
+          col3: "foobar"
+        }
+      ];
+
+    </script>
+  </template>
+</demo-snippet>
+</body>
+
+</html>

@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+  <title>m2-crud demo</title>
+
+  <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../../web-component-tester/browser.js"></script>
+
+  <link rel="import" href="../../m2-crud.html">
+
+  <link rel="import" href="../../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../../iron-demo-helpers/demo-pages-shared-styles.html">
+
+  <custom-style>
+    <style is="custom-style" include="demo-pages-shared-styles">
+      .centered {
+        min-width: 800px;
+      }
+
+      demo-snippet {
+        --demo-snippet-code: {
+          max-height: 500px;
+        }
+      }
+    </style>
+  </custom-style>
+
+</head>
+
+<body unresolved class="centered">
+<h3>Common Query Form</h3>
+<demo-snippet>
+  <template>
+    <style is="custom-style">
+    </style>
+    <m2-crud id="crud"></m2-crud>
+    <script>
+      crud.metadata = {
+        query: {
+          formUrl: "/query.do",
+          fields: [
+            {
+              name: "username",
+              label: "用户名",
+              editable: true,
+              visible: true
+            }
+          ]
+        },
+        result: {
+          grids: [
+            {
+              name: "username",
+              label: "用户名"
+            },
+            {
+              name: "phone",
+              label: "联系电话"
+            },
+            {
+              name: "address",
+              label: "联系地址"
+            },
+            {
+              metaType: {type: "ACTION"},
+              name: "actions",
+              label: "操作"
+            }
+          ],
+          actions: {
+            "record-edit": {
+              actionId: "record-edit",
+              actionName: "Edit",
+              operType: 1,
+              formMeta: {
+                formUrl: "/url-to-send-form",
+                confirm: "Sure to submit?",
+                fields: [
+                  {
+                    name: "name",
+                    label: "Name"
+                  },
+                  {
+                    name: "phone",
+                    label: "Phone"
+                  },
+                ],
+              }
+            }
+          }
+        }
+      };
+      crud.context = {
+        username: "jack"
+      };
+      crud.rawResult = {
+        rows: [
+          {
+            username: "Jack",
+            phone: "15900000000",
+            address: "XXXX",
+            actions: ["record-edit"]
+          }
+        ]
+      };
+
+    </script>
+  </template>
+</demo-snippet>
+
+
+<h3>Query form without paging</h3>
+<demo-snippet>
+  <template>
+    <style is="custom-style">
+    </style>
+    <m2-crud id="crud1"></m2-crud>
+
+    <script>
+      crud1.metadata = {
+        query: {
+          noPaging: true,
+          formUrl: "/query",
+          fields: [
+            {
+              name: "username",
+              label: "用户名",
+              editable: true,
+              visible: true
+            }
+          ]
+        },
+        result: {
+          grids: [
+            {
+              name: "username",
+              label: "用户名"
+            },
+            {
+              name: "phone",
+              label: "联系电话"
+            },
+            {
+              name: "address",
+              label: "联系地址"
+            },
+            {
+              metaType: {type :"ACTION"},
+              name: "actions",
+              label: "操作"
+            }
+          ],
+          actions: {
+            "record-delete": {
+              actionId: "record-delete",
+              actionName: "Delete",
+              operType: 1,
+              formMeta: {
+                formUrl: "/url-to-send-form",
+                confirm: "Sure to submit?",
+                fields: [
+                  {
+                    name: "id",
+                    label: "id"
+                  }
+                ],
+              }
+            }
+          }
+        }
+      };
+      crud1.rawResult = {
+        rows: [
+          {
+            id: 1,
+            username: "Jack",
+            phone: "15900000000",
+            address: "XXXX",
+            actions: ["record-delete"]
+          }
+        ]
+      };
+    </script>
+  </template>
+</demo-snippet>
+
+
+<h3>Query form with extra conditions</h3>
+<demo-snippet>
+  <template>
+    <style is="custom-style">
+    </style>
+    <m2-crud id="crud2">
+      <div slot="ext-condition">
+        This is status,you can add anything you want.
+      </div>
+    </m2-crud>
+
+    <script>
+      crud2.metadata = {
+        query: {
+          formUrl: "/query",
+          fields: [
+            {
+              name: "username",
+              label: "用户名",
+              editable: true,
+              visible: true
+            }
+          ]
+        },
+        result: {
+          grids: [
+            {
+              name: "用户名",
+              label: "username"
+            },
+            {
+              name: "联系电话",
+              label: "phone"
+            },
+            {
+              name: "联系地址",
+              label: "address"
+            },
+            {
+              metaType: {type: "ACTION"},
+              name: "actions",
+              label: "操作"
+            }
+          ],
+          actions: {
+            "record-edit": {
+              actionId: "record-edit",
+              actionName: "Edit",
+              operType: 1,
+              formMeta: {
+                formUrl: "/url-to-send-form",
+                confirm: "Sure to submit?",
+                fields: [
+                  {
+                    name: "name",
+                    label: "Name"
+                  },
+                  {
+                    name: "phone",
+                    label: "Phone"
+                  },
+                ],
+              }
+            }
+          }
+        }
+      };
+      status.statusItems = [{
+        value: "-1",
+        label: "全部",
+        count: "0"
+      }, {
+        value: 3,
+        label: "待确认",
+        count: "0"
+      }, {
+        value: 4,
+        label: "已确认",
+        count: "0"
+      }];
+      status.onStatusSelect = (e) => {
+        e.target.dispatchEvent(new CustomEvent('query-domain', {
+          detail: e.detail,
+          composed: true,
+          bubbles: true
+        }));
+      }
+    </script>
+  </template>
+</demo-snippet>
+
+</body>
+
+</html>

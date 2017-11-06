@@ -1,0 +1,37 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../paper-input/paper-textarea.html">
+<link rel="import" href="./m2-widget-base.html">
+<dom-module id="m2-text-area">
+    <template>
+        <paper-textarea
+                id="textArea"
+                value="{{ value }}"
+                always-float-label
+                label="[[ metadata.label ]]"
+                auto-validate
+                required="[[ metadata.required ]]"
+                error-message="[[ metadata.prompt ]]"
+                min="[[ metadata.min ]]"
+                minlength="[[ metadata.minLength ]]"
+                max="[[ metadata.max ]]"
+                maxlength="[[ metadata.maxLength ]]"
+                pattern="[[ metadata.regexp ]]"
+                disabled="[[ metadata.disabled]]"
+                readonly="[[ !metadata.editable ]]">
+        </paper-textarea>
+    </template>
+    <script>
+      class M2TextArea extends M2WidgetBase {
+        static get is() {
+          return "m2-text-area";
+        }
+
+        validate() {
+          // TODO
+          return this.$.textArea.validate();
+        }
+
+      }
+      customElements.define(M2TextArea.is, M2TextArea);
+    </script>
+</dom-module>

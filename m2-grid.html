@@ -1,0 +1,271 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../h2-elements/h2-grid.html">
+<link rel="import" href="../h2-elements/h2-grid-header.html">
+<link rel="import" href="../h2-elements/h2-grid-header-cell.html">
+<link rel="import" href="../h2-elements/h2-grid-body.html">
+<link rel="import" href="../h2-elements/h2-grid-row.html">
+<link rel="import" href="../h2-elements/h2-grid-cell.html">
+<link rel="import" href="../h2-elements/h2-button-group.html">
+<link rel="import" href="../h2-elements/behaviors/base-behavior.html">
+<link rel="import" href="./m2-field.html">
+<link rel="import" href="./m2-action.html">
+<!--
+## A component for table.
+
+```html
+<m2-grid metadata="{{ metadata }}" value="{{ value }}"></m2-grid>
+```
+```
+metadata = {
+  title: "I am the title!",
+  grids: [
+    {
+      name: "col1",
+      label: "Col1"
+    },
+    {
+      name: "col2",
+      label: "Col2"
+    },
+    {
+      name: "col3",
+      label: "Col3"
+    },
+    {
+      metaType: {
+        type: "ACTION"
+        },
+      name: "actions",
+      label: "Actions",
+    }
+  ],
+  actions: {
+    "action-1": {
+      actionId: "action-1",
+      actionName: "Action1",
+      operType: 1,
+      formMeta: {
+        formUrl: "/url-to-send-form",
+        confirm: "Sure to submit?",
+        fields: [
+          {
+            name: "name",
+            label:"Name"
+          },
+          {
+            name: "phone",
+            label:"Phone"
+          },
+        ],
+      }
+    },
+    "action-2": {
+      actionId: "action-2",
+      actionName: "Action2",
+      operType: 2,
+      formMeta: {
+        title: "Dialog Title",
+        formUrl: "/url-to-send-form",
+        confirm: "Sure to submit?",
+        fields: [
+          {
+            name: "name",
+            label:"Name",
+            visible:true,
+            editable:true
+          },
+          {
+            name: "phone",
+            label:"Phone",
+            visible:true,
+            editable:true
+          },
+        ],
+      }
+    }
+  }
+}
+
+value = [
+  {
+    col1: "foo",
+    col2: "bar",
+    col3: "foobar",
+    actions:["action-1","action-2"]
+  },
+  {
+    col1: "foo",
+    col2: "bar",
+    col3: "foobar",
+    actions:["action-1"]
+  },
+  {
+    col1: "foo",
+    col2: "bar",
+    col3: "foobar",
+    actions:["action-2"]
+  },
+  {
+    col1: "foo",
+    col2: "bar",
+    col3: "foobar",
+    actions:["action-1","action-2"]
+  }
+]
+```
+### metadata定义 (GridMeta)
+|字段名|类型|Required|描述|
+|:--|:--|:--|:--|
+|grids|``array.<FieldMeta>``|是|表格单元格元数据|
+|actions|``map.<string, ActionMeta>``|是|操作集|
+|title|string|否|表格标题|
+|editable|boolean|否|是否可编辑|
+|noPaging|boolean|否|是否取消分页|
+
+### [See FieldMeta](https://www.webcomponents.org/element/isuwang/metaui/elements/m2-field)
+### [See ActionMeta](https://www.webcomponents.org/element/isuwang/metaui/elements/m2-action)
+-->
+<dom-module id="m2-grid">
+  <template>
+    <style>
+      :host {
+        font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+        font-size: 12px;
+      }
+
+      dom-repeat, dom-if {
+        display: none;
+      }
+
+      :host .action, :host .action-group {
+        width: 100px;
+        height: 30px;
+      }
+
+      :host .table-caption {
+        text-align: left;
+        font-size: 1.2em;
+        padding-bottom: 10px;
+      }
+
+    </style>
+    <slot name="filter"></slot>
+
+    <h2-grid paging="{{paging}}">
+
+      <caption class="table-caption">[[ metadata.title ]]</caption>
+      <h2-grid-header>
+        <template is="dom-repeat" items="[[ metadata.grids ]]">
+          <h2-grid-header-cell>
+            [[item.label]]
+          </h2-grid-header-cell>
+        </template>
+      </h2-grid-header>
+      <h2-grid-body>
+        <template is="dom-repeat" items="[[ value ]]" as="model">
+          <h2-grid-row>
+            <template is="dom-repeat" items="[[ metadata.grids ]]" as="fieldMeta">
+              <h2-grid-cell>
+                <template is="dom-if" if="[[ !isEqual(fieldMeta.metaType.type, 'ACTION') ]]">
+                  <m2-field class="field"
+                            metadata="[[ fieldMeta ]]"
+                            editable="[[ orElse(editable, metadata.editable, fieldMeta.editable) ]]"
+                            context="[[ model ]]"
+                            value="[[ getValueOrElse(model,fieldMeta.srcKey, fieldMeta.name) ]]">
+                  </m2-field>
+                </template>
+
+                <template is="dom-if" if="[[ isEqual(fieldMeta.metaType.type,'ACTION') ]]">
+                  <template is="dom-repeat" items="[[ _noGroupActions(model.actions) ]]"
+                            as="actionMeta">
+                    <m2-action class="action"
+                               metadata="[[ actionMeta ]]"
+                               context="[[ model ]]">
+                    </m2-action>
+                  </template>
+                  <template is="dom-repeat" items="[[ _groupedActions(model.actions) ]]">
+                    <h2-button-group label="[[ item.group ]]"
+                            class="action-group">
+                      <template is="dom-repeat" items="[[ item.actions ]]" as="actionMeta">
+                        <m2-action class="action"
+                                   metadata="[[ actionMeta ]]"
+                                   context="[[ model ]]">
+                        </m2-action>
+                      </template>
+                    </h2-button-group>
+                  </template>
+                </template>
+              </h2-grid-cell>
+            </template>
+          </h2-grid-row>
+        </template>
+      </h2-grid-body>
+    </h2-grid>
+  </template>
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     * @demo demo/m2-grid/index.html
+     */
+    class M2Grid extends Polymer.mixinBehaviors([BaseBehavior], Polymer.Element) {
+      constructor() {
+        super();
+      }
+
+      static get is() {
+        return "m2-grid";
+      }
+
+      static get properties() {
+        return {
+          editable: {
+            type: Boolean,
+            value: false
+          },
+          /** Data for the grid.*/
+          value: {
+            type: Array
+          },
+          metadata: {
+            type: Object,
+            observer: '__metadataChange'
+          }
+        }
+      }
+
+      __metadataChange(metadata) {
+        if (metadata) {
+          return this.updateStyle(metadata.style);
+        }
+      }
+
+      _groupedActions(actions) {
+        const groupedActions = [];
+        const groupMap = {};
+        actions.map(actionId => {
+          const meta = this.getValueByKey(this.metadata.actions, actionId);
+          const grp = meta.group;
+          if (grp) {
+            groupMap[grp] = groupMap[grp] || [];
+            groupMap[grp].push(meta);
+          }
+        });
+        for (let grp in groupMap) {
+          groupedActions.push({group: grp, actions: groupMap[grp]});
+        }
+        return groupedActions;
+      }
+
+      _noGroupActions(actions) {
+        return actions.filter(actionId => {
+          const meta = this.getValueByKey(this.metadata.actions, actionId);
+          const grp = meta.group;
+          return !grp;
+        }).map(actionId => this.getValueByKey(this.metadata.actions, actionId));
+      }
+    }
+
+    window.customElements.define(M2Grid.is, M2Grid);
+  </script>
+</dom-module>
