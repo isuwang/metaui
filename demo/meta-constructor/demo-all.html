@@ -1,0 +1,64 @@
+<link rel="import" href="../../../polymer/polymer-element.html">
+<link rel="import" href="../../utils/meta-constructor.html">
+<link rel="import" href="../../m2-crud.html">
+<!--
+
+```javascript
+
+<demo-all></demo-all>
+```
+-->
+
+<dom-module id="demo-all">
+  <template>
+    <style>
+
+    </style>
+    <meta-constructor src="/dapeng/metadata"
+                      metadata="{{ metadata }}"
+                      option="[[ option ]]"
+                      on-return="[[ onReturn() ]]"></meta-constructor>
+    <m2-crud metadata="[[ metadata ]]"
+             key-for-page-result="pageResponse.results"
+             result-descriptor="[[ _resultChange() ]]"></m2-crud>
+  </template>
+  <script>
+    /**
+     * `demo-all`
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/demo-all/index.html
+     */
+    class DemoAll extends Polymer.Element {
+      static get properties() {
+        return {
+          option: {
+            type:Object,
+            value: function() {
+              return {
+                serviceName: "com.isuwang.soa.order.service.WaybillBizService",
+                version: "1.0.0",
+                methodName: "findWaybills"
+              }
+            }
+          }
+        };
+      }
+
+      static get is() {
+        return "demo-all";
+      }
+
+      _resultChange() {
+        return (result) => result;
+      }
+
+      onReturn() {
+        return (metadata) => metadata;
+      }
+
+    }
+    window.customElements.define(DemoAll.is, DemoAll);
+  </script>
+</dom-module>

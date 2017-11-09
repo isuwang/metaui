@@ -2,6 +2,7 @@
 <link rel="import" href="../h2-elements/behaviors/ajax-behavior.html">
 <link rel="import" href="../h2-elements/behaviors/base-behavior.html">
 <link rel="import" href="../h2-elements/behaviors/tip-behavior.html">
+<link rel="import" href="../h2-elements/h2-fetch.html">
 <link rel="import" href="./m2-field.html">
 
 <!--
@@ -104,6 +105,7 @@ metadata = {
                 <paper-button raised on-click="submit">保存</paper-button>
             </template>
         </div>
+        <h2-fetch request="[[ __fetchRequest ]]" response="{{ __fetchResponse }}"></h2-fetch>
     </template>
     <script>
       /**
@@ -173,6 +175,11 @@ metadata = {
               type: Object
             }
           };
+        }
+
+
+        static get observers() {
+          return ["__fetchResponseChange(__fetchResponse)"];
         }
 
         __metadataChange(metadata) {
@@ -246,13 +253,46 @@ metadata = {
           }
 
           const _submit = () => {
-            this.post({
+            this.__fetchRequest = {
               url: this.metadata.formUrl,
-              sendAsJson: this.metadata.sendAsJson,
+              method: "POST",
+              credentials: "include",
+              body: JSON.stringify(this._requestBody())
+            };
 
-              data: this._requestBody()
-            }, (data) => {
+//            this.post({
+//              url: this.metadata.formUrl,
+//              sendAsJson: this.metadata.sendAsJson,
+//
+//              data: this._requestBody()
+//            }, (data) => {
+//
+//              /**
+//               * @event m2-form-submitted fire when form submitted.
+//               */
+//              this.dispatchEvent(new CustomEvent("m2-form-submitted", {
+//                bubbles: true, composed: true, detail: data
+//              }));
+//
+//              this.isFunction(this.onSuccess) && this.onSuccess(data);
+//
+//            }, (err) => {
+//              this.hTip.error(JSON.stringify(err));
+//              this.isFunction(this.onError) && this.onError(err);
+//            });
+//
+          };
 
+          if (this.metadata.confirm) {
+            this.hTip.confirm(this.metadata.confirm, _submit);
+          } else {
+            _submit();
+          }
+        }
+
+        __fetchResponseChange() {
+          if (this.__fetchResponseChange.ok) {
+            this.__fetchResponseChange.json().then((data) => {
               /**
                * @event m2-form-submitted fire when form submitted.
                */
@@ -261,19 +301,14 @@ metadata = {
               }));
 
               this.isFunction(this.onSuccess) && this.onSuccess(data);
-
-            }, (err) => {
+            })
+          } else {
+            this.__fetchResponseChange.text().then((err) => {
               this.hTip.error(JSON.stringify(err));
               this.isFunction(this.onError) && this.onError(err);
             });
-
-          };
-
-          if (this.metadata.confirm) {
-            this.hTip.confirm(this.metadata.confirm, _submit);
-          } else {
-            _submit();
           }
+
         }
 
         _filterVisible(item) {

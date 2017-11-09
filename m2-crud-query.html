@@ -85,6 +85,7 @@ metadata = {
     </div>
 
     <slot id="ext-condition" name="ext-condition"></slot>
+    <h2-fetch request="[[ __fetchRequest ]]" response="{{ __fetchResponse }}"></h2-fetch>
   </template>
 
   <script>
@@ -138,13 +139,17 @@ metadata = {
           queryAfterReset: {
             type: Boolean,
             value: false
+          },
+          __fetchResponse:{
+            type: Object
           }
         }
       }
 
       static get observers() {
         return [
-          '_pagingChange(paging.start, metadata.noPaging)'
+          '_pagingChange(paging.start, metadata.noPaging)',
+          "__fetchResponseChange(__fetchResponse)"
         ];
       }
 
@@ -176,13 +181,31 @@ metadata = {
           param.limit = limit;
         }
 
-        this.query({
-            url: this.metadata.formUrl,
-            data: param
-          },
-          data => this.result = data,
-          err => this.hTip.error(err)
-        );
+        const reqUrl = new URL(window.location.origin + this.metadata.formUrl);
+        Object.keys(param).filter(key => !!param[key])
+          .reduce((searchParams, key) => {searchParams.append(key, param[key]); return searchParams;},
+            reqUrl.searchParams);
+        this.__fetchRequest = {
+          url: reqUrl,
+          method: "GET",
+          credentials: "include"
+        };
+
+//        this.query({
+//            url: this.metadata.formUrl,
+//            data: param
+//          },
+//          data => this.result = data,
+//          err => this.hTip.error(err)
+//        );
+      }
+
+      __fetchResponseChange() {
+        if (this.__fetchResponse.ok) {
+          this.__fetchResponse.clone().json().then(data => this.result = data);
+        } else {
+          this.__fetchResponse.clone().text().then((err) => this.hTip.error(err));
+        }
       }
 
       /**

@@ -16,9 +16,14 @@
 -->
 <dom-module id="meta-constructor">
   <template>
-    <h2-fetch></h2-fetch>
+    <h2-fetch request="[[ request ]]" response-body="{{responseBody}}"></h2-fetch>
   </template>
   <script>
+    /**
+     * @customElement
+     * @polymer
+     * @demo demo/meta-constructor/index.html
+     */
     class MetaConstructor extends Polymer.mixinBehaviors([BaseBehavior], Polymer.Element) {
       static get is() {
         return "meta-constructor";
@@ -67,6 +72,10 @@
           data: {
             type: Object,
             notify: true
+          },
+          responseBody: {
+            type: Object,
+            observer:"_responseBodyChange"
           }
         };
       }
@@ -139,47 +148,87 @@
         );
       }
 
+      _responseBodyChange() {
+        if(!this.responseBody) return;
+        const data = this.responseBody;
+        let metadata = null;
+        switch (this.metaType) {
+          case "domain":
+            metadata = this.assembleDomainMeta(data);
+            break;
+          case "grid":
+            metadata = this.assembleGridMeta(data);
+            break;
+          case "struct":
+            metadata = this.assembleStructMeta(data);
+            break;
+          case "action":
+            metadata = this.assembleActionMeta(data);
+            break;
+          case "form":
+            metadata = this.assembleFormMeta(data);
+            break;
+          case "field":
+            metadata = this.assembleFieldMeta(data);
+            break;
+          default:
+            throw new TypeError(`Unknown meta-type【${this.metaType}】`);
+        }
+
+        if (this.isFunction(this.onReturn) && metadata) {
+          this.metadata = this.onReturn(metadata);
+        } else {
+          this.metadata = metadata;
+        }
+
+        this.data = data;
+      }
       __srcChange() {
         const {
           serviceName = this.throwNotFoundError("serviceName"),
           version = this.throwNotFoundError("version")
         } = this.option;
 
-        this.post({url: this.src, data: {serviceName, version}}, (data) => {
-          let metadata = null;
-          switch (this.metaType) {
-            case "domain":
-              metadata = this.assembleDomainMeta(data);
-              break;
-            case "grid":
-              metadata = this.assembleGridMeta(data);
-              break;
-            case "struct":
-              metadata = this.assembleStructMeta(data);
-              break;
-            case "action":
-              metadata = this.assembleActionMeta(data);
-              break;
-            case "form":
-              metadata = this.assembleFormMeta(data);
-              break;
-            case "field":
-              metadata = this.assembleFieldMeta(data);
-              break;
-            default:
-              throw new TypeError(`Unknown meta-type【${this.metaType}】`);
-          }
+        this.request = {
+          url: this.src,
+          method: "POST",
+          body: JSON.stringify({serviceName, version})};
 
-          if (this.isFunction(this.onReturn) && metadata) {
-            this.metadata = this.onReturn(metadata);
-          } else {
-            this.metadata = metadata;
-          }
-
-          this.data = data;
-        }, err => {
-          console.warn(err);
-        });
+//        this.post({url: this.src, data: {serviceName, version}}, (data) => {
+//          let metadata = null;
+//          switch (this.metaType) {
+//            case "domain":
+//              metadata = this.assembleDomainMeta(data);
+//              break;
+//            case "grid":
+//              metadata = this.assembleGridMeta(data);
+//              break;
+//            case "struct":
+//              metadata = this.assembleStructMeta(data);
+//              break;
+//            case "action":
+//              metadata = this.assembleActionMeta(data);
+//              break;
+//            case "form":
+//              metadata = this.assembleFormMeta(data);
+//              break;
+//            case "field":
+//              metadata = this.assembleFieldMeta(data);
+//              break;
+//            default:
+//              throw new TypeError(`Unknown meta-type【${this.metaType}】`);
+//          }
+//
+//          if (this.isFunction(this.onReturn) && metadata) {
+//            this.metadata = this.onReturn(metadata);
+//          } else {
+//            this.metadata = metadata;
+//          }
+//
+//          this.data = data;
+//        }, err => {
+//          console.warn(err);
+//        });
       }
 
       /**

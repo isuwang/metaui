@@ -9,17 +9,24 @@
 
   <title>meta-constructor demo</title>
 
+  <script>
+    if(!window.location.href.endsWith("?mock=mockData.js")) {
+      window.location.href = window.location.href + "?mock=mockData.js";
+    }
+  </script>
+
+  <script type="text/javascript" src="../../../h2-elements/utils/mock_setup.js"></script>
+
   <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 
   <link rel="import" href="../../utils/meta-constructor.html">
-
+  <link rel="import" href="demo-all.html">
   <link rel="import" href="../../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../../iron-demo-helpers/demo-pages-shared-styles.html">
-
   <custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
       .centered {
-        min-width: 800px;
+        max-width: 1500px;
       }
 
       demo-snippet {
@@ -33,111 +40,11 @@
 </head>
 
 <body unresolved class="centered">
-<h3>Simple Grid</h3>
+<h3>Demo</h3>
 <demo-snippet>
   <template>
-    <style is="custom-style">
-    </style>
-    <meta-constructor id="grid"></meta-constructor>
+    <demo-all></demo-all>
     <script>
-      grid.metadata = {
-        title: "I am the title!",
-        grids: [
-          {
-            name: "col1",
-            label: "Col1"
-          },
-          {
-            name: "col2",
-            label: "Col2"
-          },
-          {
-            name: "col3",
-            label: "Col3"
-          },
-          {
-            metaType: {type: "ACTION"},
-            name: "actions",
-            label: "Actions",
-          }
-        ],
-        actions: {
-          "action-1": {
-            actionId: "action-1",
-            actionName: "Action1",
-            group:"GROUP",
-            operType: 1,
-            formMeta: {
-              formUrl: "/url-to-send-form",
-              confirm: "Sure to submit?",
-              fields: [
-                {
-                  name: "name",
-                  label: "Name"
-                },
-                {
-                  name: "phone",
-                  label: "Phone"
-                },
-              ],
-            }
-          },
-          "action-2": {
-            actionId: "action-2",
-            actionName: "Action2",
-            group:"GROUP",
-            operType: 2,
-            formMeta: {
-              title: "Dialog Title",
-              formUrl: "/url-to-send-form",
-              confirm: "Sure to submit?",
-              fields: [
-                {
-                  name: "name",
-                  label: "Name",
-                  visible: true,
-                  editable: true
-                },
-                {
-                  name: "phone",
-                  label: "Phone",
-                  visible: true,
-                  editable: true
-                },
-              ],
-            }
-          }
-        },
-        style: `.grid-column {font-size: 16px;}`
-      };
-
-      grid.value = [
-        {
-          col1: "foo",
-          col2: "bar",
-          col3: "foobar",
-          actions: ["action-1", "action-2"]
-        },
-        {
-          col1: "foo",
-          col2: "bar",
-          col3: "foobar",
-          actions: ["action-1"]
-        },
-        {
-          col1: "foo",
-          col2: "bar",
-          col3: "foobar",
-          actions: ["action-2"]
-        },
-        {
-          col1: "foo",
-          col2: "bar",
-          col3: "foobar",
-          actions: ["action-1", "action-2"]
-        }
-      ];
-
     </script>
   </template>
 </demo-snippet>
