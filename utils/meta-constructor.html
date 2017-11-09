@@ -192,7 +192,8 @@
         this.request = {
           url: this.src,
           method: "POST",
-          body: JSON.stringify({serviceName, version})};
+          body: new URLSearchParams({serviceName, version})
+        };
 
 //        this.post({url: this.src, data: {serviceName, version}}, (data) => {
 //          let metadata = null;
