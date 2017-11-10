@@ -241,6 +241,7 @@ value = [
       }
 
       _groupedActions(actions) {
+        if(!actions) return [];
         const groupedActions = [];
         const groupMap = {};
         actions.map(actionId => {
@@ -258,6 +259,7 @@ value = [
       }
 
       _noGroupActions(actions) {
+        if(!actions) return [];
         return actions.filter(actionId => {
           const meta = this.getValueByKey(this.metadata.actions, actionId);
           const grp = meta.group;

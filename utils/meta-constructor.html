@@ -149,8 +149,8 @@
       }
 
       _responseBodyChange() {
-        if(!this.responseBody) return;
-        const data = this.responseBody;
+        if(!this.responseBody || !this.responseBody.content) return;
+        const data = this.responseBody.content;
         let metadata = null;
         switch (this.metaType) {
           case "domain":
@@ -394,6 +394,7 @@
         formMeta.title = map["m.form.title"] || methodMeta.name;
         formMeta.formUrl = map["m.form.url"] || "/metadata/form_url/not_config.do";
         formMeta.hideSubmitBtn = Boolean(map["m.form.hideSubmitBtn"]);
+        formMeta.sendAsSearchParams = Boolean(map["m.form.sendAsSearchParams"]);
         const args = methodMeta.request.fields;
 
         // 1. 方法没有入参， 如void doSomething()

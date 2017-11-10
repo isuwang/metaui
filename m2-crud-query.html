@@ -181,10 +181,9 @@ metadata = {
           param.limit = limit;
         }
 
-        const reqUrl = new URL(window.location.origin + this.metadata.formUrl);
-        Object.keys(param).filter(key => !!param[key])
-          .reduce((searchParams, key) => {searchParams.append(key, param[key]); return searchParams;},
-            reqUrl.searchParams);
+        const reqUrl = new URL(this.metadata.formUrl, window.location.href);
+        Object.keys(param).filter(key => !!param[key]).forEach(key => reqUrl.searchParams.append(key, param[key]));
+
         this.__fetchRequest = {
           url: reqUrl,
           method: "GET",
