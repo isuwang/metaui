@@ -182,6 +182,14 @@ metadata = {
       refresh() {
         this.$.query.submit();
       }
+
+      connectedCallback() {
+        super.connectedCallback();
+        this.addEventListener('form-submitted', (e) => {
+          e.stopPropagation();
+          this.refresh();
+        });
+      }
     }
 
     window.customElements.define(M2Crud.is, M2Crud);
