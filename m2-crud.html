@@ -120,7 +120,7 @@ metadata = {
            * a closure ``(result) => result``, will be invoked before result is access to dom.
            * @callback resultDescriptor {{(result) => result}}
            */
-          resultDescriptor: {
+          resultDecorator: {
             type: Object
           },
           /**
@@ -136,7 +136,7 @@ metadata = {
            */
           finalResult: {
             type: Array,
-            computed: '_resultDescriptor(rawResult)'
+            computed: '_resultDecorator(rawResult)'
           },
 
           /**
@@ -171,9 +171,9 @@ metadata = {
         }
       }
 
-      _resultDescriptor(result) {
-        return Function.prototype.isPrototypeOf(this.resultDescriptor) ?
-          this.resultDescriptor(result) : result;
+      _resultDecorator(result) {
+        return Function.prototype.isPrototypeOf(this.resultDecorator) ?
+          this.resultDecorator(result) : result;
       }
 
       /**
