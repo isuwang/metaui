@@ -1,9 +1,9 @@
 {
   "name": "metaui",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "meta ui",
   "authors": [
-    "WahsonLeung"
+    "WahsonLeung  <hsliang1@163.com>"
   ],
   "keywords": [
     "web-components",
@@ -11,16 +11,13 @@
     "metaui"
   ],
   "main": [
-    "h2-crud.html",
-    "h2-crud-query.html",
-    "h2-grid.html",
-    "h2-form.html",
-    "h2-action.html",
-    "h2-action-group",
-    "h2-dialog",
-    "h2-crust.html",
-    "h2-field.html",
-    "h2-pagination.html"
+    "m2-crud.html",
+    "m2-crud-query.html",
+    "m2-grid.html",
+    "m2-form.html",
+    "m2-action.html",
+    "m2-dialog",
+    "m2-field.html"
   ],
   "repository": {
     "type": "git",
@@ -31,17 +28,10 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.2",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
-    "iron-input": "PolymerElements/iron-input#1 - 2",
-    "iron-collapse": "PolymerElements/iron-collapse#1 - 2",
-    "iron-icons": "PolymerElements/iron-icons#1 - 2",
     "paper-button": "PolymerElements/paper-button#1 - 2",
     "paper-dialog": "PolymerElements/paper-dialog#1 - 2",
     "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable#1 - 2",
     "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#1 - 2",
-    "paper-radio-group": "PolymerElements/paper-radio-group#1 - 2",
-    "paper-radio-button": "PolymerElements/paper-radio-button#1 - 2",
-    "paper-item": "PolymerElements/paper-item#1 - 2",
-    "paper-listbox": "PolymerElements/paper-listbox#1 - 2",
     "web-animations-js": "web-animations/web-animations-js#^2.2.0",
     "h2-elements": "https://github.com/isuwang/h2-elements.git"
   },
@@ -56,7 +46,6 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests",
-    "h2-grid.html"
+    "tests"
   ]
 }
