@@ -54,123 +54,123 @@ metadata = {
 
 -->
 <dom-module id="m2-field">
-    <template></template>
-    <script>
-      /**
-       * @customElement
-       * @polymer
-       * @demo demo/m2-field/index.html
-       */
-      class M2Field extends Polymer.mixinBehaviors([BaseBehavior], M2WidgetBase) {
-        static get is() {
-          return "m2-field";
-        }
+  <template></template>
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     * @demo demo/m2-field/index.html
+     */
+    class M2Field extends Polymer.mixinBehaviors([BaseBehavior], M2WidgetBase) {
+      static get is() {
+        return "m2-field";
+      }
 
-        static get properties() {
-          return {
-            editable: {
-              type: Boolean,
-              value: false
-            },
-            _ref: {
-              type: Object
-            },
-            context: {
-              type: Object
-            }
-          };
-        }
-
-        static get observers() {
-          return [
-            '__metadataChange(metadata)',
-            '__valueChange(value)',
-            '__contextChange(context.*)'
-          ];
-        }
-
-        __contextChange(obj) {
-          // if context obj change, force to refresh
-          if (obj.path === "context") {
-            this.__valueChange();
+      static get properties() {
+        return {
+          editable: {
+            type: Boolean,
+            value: false
+          },
+          _ref: {
+            type: Object
+          },
+          context: {
+            type: Object
           }
+        };
+      }
 
-          if (this._ref && this.isFunction(this._ref.notifyPath)) {
-            this._ref.notifyPath(obj.path);
-          }
+      static get observers() {
+        return [
+          '__metadataChange(metadata)',
+          '__valueChange(value)',
+          '__contextChange(context.*)'
+        ];
+      }
+
+      __contextChange(obj) {
+        // if context obj change, force to refresh
+        if (obj.path === "context") {
+          this.__valueChange();
         }
 
-        /**
-         * Validate the editor.
-         * @returns {Boolean}
-         */
-        validate() {
-          const ele = this._ref;
-          return ele && ele.validate && ele.validate();
-        }
-
-        __metadataChange() {
-          if (this.editable) {
-            const tagName = this.metadata.element || M2Field.defaultElements(this.metadata.metaType);
-            const eleDom = document.createElement(tagName);
-
-            eleDom.addEventListener('value-changed', e => {
-              this.value = e.detail.value;
-            });
-
-            eleDom.context = this.context;
-
-            if (this.metadata.metaType && this.metadata.metaType.metadata) {
-              eleDom.metadata = this.metadata.metaType.metadata;
-            } else {
-              eleDom.metadata = this.metadata;
-            }
-
-            if (eleDom.metadata.editable == undefined) {
-              eleDom.metadata.editable = this.editable;
-            }
-            this._ref = this.shadowRoot.appendChild(eleDom);
-          } else {
-
-            const element = this.elementRender(this.context, this.metadata);
-            this.shadowRoot.innerHTML = element;
-          }
-
-        }
-
-        connectedCallback() {
-          super.connectedCallback();
-          this.dispatchEvent(new CustomEvent('field-attached', {
-            composed: true
-          }));
-        }
-
-        __valueChange() {
-          const target = this._ref;
-
-          target && (target.value = this.value);
-
-          if (!this.editable) {
-            const element = this.elementRender(this.context, this.metadata);
-            this.shadowRoot.innerHTML = element;
-          }
-        }
-
-        static defaultElements({type} = {}) {
-          // more default elements will support in the future.
-          switch (type) {
-            case "ACTION":
-              return "m2-action";
-            case "FORM":
-              return "m2-form";
-            case "GRID":
-              return "m2-grid";
-            default:
-              return "m2-text";
-          }
+        if (this._ref && this.isFunction(this._ref.notifyPath)) {
+          this._ref.notifyPath(obj.path);
         }
       }
 
-      window.customElements.define(M2Field.is, M2Field);
-    </script>
+      /**
+       * Validate the editor.
+       * @returns {Boolean}
+       */
+      validate() {
+        const ele = this._ref;
+        return ele && ele.validate && ele.validate();
+      }
+
+      __metadataChange() {
+        if (this.editable) {
+          const tagName = this.metadata.element || M2Field.defaultElements(this.metadata.metaType);
+          const eleDom = document.createElement(tagName);
+
+          eleDom.addEventListener('value-changed', e => {
+            this.value = e.detail.value;
+          });
+
+          eleDom.context = this.context;
+
+          if (this.metadata.metaType && this.metadata.metaType.metadata) {
+            eleDom.metadata = this.metadata.metaType.metadata;
+          } else {
+            eleDom.metadata = this.metadata;
+          }
+
+          if (eleDom.metadata.editable == undefined) {
+            eleDom.metadata.editable = this.editable;
+          }
+          this._ref = this.shadowRoot.appendChild(eleDom);
+        } else {
+
+          const element = this.elementRender(this.context, this.metadata);
+          this.shadowRoot.innerHTML = element;
+        }
+
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        this.dispatchEvent(new CustomEvent('field-attached', {
+          composed: true
+        }));
+      }
+
+      __valueChange() {
+        const target = this._ref;
+
+        target && (target.value = this.value);
+
+        if (!this.editable) {
+          const element = this.elementRender(this.context, this.metadata);
+          this.shadowRoot.innerHTML = element;
+        }
+      }
+
+      static defaultElements({type} = {}) {
+        // more default elements will support in the future.
+        switch (type) {
+          case "ACTION":
+            return "m2-action";
+          case "FORM":
+            return "m2-form";
+          case "GRID":
+            return "m2-grid";
+          default:
+            return "m2-text";
+        }
+      }
+    }
+
+    window.customElements.define(M2Field.is, M2Field);
+  </script>
 </dom-module>

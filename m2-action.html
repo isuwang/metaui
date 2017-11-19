@@ -74,153 +74,155 @@ metadata1 = {
 ### [See FormMeta](https://www.webcomponents.org/element/isuwang/metaui/elements/m2-form)
 -->
 <dom-module id="m2-action">
-    <template>
-        <style>
-            :host {
-                display: inline-block;
-                overflow: visible;
-            }
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        overflow: visible;
+      }
 
-            :host paper-button {
-                width: inherit;
-                height: inherit;
-                margin: 0;
-                background: #fff;
-            }
-        </style>
-        <paper-button raised on-tap="submitOrOpenDialog">[[ metadata.actionName ]]</paper-button>
-        <div id="form" hidden></div>
-    </template>
-    <script>
+      :host paper-button {
+        width: inherit;
+        height: inherit;
+        margin: 0;
+        background: #fff;
+      }
+    </style>
+    <paper-button raised on-tap="submitOrOpenDialog">[[ metadata.actionName ]]</paper-button>
+    <div id="form" hidden></div>
+  </template>
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     * @demo demo/m2-action/index.html
+     */
+    class M2Action extends Polymer.mixinBehaviors([AjaxBehavior], Polymer.Element) {
+      constructor() {
+        super();
+      }
+
+      static get is() {
+        return "m2-action";
+      }
+
+      static get properties() {
+        return {
+          metadata: {
+            type: Object
+          },
+
+          context: {
+            type: Object,
+            observer: "__contextChange"
+          },
+
+          _dialog: {
+            type: Object
+          },
+
+          _form: {
+            type: Object
+          }
+        }
+      }
+
+      __contextChange() {
+        this._dialog = null;
+        this._form = null;
+      }
+
       /**
-       * @customElement
-       * @polymer
-       * @demo demo/m2-action/index.html
+       * When metadata.modelSrc is defined, fetch the new context.
        */
-      class M2Action extends Polymer.mixinBehaviors([AjaxBehavior], Polymer.Element) {
-        constructor() {
-          super();
+      _fetchContext() {
+        if (!this.metadata.modelSrc) return;
+        // fetch model with modelSrc
+        const data = {};
+
+        if (this.metadata.modelQueryParams) {
+          this.metadata.modelQueryParams.forEach(param => (data[param] = this.context[param]));
         }
 
-        static get is() {
-          return "m2-action";
-        }
-
-        static get properties() {
-          return {
-            metadata: {
-              type: Object
-            },
-
-            context: {
-              type: Object,
-              observer: "__contextChange"
-            },
-
-            _dialog: {
-              type: Object
-            },
-
-            _form: {
-              type: Object
-            }
-          }
-        }
-
-        __contextChange() {
-          this._dialog = null;
-          this._form = null;
-        }
-        /**
-         * When metadata.modelSrc is defined, fetch the new context.
-         */
-        _fetchContext() {
-          if (!this.metadata.modelSrc) return;
-          // fetch model with modelSrc
-          const data = {};
-
-          if (this.metadata.modelQueryParams) {
-            this.metadata.modelQueryParams.forEach(param => (data[param] = this.context[param]));
-          }
-
-          this.query({
-            url: this.metadata.modelSrc,
-            data: data
-          }, (data) => {
-            this._refreshContext(data);
-          }, (err) => this.hTip.error(JSON.stringify(err)));
-
-        }
-
-        /**
-         * If metadata.operType == 1 then submit a form,
-         * else if metadata.operType == 2 then open a dialog.
-         */
-        submitOrOpenDialog() {
-          if (this.metadata.operType == 1) {
-            // If no <m2-form /> exists in #form component, then append one.
-            this._form = this._form || this.$.form.appendChild(this._createForm());
-            setTimeout(() => {
-              this._form.submit();
-            },0);
-
-          } else if (this.metadata.operType == 2) {
-            this._fetchContext();
-            this._createDialog();
-          }
-        }
-
-        _refreshContext(context) {
-          this.context = context;
-          this._form.set('context', context);
-        }
-
-        _createForm() {
-          const form = document.createElement('m2-form');
-          form.metadata = this.metadata.formMeta;
-          form.context = this.context || {};
-          form.addEventListener('m2-form-submitted', this._formSubmittedHandler.bind(this));
-          return form;
-        }
-
-        _createDialog() {
-          this._dialog = document.createElement('m2-dialog');
-          document.body.appendChild(this._dialog);
-          this._dialog.open();
-
-          // make sure the dialog is opened smoothly
-          setTimeout(() => {
-            const form = this._createForm();
-            form.slot = "container";
-            this._form = form;
-            this._dialog.appendChild(form);
-            this._dialog.addEventListener('m2-dialog-closed', e => {
-              this._form = null;
-              this._dialog = null;
-            });
-          }, 0);
-
-          return this._dialog;
-        }
-
-        _formSubmittedHandler(e) {
-
-          e.stopPropagation();
-
-          if (this._dialog) {
-            this._dialog.close();
-          }
-
-          /**
-           * @event form-submitted
-           * Fire when the form submitted, in fact the ``form-submitted`` transmits the event ``m2-form-submitted`` in m2-form.
-           */
-          this.dispatchEvent(new CustomEvent("form-submitted", {
-            bubbles: true, composed: true, detail: e.detail
-          }));
-        }
+        this.query({
+          url: this.metadata.modelSrc,
+          data: data
+        }, (data) => {
+          this._refreshContext(data);
+        }, (err) => this.hTip.error(JSON.stringify(err)));
 
       }
-      window.customElements.define(M2Action.is, M2Action);
-    </script>
+
+      /**
+       * If metadata.operType == 1 then submit a form,
+       * else if metadata.operType == 2 then open a dialog.
+       */
+      submitOrOpenDialog() {
+        if (this.metadata.operType == 1) {
+          // If no <m2-form /> exists in #form component, then append one.
+          this._form = this._form || this.$.form.appendChild(this._createForm());
+          setTimeout(() => {
+            this._form.submit();
+          }, 0);
+
+        } else if (this.metadata.operType == 2) {
+          this._fetchContext();
+          this._createDialog();
+        }
+      }
+
+      _refreshContext(context) {
+        this.context = context;
+        this._form.set('context', context);
+      }
+
+      _createForm() {
+        const form = document.createElement('m2-form');
+        form.metadata = this.metadata.formMeta;
+        form.context = this.context || {};
+        form.addEventListener('m2-form-submitted', this._formSubmittedHandler.bind(this));
+        return form;
+      }
+
+      _createDialog() {
+        this._dialog = document.createElement('m2-dialog');
+        document.body.appendChild(this._dialog);
+        this._dialog.open();
+
+        // make sure the dialog is opened smoothly
+        setTimeout(() => {
+          const form = this._createForm();
+          form.slot = "container";
+          this._form = form;
+          this._dialog.appendChild(form);
+          this._dialog.addEventListener('m2-dialog-closed', e => {
+            this._form = null;
+            this._dialog = null;
+          });
+        }, 0);
+
+        return this._dialog;
+      }
+
+      _formSubmittedHandler(e) {
+
+        e.stopPropagation();
+
+        if (this._dialog) {
+          this._dialog.close();
+        }
+
+        /**
+         * @event form-submitted
+         * Fire when the form submitted, in fact the ``form-submitted`` transmits the event ``m2-form-submitted`` in m2-form.
+         */
+        this.dispatchEvent(new CustomEvent("form-submitted", {
+          bubbles: true, composed: true, detail: e.detail
+        }));
+      }
+
+    }
+
+    window.customElements.define(M2Action.is, M2Action);
+  </script>
 </dom-module>

@@ -185,7 +185,7 @@ value = [
                   </template>
                   <template is="dom-repeat" items="[[ _groupedActions(model.actions) ]]">
                     <h2-button-group label="[[ item.group ]]"
-                            class="action-group">
+                                     class="action-group">
                       <template is="dom-repeat" items="[[ item.actions ]]" as="actionMeta">
                         <m2-action class="action"
                                    metadata="[[ actionMeta ]]"
@@ -241,7 +241,7 @@ value = [
       }
 
       _groupedActions(actions) {
-        if(!actions) return [];
+        if (!actions) return [];
         const groupedActions = [];
         const groupMap = {};
         actions.map(actionId => {
@@ -259,7 +259,7 @@ value = [
       }
 
       _noGroupActions(actions) {
-        if(!actions) return [];
+        if (!actions) return [];
         return actions.filter(actionId => {
           const meta = this.getValueByKey(this.metadata.actions, actionId);
           const grp = meta.group;
