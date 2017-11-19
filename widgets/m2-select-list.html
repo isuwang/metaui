@@ -17,23 +17,6 @@
                disabled="[[ metadata.disabled ]]"
                value="{{ value }}"></h2-select>
 
-    <!--<paper-dropdown-menu id="dropdownMenu"-->
-    <!--always-float-label-->
-    <!--dynamic-align-->
-    <!--required="[[ metadata.required ]]"-->
-    <!--error-message="[[ metadata.prompt ]]"-->
-    <!--disabled="[[ metadata.disabled ]]"-->
-    <!--label="[[ metadata.label ]]">-->
-    <!--<paper-listbox slot="dropdown-content" attr-for-selected="value" selected="{{ value }}">-->
-    <!--<template is="dom-repeat"-->
-    <!--items="[[ metadata.candidates ]]"-->
-    <!--as="selectItem">-->
-    <!--<paper-item value="[[ getValueByKey(selectItem, metadata.candidateValue) ]]">-->
-    <!--[[ getValueByKey(selectItem, metadata.candidateLabel) ]]-->
-    <!--</paper-item>-->
-    <!--</template>-->
-    <!--</paper-listbox>-->
-    <!--</paper-dropdown-menu>-->
   </template>
   <script>
     class M2SelectList extends Polymer.mixinBehaviors([BaseBehavior], M2WidgetBase) {

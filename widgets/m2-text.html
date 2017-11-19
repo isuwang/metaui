@@ -2,50 +2,34 @@
 <link rel="import" href="../../h2-elements/h2-input.html">
 <link rel="import" href="./m2-widget-base.html">
 <dom-module id="m2-text">
-    <template>
-        <!--<paper-input-->
-                <!--id="input"-->
-                <!--always-float-label-->
-                <!--value="{{ value }}"-->
-                <!--label="[[ metadata.label ]]"-->
-                <!--auto-validate-->
-                <!--required="[[ metadata.required]]"-->
-                <!--error-message="[[ metadata.prompt ]]"-->
-                <!--min="[[ metadata.min ]]"-->
-                <!--minlength="[[ metadata.minLength ]]"-->
-                <!--max="[[ metadata.max ]]"-->
-                <!--maxlength="[[ metadata.maxLength ]]"-->
-                <!--pattern="[[ metadata.regexp ]]"-->
-                <!--disabled="[[ metadata.disabled]]"-->
-                <!--readonly="[[ !metadata.editable ]]">-->
-        <!--</paper-input>-->
-        <h2-input
-                value="{{ value }}"
-                label="[[ metadata.label ]]"
-                required="[[ metadata.required]]"
-                error-message="[[ metadata.prompt ]]"
-                min="[[ metadata.min ]]"
-                minlength="[[ metadata.minLength ]]"
-                max="[[ metadata.max ]]"
-                maxlength="[[ metadata.maxLength ]]"
-                pattern="[[ metadata.regexp ]]"
-                disabled="[[ metadata.disabled]]"
-                readonly="[[ !metadata.editable ]]">
+  <template>
+    <h2-input
+            value="{{ value }}"
+            label="[[ metadata.label ]]"
+            required="[[ metadata.required]]"
+            error-message="[[ metadata.prompt ]]"
+            min="[[ metadata.min ]]"
+            minlength="[[ metadata.minLength ]]"
+            max="[[ metadata.max ]]"
+            maxlength="[[ metadata.maxLength ]]"
+            pattern="[[ metadata.regexp ]]"
+            disabled="[[ metadata.disabled]]"
+            readonly="[[ !metadata.editable ]]">
 
-        </h2-input>
-    </template>
-    <script>
-        class M2Text extends M2WidgetBase {
-            static get is() {
-              return "m2-text";
-            }
+    </h2-input>
+  </template>
+  <script>
+    class M2Text extends M2WidgetBase {
+      static get is() {
+        return "m2-text";
+      }
 
-            validate() {
-              return this.$.input.validate();
-            }
+      validate() {
+        return this.$.input.validate();
+      }
 
-        }
+    }
 
-        window.customElements.define(M2Text.is, M2Text);
-    </script>
+    window.customElements.define(M2Text.is, M2Text);
+  </script>
 </dom-module>

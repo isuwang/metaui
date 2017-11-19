@@ -1,52 +1,53 @@
 <link rel="import" href="../../polymer/polymer.html">
 <dom-module id="m2-widget-base">
-    <script>
-      class M2WidgetBase extends Polymer.Element {
+  <script>
+    class M2WidgetBase extends Polymer.Element {
 
-        static get is() {
-          return "m2-widget-base";
-        }
+      static get is() {
+        return "m2-widget-base";
+      }
 
-        static get properties() {
-          return {
-            context: {
-              type: Object,
-              notify: true,
-              value:function() {
-                return {};
-              }
-            },
-            value: {
-              type: Object,
-              notify:true
-            },
-            metadata: {
-              type: Object
+      static get properties() {
+        return {
+          context: {
+            type: Object,
+            notify: true,
+            value: function () {
+              return {};
             }
-          };
-        }
-
-        static get observers() {
-          return [
-            '__baseValueChange(value)',
-            '__baseContextChange(context.*)'
-          ];
-        }
-
-        __baseContextChange(obj) {
-          if(this.context) {
-            this.value = this.context[this.metadata.srcKey || this.metadata.name];
+          },
+          value: {
+            type: Object,
+            notify: true
+          },
+          metadata: {
+            type: Object
           }
-        }
+        };
+      }
 
-        __baseValueChange(val) {
-          this.set(`context.${this.metadata.srcKey || this.metadata.name}`, this.value);
-        }
+      static get observers() {
+        return [
+          '__baseValueChange(value)',
+          '__baseContextChange(context.*)'
+        ];
+      }
 
-        validate() {
-          return true;
+      __baseContextChange(obj) {
+        if (this.context) {
+          this.value = this.context[this.metadata.srcKey || this.metadata.name];
         }
       }
-      window.customElements.define(M2WidgetBase.is, M2WidgetBase);
-    </script>
+
+      __baseValueChange(val) {
+        this.set(`context.${this.metadata.srcKey || this.metadata.name}`, this.value);
+      }
+
+      validate() {
+        return true;
+      }
+    }
+
+    window.customElements.define(M2WidgetBase.is, M2WidgetBase);
+  </script>
 </dom-module>
