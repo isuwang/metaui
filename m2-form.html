@@ -94,7 +94,7 @@ metadata = {
                 id="[[ getEditorId(fieldMeta.name) ]]"
                 editable
                 context="{{ __context }}"
-                value="[[ getValueOrElse(context,fieldMeta.srcKey, fieldMeta.name) ]]"
+                value="[[ getValueOrElseNull(context,fieldMeta.srcKey, fieldMeta.name) ]]"
                 on-value-changed="_onValueChange"
                 on-field-attached="_onFieldAttached"
                 metadata="[[ fieldMeta ]]">

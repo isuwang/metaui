@@ -72,7 +72,7 @@ metadata = {
                   class="conditions__item"
                   editable
                   context="{{ context }}"
-                  value="[[ getValueOrElse(context,fieldMeta.srcKey, fieldMeta.name) ]]"
+                  value="[[ getValueOrElseNull(context,fieldMeta.srcKey, fieldMeta.name) ]]"
                   metadata="{{ fieldMeta }}">
           </m2-field>
         </template>
