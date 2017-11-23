@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../h2-elements/behaviors/ajax-behavior.html">
+<link rel="import" href="../h2-elements/behaviors/base-behavior.html">
 <link rel="import" href="./m2-dialog.html">
 <link rel="import" href="./m2-form.html">
 
@@ -97,7 +98,7 @@ metadata1 = {
      * @polymer
      * @demo demo/m2-action/index.html
      */
-    class M2Action extends Polymer.mixinBehaviors([AjaxBehavior], Polymer.Element) {
+    class M2Action extends Polymer.mixinBehaviors([AjaxBehavior,BaseBehavior], Polymer.Element) {
       constructor() {
         super();
       }
@@ -158,6 +159,11 @@ metadata1 = {
        * else if metadata.operType == 2 then open a dialog.
        */
       submitOrOpenDialog() {
+        // if there's a custom aciton, execute it, and return
+        if(this.isFunction(this.metadata.customAction)) {
+          return this.metadata.customAction();
+        }
+
         if (this.metadata.operType == 1) {
           // If no <m2-form /> exists in #form component, then append one.
           this._form = this._form || this.$.form.appendChild(this._createForm());
