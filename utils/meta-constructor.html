@@ -195,41 +195,6 @@
           body: new URLSearchParams({serviceName, version})
         };
 
-//        this.post({url: this.src, data: {serviceName, version}}, (data) => {
-//          let metadata = null;
-//          switch (this.metaType) {
-//            case "domain":
-//              metadata = this.assembleDomainMeta(data);
-//              break;
-//            case "grid":
-//              metadata = this.assembleGridMeta(data);
-//              break;
-//            case "struct":
-//              metadata = this.assembleStructMeta(data);
-//              break;
-//            case "action":
-//              metadata = this.assembleActionMeta(data);
-//              break;
-//            case "form":
-//              metadata = this.assembleFormMeta(data);
-//              break;
-//            case "field":
-//              metadata = this.assembleFieldMeta(data);
-//              break;
-//            default:
-//              throw new TypeError(`Unknown meta-type【${this.metaType}】`);
-//          }
-//
-//          if (this.isFunction(this.onReturn) && metadata) {
-//            this.metadata = this.onReturn(metadata);
-//          } else {
-//            this.metadata = metadata;
-//          }
-//
-//          this.data = data;
-//        }, err => {
-//          console.warn(err);
-//        });
       }
 
       /**
@@ -395,16 +360,16 @@
         formMeta.formUrl = map["m.form.url"] || "/metadata/form_url/not_config.do";
         formMeta.hideSubmitBtn = Boolean(map["m.form.hideSubmitBtn"]);
         formMeta.sendAsSearchParams = Boolean(map["m.form.sendAsSearchParams"]);
-        const args = methodMeta.request.fields;
+        const argMetas = methodMeta.request.fields;   // 方法请求参数元数据
 
         // 1. 方法没有入参， 如void doSomething()
         // 2. 方法有且仅有一个入参，且入参类型是STRUCT，如 void doSomething(TRequest request)
         // 3. 其他情况 ，如 void doSomething(int id, String name)
         let fields = null;
-        if (!args || args.length === 0) {
+        if (!argMetas || argMetas.length === 0) {
           fields = [];
-        } else if (args.length === 1 && "STRUCT" === args[0].dataType.kind) {
-          const struct = this.__getStruct(serviceMeta, args[0].dataType.qualifiedName);
+        } else if (argMetas.length === 1 && "STRUCT" === argMetas[0].dataType.kind) {
+          const struct = this.__getStruct(serviceMeta, argMetas[0].dataType.qualifiedName);
           fields = struct.fields.map(f =>
             this.assembleFieldMeta(
               {serviceMeta, fieldsInStruct},
@@ -413,7 +378,7 @@
             )
           );
         } else {
-          fields = args.map(f => this.assembleFieldMeta({serviceMeta, fieldsInStruct}, f,
+          fields = argMetas.map(f => this.assembleFieldMeta({serviceMeta, fieldsInStruct}, f,
             this.__getFieldEntity(fieldsInStruct, null, f.name)));
         }
 
@@ -456,6 +421,7 @@
         switch (rawFieldMeta.dataType.kind) {
           case "LIST":
           case "SET":
+            // TODO  assembleNoActionGridMeta
             const unitType = rawFieldMeta.dataType.valueType;
             if (["LIST", "SET", "MAP"].indexOf(unitType.kind) > -1) {
               throw new TypeError(`暂时不支持多层嵌套集合的结构 Field【${rawFieldMeta.name}】`)
@@ -467,7 +433,7 @@
             }
             break;
           case "MAP":
-            // TODO handle map
+            // TODO handle map convert to struct
             break;
           case "STRUCT":
             metaType.type = "STRUCT";

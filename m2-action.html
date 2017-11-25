@@ -161,7 +161,7 @@ metadata1 = {
       submitOrOpenDialog() {
         // if there's a custom aciton, execute it, and return
         if(this.isFunction(this.metadata.customAction)) {
-          return this.metadata.customAction();
+          return this.metadata.customAction(this.context);
         }
 
         if (this.metadata.operType == 1) {
