@@ -155,6 +155,27 @@
   </template>
 </demo-snippet>
 
+<h3>Custom Action</h3>
+<demo-snippet>
+  <template>
+    <style is="custom-style">
+    </style>
+    <m2-action id="action3"></m2-action>
+    <script>
+      action3.context = {
+        id:"123",
+        name: "WahsonLeung"
+      };
+      action2.metadata = {
+        actionId: "add-record",
+        actionName: "Add Record",
+        customAction: ({name}) => {
+          alert(name);
+        }
+      };
+    </script>
+  </template>
+</demo-snippet>
 </body>
 
 </html>

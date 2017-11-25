@@ -45,6 +45,7 @@ metadata = {
 |candidateValue|string|否| 组件值字段名，针对下拉组件、radio-group组件等，“value”
 |srcKey|string|否|当一个字段的值是来源于另外一个字段，则通过srcKey配置值来源字段的字段名，如 "id"
 |metaType|MetaType或string|否|元数据类型，如果缺少metaType，默认渲染的组件是<m2-text>；在表格元数据中定义操作列时，可以省略操作的元数据，如 metaType:"ACTION" [See h2-grid](#/elements/h2-grid)|
+|render|Function(Closure)|否|只读模式下会执行此闭包生成显示内容
 
 ### MetaType定义
 |字段名|类型|Required|描述|
@@ -113,6 +114,7 @@ metadata = {
         if (this.editable) {
           const tagName = this.metadata.element || M2Field.defaultElements(this.metadata.metaType);
           const eleDom = document.createElement(tagName);
+          eleDom.width = "100%";
 
           eleDom.addEventListener('value-changed', e => {
             this.value = e.detail.value;
