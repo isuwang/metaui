@@ -15,7 +15,7 @@
 
   <link rel="import" href="../../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../../iron-demo-helpers/demo-pages-shared-styles.html">
-  <link rel="import" href="../../widgets/h2-select-list.html">
+  <link rel="import" href="../../widgets/m2-select-list.html">
 
   <custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
@@ -62,6 +62,78 @@
             label: "性别",
             editable: true,
             visible: true,
+            element: "m2-select-list",
+            candidates: [
+              {
+                label: "男",
+                value: "1"
+              },
+              {
+                label: "女",
+                value: "2"
+              }
+            ],
+            candidateLabel: "label",
+            candidateValue: "value",
+          }
+        ],
+        style: `
+          .conditions {
+              grid-column-gap: 4%;
+              grid-template-columns: 48% 48%;
+          }
+        `
+      };
+      action.context = {
+        username: "jack"
+      };
+    </script>
+  </template>
+</demo-snippet>
+
+<h3>Extend Condition</h3>
+<demo-snippet>
+  <template>
+    <style is="custom-style">
+    </style>
+    <m2-crud-query id="action1" query-after-reset>
+        <a slot="ext-condition" id="clickA" href="javascript:void(0)">更多条件</a>
+    </m2-crud-query>
+
+    <script>
+      clickA.onclick = function(e) {
+        console.log(e.target);
+        e.target.dispatchEvent(
+          new CustomEvent('query-domain',
+            {
+              // e.detail的值是组件中返回的状态值，比如 {status: 1}
+              detail: {status:1},
+              composed: true,
+              bubbles: true
+            }
+          )
+        );
+      };
+      action1.metadata = {
+        formUrl: "/query.do",
+        fields: [
+          {
+            name: "username",
+            label: "用户名",
+            editable: true,
+            visible: true
+          },
+          {
+            name: "phone",
+            label: "联系电话",
+            editable: true,
+            visible: true
+          },
+          {
+            name: "sex",
+            label: "性别",
+            editable: true,
+            visible: true,
             element: "h2-select-list",
             candidates: [
               {
@@ -84,7 +156,6 @@
     </script>
   </template>
 </demo-snippet>
-
 </body>
 
 </html>

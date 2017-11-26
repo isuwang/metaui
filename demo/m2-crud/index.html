@@ -20,12 +20,12 @@
   <custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
       .centered {
-        min-width: 800px;
+        min-width: 1000px;
       }
 
       demo-snippet {
         --demo-snippet-code: {
-          max-height: 500px;
+          max-height: 1000px;
         }
       }
     </style>
@@ -39,7 +39,9 @@
   <template>
     <style is="custom-style">
     </style>
-    <m2-crud id="crud"></m2-crud>
+    <m2-crud id="crud">
+      <a slot="ext-condition" id="clickA" href="javascript:void(0)"></a>
+    </m2-crud>
     <script>
       crud.metadata = {
         query: {
@@ -126,7 +128,7 @@
       crud1.metadata = {
         query: {
           noPaging: true,
-          formUrl: "/query",
+          formUrl: "/query.do",
           fields: [
             {
               name: "username",
@@ -198,14 +200,14 @@
     </style>
     <m2-crud id="crud2">
       <div slot="ext-condition">
-        This is status,you can add anything you want.
+        <a slot="ext-condition" id="moreCond" href="javascript:void(0)">更多条件</a>
       </div>
     </m2-crud>
 
     <script>
       crud2.metadata = {
         query: {
-          formUrl: "/query",
+          formUrl: "/query.do",
           fields: [
             {
               name: "username",
@@ -258,26 +260,20 @@
           }
         }
       };
-      status.statusItems = [{
-        value: "-1",
-        label: "全部",
-        count: "0"
-      }, {
-        value: 3,
-        label: "待确认",
-        count: "0"
-      }, {
-        value: 4,
-        label: "已确认",
-        count: "0"
-      }];
-      status.onStatusSelect = (e) => {
-        e.target.dispatchEvent(new CustomEvent('query-domain', {
-          detail: e.detail,
-          composed: true,
-          bubbles: true
-        }));
-      }
+
+      moreCond.onclick = function (e) {
+        console.log(e.target);
+        e.target.dispatchEvent(
+          new CustomEvent('query-domain',
+            {
+              // e.detail的值是组件中返回的状态值，比如 {status: 1}
+              detail: {status: 1},
+              composed: true,
+              bubbles: true
+            }
+          )
+        );
+      };
     </script>
   </template>
 </demo-snippet>
