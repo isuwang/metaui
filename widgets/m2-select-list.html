@@ -5,18 +5,16 @@
 <dom-module id="m2-select-list">
   <template>
     <style>
-      #dropdownMenu {
-        width: 100%;
-      }
     </style>
     <h2-select id="select"
                label="[[ metadata.label ]]"
                items="[[ metadata.candidates ]]"
                attr-for-label="[[ metadata.candidateLabel ]]"
                attr-for-value="[[ metadata.candidateValue ]]"
+               multi="[[metadata.multi]]"
                disabled="[[ metadata.disabled ]]"
+               required="[[metadata.required]]"
                value="{{ value }}"></h2-select>
-
   </template>
   <script>
     class M2SelectList extends Polymer.mixinBehaviors([BaseBehavior], M2WidgetBase) {
