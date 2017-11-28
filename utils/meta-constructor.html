@@ -75,7 +75,7 @@
           },
           responseBody: {
             type: Object,
-            observer:"_responseBodyChange"
+            observer: "_responseBodyChange"
           }
         };
       }
@@ -149,7 +149,7 @@
       }
 
       _responseBodyChange() {
-        if(!this.responseBody || !this.responseBody.content) return;
+        if (!this.responseBody || !this.responseBody.content) return;
         const data = this.responseBody.content;
         let metadata = null;
         switch (this.metaType) {
@@ -183,6 +183,7 @@
 
         this.data = data;
       }
+
       __srcChange() {
         const {
           serviceName = this.throwNotFoundError("serviceName"),
@@ -413,49 +414,18 @@
             fieldMeta.candidates = [];
           }
         }
-        // fieldMeta.metaType
-        const metaType = {};
-        // default type
-        metaType.type = rawFieldMeta.dataType.kind;
-
-        switch (rawFieldMeta.dataType.kind) {
-          case "LIST":
-          case "SET":
-            // TODO  assembleNoActionGridMeta
-            const unitType = rawFieldMeta.dataType.valueType;
-            if (["LIST", "SET", "MAP"].indexOf(unitType.kind) > -1) {
-              throw new TypeError(`暂时不支持多层嵌套集合的结构 Field【${rawFieldMeta.name}】`)
-            }
-            if (unitType.kind === "STRUCT") {
-              const struct = this.__getStruct(serviceMeta, unitType.qualifiedName);
-              metaType.type = "STRUCT";
-              metaType.metadata = this.assembleStructMeta({serviceMeta, fieldsInStruct}, struct);
-            }
-            break;
-          case "MAP":
-            // TODO handle map convert to struct
-            break;
-          case "STRUCT":
-            metaType.type = "STRUCT";
-            const struct = this.__getStruct(serviceMeta, rawFieldMeta.dataType.qualifiedName);
-            metaType.metadata = this.assembleStructMeta({serviceMeta, fieldsInStruct}, struct);
-            break;
-          default:
-            break;
-        }
-
-        fieldMeta.metaType = metaType;
 
         rawFieldMeta.annotations && rawFieldMeta.annotations.forEach(an => {
           const key = an.key.substring(an.key.indexOf('.') + 1);
           // 对布尔值进行转换
           switch (key) {
             case "required":
-            case "mutil":
+            case "multi":
             case "editable":
             case "validate":
             case "visible":
             case "disabled":
+            case "processNestedType":
               fieldMeta[key] = an.value === "true";
               break;
             default:
@@ -475,6 +445,53 @@
         if (fieldMeta.length === 0) {
           delete fieldMeta.length;
         }
+
+        // process nested type
+        if (!!fieldMeta["processNestedType"]) {
+
+          // fieldMeta.metaType
+          const metaType = {};
+          // default type
+          metaType.type = rawFieldMeta.dataType.kind;
+
+          switch (rawFieldMeta.dataType.kind) {
+            case "LIST":
+            case "SET":
+              const unitType = rawFieldMeta.dataType.valueType;
+              if (["LIST", "SET", "MAP"].indexOf(unitType.kind) > -1) {
+                throw new TypeError(`暂时不支持多层嵌套集合的结构 Field【${rawFieldMeta.name}】`)
+              }
+
+              if (unitType.kind === "STRUCT") {
+                const struct = this.__getStruct(serviceMeta, unitType.qualifiedName);
+                metaType.type = "GRID";
+                const grids = struct.fields.map(f =>
+                  this.assembleFieldMeta(
+                    {serviceMeta, fieldsInStruct},
+                    f,
+                    this.__getFieldEntity(fieldsInStruct, `${struct.namespace}.${struct.name}`, f.name)
+                  )
+                );
+                metaType.metadata = {grids};
+                //this.assembleStructMeta({serviceMeta, fieldsInStruct}, struct);
+              }
+
+              break;
+            case "MAP":
+              // TODO handle map convert to struct
+              break;
+            case "STRUCT":
+              metaType.type = "STRUCT";
+              const struct = this.__getStruct(serviceMeta, rawFieldMeta.dataType.qualifiedName);
+              metaType.metadata = this.assembleStructMeta({serviceMeta, fieldsInStruct}, struct);
+              break;
+            default:
+              break;
+          }
+
+          fieldMeta.metaType = metaType;
+        }
+
         return fieldMeta;
       }
 
