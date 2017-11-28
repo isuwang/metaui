@@ -81,7 +81,7 @@
 |m.name|FieldMeta.name|应与实体字段名相同|字段名，如“orderNo”
 |m.label|FieldMeta.label||字段名，如“订单号”
 |m.required|FieldMeta.required||是否必填
-|m.mutil|FieldMeta.mutil||是否多选
+|m.multi|FieldMeta.multi||是否多选
 |m.editable|FieldMeta.editable| | 是否可编辑
 |m.validate|FieldMeta.validate|| 是否需要校验
 |m.visible|FieldMeta.visible|| 界面是否可见，仅对表单中的字段有效
@@ -109,7 +109,7 @@ CREATE TABLE `metadb`.`fields` (
   `element` varchar(50) DEFAULT NULL COMMENT '替换元素，如 "paper-input" ',
   `label` varchar(50) NOT NULL COMMENT '字段名，如"订单号"',
   `required` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否必填 1: 是 0：否',
-  `mutil` smallint(1) NOT NULL DEFAULT '0' COMMENT '多否多选  1: 是 0：否',
+  `multi` smallint(1) NOT NULL DEFAULT '0' COMMENT '多否多选  1: 是 0：否',
   `format` varchar(50) DEFAULT NULL COMMENT '显示格式，用于日期显示，如“yyyy-MM-dd”',
   `editable` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否可编辑  1: 是 0：否',
   `validate` smallint(1) NOT NULL DEFAULT '0' COMMENT '前是否需要校验， 1: 是 0：否',

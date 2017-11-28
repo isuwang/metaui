@@ -25,7 +25,7 @@ metadata = {
 |name|string|是|字段名，如“orderNo”
 |label|string|是|字段名，如“订单号”，缺省值：name字段的值
 |require|boolean|否|是否必填，缺省值：false
-|mutil|boolean|否|是否多选，缺省值：false
+|multi|boolean|否|是否多选，缺省值：false
 |editable|boolean|否| 是否可编辑，缺省值：false
 |validate| boolean|否| 是否需要校验，缺省值：false
 |visible| boolean|否| 界面是否可见，仅对表单中的字段有效，缺省值：false
@@ -134,6 +134,7 @@ metadata = {
             eleDom.metadata = this.metadata;
           }
 
+          // null == undefined
           if (eleDom.metadata.editable == undefined) {
             eleDom.metadata.editable = this.editable;
           }
