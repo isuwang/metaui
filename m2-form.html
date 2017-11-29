@@ -324,12 +324,20 @@ metadata = {
         return this.metadata.fields
           .filter(fieldMeta => fieldMeta.visible && (fieldMeta.required || !!fieldMeta.validate))
           .every(fieldMeta => {
+
             const editor = this._getEditor(fieldMeta.name);
             if (!editor) {
               console.warn(`Editor for 【${fieldMeta.name}】 not found in <${this.constructor.is} />`);
             }
+
             // if the editor does not have a validator,return true
-            return editor && editor.validate ? editor.validate() : true;
+            const isValid = editor && editor.validate ? editor.validate() : true;
+
+            if(!isValid) {
+              this.hTip.error(`${fieldMeta.label} is invalid.`);
+            }
+
+            return isValid;
           });
       }
 

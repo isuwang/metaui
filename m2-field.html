@@ -25,7 +25,7 @@ metadata = {
 |name|string|是|字段名，如“orderNo”
 |label|string|是|字段名，如“订单号”，缺省值：name字段的值
 |require|boolean|否|是否必填，缺省值：false
-|multi|boolean|否|是否多选，缺省值：false
+|mutil|boolean|否|是否多选，缺省值：false
 |editable|boolean|否| 是否可编辑，缺省值：false
 |validate| boolean|否| 是否需要校验，缺省值：false
 |visible| boolean|否| 界面是否可见，仅对表单中的字段有效，缺省值：false
@@ -57,10 +57,12 @@ metadata = {
 <dom-module id="m2-field">
   <template>
     <style>
-      :host {
+      :host .text-container {
         word-wrap: break-word;
+        line-height: 25px;
       }
     </style>
+    <div id="textContainer" class="text-container"></div>
   </template>
   <script>
     /**
@@ -126,7 +128,9 @@ metadata = {
             this.value = e.detail.value;
           });
 
-          eleDom.context = this.context;
+          setTimeout(() => {
+            eleDom.context = this.context;
+          }, 0);
 
           if (this.metadata.metaType && this.metadata.metaType.metadata) {
             eleDom.metadata = this.metadata.metaType.metadata;
@@ -134,7 +138,6 @@ metadata = {
             eleDom.metadata = this.metadata;
           }
 
-          // null == undefined
           if (eleDom.metadata.editable == undefined) {
             eleDom.metadata.editable = this.editable;
           }
@@ -142,7 +145,7 @@ metadata = {
         } else {
 
           const element = this.elementRender(this.context, this.metadata);
-          this.shadowRoot.innerHTML = element;
+          this.$.textContainer.innerHTML = element;
         }
 
       }
@@ -161,7 +164,7 @@ metadata = {
 
         if (!this.editable) {
           const element = this.elementRender(this.context, this.metadata);
-          this.shadowRoot.innerHTML = element;
+          this.$.textContainer.innerHTML = element;
         }
       }
 
