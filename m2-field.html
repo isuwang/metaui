@@ -1,5 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="./all-imports.html">
+<!--<link rel="import" href="./all-imports.html">-->
 <link rel="import" href="./widgets/m2-widget-resources.html">
 <link rel="import" href="./widgets/m2-widget-base.html">
 <link rel="import" href="../h2-elements/behaviors/base-behavior.html">
@@ -57,11 +57,27 @@ metadata = {
 <dom-module id="m2-field">
   <template>
     <style>
+      :host {
+        position: relative;
+      }
+
       :host .text-container {
         word-wrap: break-word;
       }
+
+      :host .conceal {
+        z-index: 99;
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+        background-color: rgba(255, 255, 255, 0.5);
+
+      }
     </style>
     <div id="textContainer" class="text-container"></div>
+    <div id="mask" class="conceal"></div>
   </template>
   <script>
     /**
@@ -69,7 +85,7 @@ metadata = {
      * @polymer
      * @demo demo/m2-field/index.html
      */
-    class M2Field extends Polymer.mixinBehaviors([BaseBehavior], M2WidgetBase) {
+    class M2Field extends Polymer.mixinBehaviors([BaseBehavior], Polymer.Element) {
       static get is() {
         return "m2-field";
       }
@@ -85,7 +101,16 @@ metadata = {
           },
           context: {
             type: Object
+          },
+          value: {
+            type: Object,
+            notify: true
+          },
+          disabled: {
+            type: Boolean,
+            value: false
           }
+
         };
       }
 
@@ -93,8 +118,13 @@ metadata = {
         return [
           '__metadataChange(metadata)',
           '__valueChange(value)',
-          '__contextChange(context.*)'
+          '__contextChange(context.*)',
+          '__disabledChangeHandler(disabled)'
         ];
+      }
+
+      __disabledChangeHandler() {
+        this.$.mask.classList[this.disabled ? "add" : "remove"]("conceal");
       }
 
       __contextChange(obj) {
@@ -103,8 +133,9 @@ metadata = {
           this.__valueChange();
         }
 
-        if (this._ref && this.isFunction(this._ref.notifyPath)) {
-          this._ref.notifyPath(obj.path);
+        // when `context.${this.metadata.name}` changed, access the new value to nested element.
+        if (obj.path === `context.${this.metadata.name}`) {
+          this._ref && this.isFunction(this._ref.notifyPath) && this._ref.notifyPath(obj.path);
         }
       }
 
@@ -122,13 +153,17 @@ metadata = {
           const tagName = this.metadata.element || M2Field.defaultElements(this.metadata.metaType);
           const eleDom = document.createElement(tagName);
           eleDom.width = "100%";
+          this._ref = this.shadowRoot.appendChild(eleDom);
 
           eleDom.addEventListener('value-changed', e => {
-            this.value = e.detail.value;
+            if (this.value !== e.detail.value) {
+              this.value = e.detail.value;
+            }
           });
 
           setTimeout(() => {
             eleDom.context = this.context;
+            eleDom.value = this.value;
           }, 0);
 
           if (this.metadata.metaType && this.metadata.metaType.metadata) {
@@ -140,7 +175,7 @@ metadata = {
           if (eleDom.metadata.editable == undefined) {
             eleDom.metadata.editable = this.editable;
           }
-          this._ref = this.shadowRoot.appendChild(eleDom);
+
         } else {
 
           const element = this.elementRender(this.context, this.metadata);
@@ -159,7 +194,7 @@ metadata = {
       __valueChange() {
         const target = this._ref;
 
-        target && (target.value = this.value);
+        target && (target.value !== this.value) && (target.value = this.value);
 
         if (!this.editable) {
           const element = this.elementRender(this.context, this.metadata);
