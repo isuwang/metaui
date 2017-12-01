@@ -190,10 +190,16 @@
           version = this.throwNotFoundError("version")
         } = this.option;
 
+//        experimental api, not work below chrome 61
+//        new URLSearchParams({serviceName, version})
+
+        const searchParams = new URLSearchParams();
+        searchParams.append("serviceName", serviceName);
+        searchParams.append("version", version);
         this.request = {
           url: this.src,
           method: "POST",
-          body: new URLSearchParams({serviceName, version})
+          body: searchParams
         };
 
       }
