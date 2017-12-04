@@ -37,7 +37,6 @@
 <demo-snippet>
     <template>
         <style is="custom-style">
-
         </style>
         <m2-field id="field" editable></m2-field>
         <script>
@@ -147,6 +146,28 @@
             ],
             candidateLabel: "label",
             candidateValue: "value",
+          }
+        </script>
+    </template>
+</demo-snippet>
+
+<h3>Disabled Text Field</h3>
+<demo-snippet>
+    <template>
+        <style is="custom-style">
+            div {
+                display: flex;
+            }
+        </style>
+        <div>
+            <m2-field id="field5" editable disabled></m2-field>
+        </div>
+
+        <script>
+          field5.metadata = {
+            element: "m2-text",
+            label: "Your name here: ",
+            editable: true
           }
         </script>
     </template>
