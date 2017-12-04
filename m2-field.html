@@ -130,6 +130,7 @@ metadata = {
       __contextChange(obj) {
         // if context obj change, force to refresh
         if (obj.path === "context") {
+          this._ref && (this._ref.context = this.context);
           this.__valueChange();
         }
 
