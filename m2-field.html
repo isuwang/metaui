@@ -178,11 +178,22 @@ metadata = {
           }
 
         } else {
-
-          const element = this.elementRender(this.context, this.metadata);
-          this.$.textContainer.innerHTML = element;
+          this.__renderReadOnlyElement();
         }
 
+      }
+
+      __renderReadOnlyElement() {
+        const element = this.elementRender(this.context, this.metadata);
+        const textContainer = this.$.textContainer;
+        if(element instanceof HTMLElement) {
+          while(textContainer.firstChild) {
+            textContainer.firstChild.remove();
+          }
+          textContainer.appendChild(element);
+        } else {
+          textContainer.innerHTML = element;
+        }
       }
 
       connectedCallback() {
@@ -197,11 +208,9 @@ metadata = {
 
         target && (target.value !== this.value) && (target.value = this.value);
 
-        if (!this.editable) {
-          const element = this.elementRender(this.context, this.metadata);
-          this.$.textContainer.innerHTML = element;
-        }
+        !this.editable && this.__renderReadOnlyElement();
       }
+
 
       static defaultElements({type} = {}) {
         // more default elements will support in the future.
