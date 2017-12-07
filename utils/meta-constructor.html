@@ -3,15 +3,41 @@
 <link rel="import" href="../../h2-elements/h2-fetch.html">
 
 <!--
-使用方式：
+使用例子：
+1. 组装DomainMeta:
 ```
-<meta-constructor src="/dapeng/metadata" metadata="{{md}}" option="[[ option ]]" on-return="{{onReturn()}}"></meta-constructor>
-<meta-constructor src="/dapeng/metadata" meta-type="struct" option="[[ option ]]"></meta-constructor>
-<meta-constructor src="/dapeng/metadata" meta-type="grid" option="[[ option ]]"></meta-constructor>
-<meta-constructor src="/dapeng/metadata" meta-type="form" option="[[ option ]]" metadata="{{formMeta}}"></meta-constructor>
-<meta-constructor src="/dapeng/metadata" meta-type="action" option="[[ option ]]"></meta-constructor>
-<meta-constructor src="/dapeng/metadata" meta-type="field" option="[[ option ]]"></meta-constructor>
-<m2-crud metadata="{{md}}"></m2-crud>
+<meta-constructor src="/dapeng/metadata"
+                  metadata="{{ metadata }}"
+                  option="[[ option ]]"
+                  on-return="[[ onReturn() ]]"></meta-constructor>
+
+<m2-crud metadata="[[ metadata ]]" context="[[context]]"></m2-crud>
+
+option = {
+  serviceName: "com.isuwang.soa.task.service.TaskAdminService",
+  version: "1.0.0",
+  methodName: "findTasks"
+}
+```
+
+2. 组装FormMeta:
+```
+<meta-constructor src="/dapeng/metadata"
+                  metadata="{{ metadata }}"
+                  meta-type="form"
+                  option="[[ option ]]"
+                  on-return="[[ onReturn() ]]"></meta-constructor>
+
+<m2-form metadata="[[ metadata ]]"
+         context="[[ context ]]"
+         on-success="{{ onFormSuccess() }}"
+         on-error="{{ onFormError() }}"></m2-form>
+
+option = {
+  serviceName: "com.isuwang.soa.task.service.TaskAdminService",
+  version: "1.0.0",
+  methodName: "createTask"
+}
 ```
 -->
 <dom-module id="meta-constructor">
@@ -193,9 +219,6 @@
           serviceName = this.throwNotFoundError("serviceName"),
           version = this.throwNotFoundError("version")
         } = this.option;
-
-//        experimental api, not work below chrome 61
-//        new URLSearchParams({serviceName, version})
 
         const searchParams = new URLSearchParams();
         searchParams.append("serviceName", serviceName);
