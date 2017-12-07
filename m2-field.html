@@ -186,8 +186,8 @@ metadata = {
       __renderReadOnlyElement() {
         const element = this.elementRender(this.context, this.metadata);
         const textContainer = this.$.textContainer;
-        if(element instanceof HTMLElement) {
-          while(textContainer.firstChild) {
+        if (element instanceof HTMLElement) {
+          while (textContainer.firstChild) {
             textContainer.firstChild.remove();
           }
           textContainer.appendChild(element);
@@ -207,6 +207,10 @@ metadata = {
         const target = this._ref;
 
         target && (target.value !== this.value) && (target.value = this.value);
+
+        if (this.context[this.metadata.name] !== this.value) {
+          this.set(`context.${this.metadata.srcKey || this.metadata.name}`, this.value);
+        }
 
         !this.editable && this.__renderReadOnlyElement();
       }

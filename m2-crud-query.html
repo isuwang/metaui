@@ -188,21 +188,13 @@ metadata = {
         }
 
         const reqUrl = new URL(this.metadata.formUrl, window.location.href);
-        Object.keys(param).filter(key => !!param[key]).forEach(key => reqUrl.searchParams.append(key, param[key]));
+        Object.keys(param).filter(key => param[key] != undefined).forEach(key => reqUrl.searchParams.append(key, param[key]));
 
         this.__fetchRequest = {
           url: reqUrl,
           method: "GET",
           credentials: "include"
         };
-
-//        this.query({
-//            url: this.metadata.formUrl,
-//            data: param
-//          },
-//          data => this.result = data,
-//          err => this.hTip.error(err)
-//        );
       }
 
       __fetchResponseChange() {

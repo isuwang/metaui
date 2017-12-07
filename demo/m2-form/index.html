@@ -3,273 +3,314 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
 
-    <title>m2-form demo</title>
+  <title>m2-form demo</title>
 
-    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../m2-form.html">
+  <link rel="import" href="../../m2-form.html">
 
-    <link rel="import" href="../../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../../iron-demo-helpers/demo-pages-shared-styles.html">
 
-    <custom-style>
-        <style is="custom-style" include="demo-pages-shared-styles">
-            .centered {
-                min-width: 500px;
-            }
+  <custom-style>
+    <style is="custom-style" include="demo-pages-shared-styles">
+      .centered {
+        min-width: 500px;
+      }
 
-            demo-snippet {
-                --demo-snippet-code: {
-                    max-height: 500px;
-                }
-            }
-        </style>
-    </custom-style>
+      demo-snippet {
+        --demo-snippet-code: {
+          max-height: 500px;
+        }
+      }
+    </style>
+  </custom-style>
 
 </head>
 
 <body unresolved class="centered">
 <h3>Simple Form</h3>
 <demo-snippet>
-    <template>
-        <m2-form id="form"></m2-form>
-        <script>
-          form.context = {
-            foo: "foo",
-            bar: "bar"
-          };
+  <template>
+    <m2-form id="form"></m2-form>
+    <script>
+      form.context = {
+        foo: "foo",
+        bar: "bar"
+      };
 
-          form.metadata = {
-            formUrl: "/url-to-send-form",
-            title: "Form Title",
-            confirm: "Sure to submit?",
-            fields: [
-              {
-                name: "foo",
-                label: "foo",
-                required: true,
-                editable: true,
-                visible: true
-              },
-              {
-                name: "bar",
-                label: "bar",
-                required: true,
-                editable: true,
-                visible: true
-              },
-            ]
-          }
-        </script>
-    </template>
+      form.metadata = {
+        formUrl: "/url-to-send-form",
+        title: "Form Title",
+        confirm: "Sure to submit?",
+        fields: [
+          {
+            name: "foo",
+            label: "foo",
+            required: true,
+            editable: true,
+            visible: true
+          },
+          {
+            name: "bar",
+            label: "bar",
+            required: true,
+            editable: true,
+            visible: true
+          },
+        ]
+      }
+    </script>
+  </template>
 </demo-snippet>
 
 <h3>Custom submit function</h3>
 <demo-snippet>
-    <template>
-        <m2-form id="form1"></m2-form>
-        <script>
+  <template>
+    <m2-form id="form1"></m2-form>
+    <script>
 
-          form1.onSubmit = (request) => {
-            window.alert(JSON.stringify(request));
-          };
+      form1.onSubmit = (request) => {
+        window.alert(JSON.stringify(request));
+      };
 
-          form1.context = {
-            foo: "foo",
-            bar: "bar"
-          };
+      form1.context = {
+        foo: "foo",
+        bar: "bar"
+      };
 
-          form1.metadata = {
-            formUrl: "/url-to-send-form",
-            title: "Form Title",
-            confirm: "Sure to submit?",
-            fields: [
-              {
-                name: "foo",
-                label: "foo",
-                required: true,
-                editable: true,
-                visible: true
-              },
-              {
-                name: "bar",
-                label: "bar",
-                required: true,
-                editable: true,
-                visible: true
-              },
-            ],
+      form1.metadata = {
+        formUrl: "/url-to-send-form",
+        title: "Form Title",
+        confirm: "Sure to submit?",
+        fields: [
+          {
+            name: "foo",
+            label: "foo",
+            required: true,
+            editable: true,
+            visible: true
+          },
+          {
+            name: "bar",
+            label: "bar",
+            required: true,
+            editable: true,
+            visible: true
           }
-        </script>
-    </template>
+        ]
+      }
+    </script>
+  </template>
 </demo-snippet>
 
 <h3>Custom style</h3>
 <demo-snippet>
-    <template>
-        <m2-form id="form2"></m2-form>
-        <script>
+  <template>
+    <m2-form id="form2"></m2-form>
+    <script>
 
-          form2.context = {
-            foo: "foo",
-            bar: "bar"
-          };
+      form2.context = {
+        foo: "foo",
+        bar: "bar"
+      };
 
-          form2.metadata = {
-            style: `.container {
-                     grid-column-gap: 4%;
-                     grid-template-columns: 48% 48%;
-                 }
-                 .container__item {
-                     border: 1px dashed
-                 }
-                `,
-            formUrl: "/url-to-send-form",
-            title: "Form Title",
-            confirm: "Sure to submit?",
-            fields: [
-              {
-                name: "foo",
-                label: "foo",
-                required: true,
-                editable: true,
-                visible: true
-              },
-              {
-                name: "bar",
-                label: "bar",
-                required: true,
-                editable: true,
-                visible: true
-              },
-            ],
+      form2.metadata = {
+        style:
+          `
+          .container {
+             grid-column-gap: 4%;
+             grid-template-columns: 48% 48%;
           }
-        </script>
-    </template>
+          .container__item {
+             border: 1px dashed
+          }
+        `,
+        formUrl: "/url-to-send-form",
+        title: "Form Title",
+        confirm: "Sure to submit?",
+        fields: [
+          {
+            name: "foo",
+            label: "foo",
+            required: true,
+            editable: true,
+            visible: true
+          },
+          {
+            name: "bar",
+            label: "bar",
+            required: true,
+            editable: true,
+            visible: true
+          }
+        ]
+      }
+    </script>
+  </template>
 </demo-snippet>
 
 <h3>Alternation between widgets</h3>
 <demo-snippet>
-    <template>
-        <m2-form id="form3"></m2-form>
-        <script>
+  <template>
+    <m2-form id="form3"></m2-form>
+    <script>
 
-          form3.context = {
-            foo: "foo",
-            bar: "bar"
-          };
+      form3.context = {
+        foo: "foo",
+        bar: "bar"
+      };
 
-          form3.metadata = {
-            style: `.container {
-                    grid-column-gap: 4%;
-                    grid-template-columns: 48% 48%;
-                }
-               .container__item {
-                    border: 1px dashed
-                }
-              `,
-            formUrl: "/url-to-send-form",
-            title: "Form Title",
-            confirm: "Sure to submit?",
-            fields: [
-              {
-                name: "foo",
-                label: "foo",
-                required: true,
-                editable: true,
-                visible: true,
-                onAttached: (fieldEle, formEle) => {
-                  formEle.watch(['bar'], ({bar}, whoChange) => {
-                    console.log(whoChange);
-                    fieldEle.style = bar.length > 4 ?
-                        'background:red;' : 'background:green;'
-
-                  });
-                }
-              },
-              {
-                name: "bar",
-                label: "bar",
-                required: true,
-                editable: true,
-                visible: true
-              },
-            ],
+      form3.metadata = {
+        style: `
+          .container {
+              grid-column-gap: 4%;
+              grid-template-columns: 48% 48%;
           }
-        </script>
-    </template>
+          .container__item {
+              border: 1px dashed
+          }
+        `,
+        formUrl: "/url-to-send-form",
+        title: "Form Title",
+        confirm: "Sure to submit?",
+        fields: [
+          {
+            name: "foo",
+            label: "foo",
+            required: true,
+            editable: true,
+            visible: true,
+            onAttached: (fieldEle, formEle) => {
+              formEle.watch(['bar'], ({bar}, whoChange) => {
+                console.log(whoChange);
+                fieldEle.style = bar.length > 4 ?
+                  'background:red;' : 'background:green;'
+
+              });
+            }
+          },
+          {
+            name: "bar",
+            label: "bar",
+            required: true,
+            editable: true,
+            visible: true
+          },
+        ],
+      }
+    </script>
+  </template>
 </demo-snippet>
 
 <h3>Nested Form</h3>
 <demo-snippet>
-    <template>
-        <m2-form id="form4"></m2-form>
-        <script>
+  <template>
+    <m2-form id="form4"></m2-form>
+    <script>
 
-          form4.context = {
-            foo: "foo",
-            bar: "bar"
-          };
+      form4.context = {
+        foo: "foo",
+        bar: "bar"
+      };
 
-          form4.metadata = {
-            style: `.container {
-                    grid-template-columns: auto;
-                }
-               .container__item {
-                    border-bottom: 1px dashed
-                }
-              `,
-            formUrl: "/url-to-send-form",
-            title: "Form Title",
-            confirm: "Sure to submit?",
-            fields: [
-              {
-                name: "bar",
-                label: "bar",
-                required: true,
-                editable: true,
-                visible: true
-              },
-              {
-                name: "foo",
-                label: "foo",
-                required: true,
-                editable: true,
-                visible: true,
-                element: "m2-form",
-                metaType: {
-                  type: "FORM",
-                  metadata: {
-                    formUrl: "/url-to-send-form",
-                    title: "Nested Form",
-                    confirm: "Sure to submit?",
-                    fields: [
-                      {
-                        name: "foo1",
-                        label: "foo1",
-                        required: true,
-                        editable: true,
-                        visible: true,
-                      },
-                      {
-                        name: "bar1",
-                        label: "bar1",
-                        required: true,
-                        editable: true,
-                        visible: true
-                      },
-                    ],
-                  }
-                }
+      form4.metadata = {
+        style:
+          `
+            .container {
+                grid-template-columns: auto;
+            }
+           .container__item {
+                border-bottom: 1px dashed
+            }
+          `,
+        formUrl: "/url-to-send-form",
+        title: "Form Title",
+        confirm: "Sure to submit?",
+        fields: [
+          {
+            name: "bar",
+            label: "bar",
+            required: true,
+            editable: true,
+            visible: true
+          },
+          {
+            name: "foo",
+            label: "foo",
+            required: true,
+            editable: true,
+            visible: true,
+            element: "m2-form",
+            metaType: {
+              type: "FORM",
+              metadata: {
+                formUrl: "/url-to-send-form",
+                title: "Nested Form",
+                confirm: "Sure to submit?",
+                fields: [
+                  {
+                    name: "foo1",
+                    label: "foo1",
+                    required: true,
+                    editable: true,
+                    visible: true,
+                  },
+                  {
+                    name: "bar1",
+                    label: "bar1",
+                    required: true,
+                    editable: true,
+                    visible: true
+                  },
+                ]
               }
-            ],
+            }
           }
-        </script>
-    </template>
+        ]
+      }
+    </script>
+  </template>
+</demo-snippet>
+
+<h3>Lifetime callbacks</h3>
+<demo-snippet>
+  <template>
+    <m2-form id="form5"></m2-form>
+    <script>
+
+      form5.onSuccess = (data) => {
+        window.alert(JSON.stringify(data));
+      };
+
+      form5.onError = (err) => {
+        window.alert(JSON.stringify(err));
+      };
+
+      form5.context = {
+        foo: "foo"
+      };
+
+      form5.metadata = {
+        formUrl: "/url-to-send-form",
+        title: "Form Title",
+        confirm: "Sure to submit?",
+        fields: [
+          {
+            name: "foo",
+            label: "foo",
+            required: true,
+            editable: true,
+            visible: true
+          }
+        ]
+      }
+    </script>
+  </template>
 </demo-snippet>
 </body>
 

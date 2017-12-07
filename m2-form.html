@@ -9,7 +9,7 @@
 A component for form.
 
 ```
-<m2-form metadata="{{ metadata }}"></m2-form>
+<m2-form metadata="{{ metadata }}" on-success="{{ onSuccess() }}" on-error={{ onError() }}></m2-form>
 ```
 ```
 context = {
@@ -37,7 +37,17 @@ metadata = {
         visible: true
       },
     ],
+};
+onSuccess() {
+  return (data) => {
+    console.log(data);
+  };
 }
+onError() {
+  return (err) => {
+    console.log(err);
+  };
+};
 ```
 ### metadata定义 (FormMeta)
 |字段名|类型|Required|描述|

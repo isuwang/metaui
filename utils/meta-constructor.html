@@ -60,14 +60,23 @@ option = {
           /**
            * For example:
            * {
-             *   methodName: "addOrganization",
-             *   structName: "com.isuwang.soa.admin.domain.TOrganization",
-             *   fieldName: "id"
-             * }
+           *     serviceName: "com.isuwang.soa.task.service.TaskAdminService",
+           *     version: "1.0.0",
+           *     methodName: "addOrganization",
+           *     structName: "com.isuwang.soa.task.domain.TTask",
+           *     fieldName: "taskNo"
+           * }
            *
            * If metaType is "domain", methodName is the query method.
            *
-           * @type {methodName:String, structName:String, fieldName:String}
+           * if metaType === "domain" require {serviceName, version}
+           * if metaType === "grid" require {serviceName, version, method}
+           * if metaType === "struct" require {serviceName, version, structName }
+           * if metaType === "action" require {serviceName, version, methodName }
+           * if metaType === "form" require {serviceName, version, methodName }
+           * if metaType === "field" require {serviceName, version, structName, fieldName }
+           *
+           * @type {serviceName:String, version:String, methodName:String, structName:String, fieldName:String}
            */
           option: {
             type: Object,
