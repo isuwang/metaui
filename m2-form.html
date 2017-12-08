@@ -270,17 +270,18 @@ onError() {
 
         const _submit = () => {
 
-          let headers = {}, body = null;
+          let headers = {}, body = null, data = this._requestBody();
           if (this.metadata.sendAsSearchParams) {
             const searchParams = new URLSearchParams();
-            const data = this._requestBody();
             Object.keys(data)
               .filter(key => data[key] != undefined)
               .forEach((key) => searchParams.append(key, data[key]));
             body = searchParams;
+          } else if(data instanceof FormData || data instanceof Blob || data instanceof ArrayBuffer || data instanceof ArrayBufferView) {
+            body = data;
           } else {
             headers = {"content-type": "application/json;charset=utf-8"};
-            body = JSON.stringify(this._requestBody());
+            body = JSON.stringify(data);
           }
 
           this.__fetchRequest = {
@@ -343,7 +344,7 @@ onError() {
             // if the editor does not have a validator,return true
             const isValid = editor && editor.validate ? editor.validate() : true;
 
-            if(!isValid) {
+            if (!isValid) {
               this.hTip.error(`${fieldMeta.label} is invalid.`);
             }
 
