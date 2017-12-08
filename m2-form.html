@@ -277,7 +277,7 @@ onError() {
               .filter(key => data[key] != undefined)
               .forEach((key) => searchParams.append(key, data[key]));
             body = searchParams;
-          } else if(data instanceof FormData || data instanceof Blob || data instanceof ArrayBuffer || data instanceof ArrayBufferView) {
+          } else if (data instanceof FormData || data instanceof Blob || data instanceof ArrayBuffer) {
             body = data;
           } else {
             headers = {"content-type": "application/json;charset=utf-8"};
