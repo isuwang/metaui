@@ -7,6 +7,7 @@
     <style>
     </style>
     <h2-radio
+            id = "radio"
             label="[[ metadata.label ]] "
             items="[[ metadata.candidates ]]"
             attr-for-label="[[ metadata.candidateLabel ]]"
@@ -30,8 +31,7 @@
       }
 
       validate() {
-        // TODO
-        return this.metadata.required ? !!this.value : true;
+        return this.$.radio.validate();
       }
 
       reset() {
