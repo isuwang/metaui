@@ -1,5 +1,5 @@
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/isuwang/metaui)
-
+## [Wiki](https://github.com/isuwang/metaui/wiki)
 ## Introduces
 > A metadata-driven front-end framework, which you can easily create a component in your web app with metadata.
 ## Tutorials
