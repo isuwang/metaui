@@ -208,7 +208,7 @@ metadata = {
 
         target && (target.value !== this.value) && (target.value = this.value);
 
-        if (this.context[this.metadata.name] !== this.value) {
+        if (this.context && this.context[this.metadata.name] !== this.value) {
           this.set(`context.${this.metadata.srcKey || this.metadata.name}`, this.value);
         }
 
