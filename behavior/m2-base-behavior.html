@@ -1,0 +1,181 @@
+<script>
+  /**
+   * @polymerBehavior
+   * @type {{redefine: (function(Object, String): Object), __redefine: (function(*=))}}
+   */
+  M2BaseBehavior = {
+
+    /**
+     *
+     * this.elementRender(model, {render});
+     * ```
+     * @param {Object} model
+     * @param {{render: {(model) => {}}, name: {String}, srcKey: {String}} param
+     * @returns {*}
+     */
+    elementRender(model, {render, name, srcKey} = {}) {
+      if (this.isFunction(render)) {
+        return render(model);
+      }
+      return this.getValueByKey(model, srcKey || name);
+    },
+
+    /**
+     * 更新样式
+     * @param {String} style
+     */
+    updateStyle(style) {
+      if (!style) return;
+
+      let styleEle = this.shadowRoot.querySelector('style#customStyle');
+
+      if (!styleEle) {
+        styleEle = document.createElement('style');
+        styleEle.id = 'customStyle';
+        styleEle.setAttribute('scope', this.constructor.is);
+        this.shadowRoot.appendChild(styleEle);
+      }
+
+      styleEle.appendChild(document.createTextNode(style));
+    },
+
+    /**
+     * 对象重定义
+     * @param {Object} obj
+     * @param {String} path
+     * @returns {Object}
+     */
+    redefine(obj, path) {
+      let pojo = this.__redefine(obj);
+      pojo && pojo.__addObserver(path, this.notifyPath.bind(this));
+      return pojo;
+    },
+
+    __redefine(obj){
+
+      const observers = []; // {path, observer: function(path, o, n)}
+      const shadows = {};
+
+      const notify = (path, o, n) => {
+        observers.forEach(node => node.observer(node.path + "." + path, o, n));
+      };
+
+      const __addObserver = (key, func) => {
+        __removeObserver(key, func);
+        observers.push({'path': key, 'observer': func});
+      };
+
+      const __removeObserver = (key, func) => {
+        for (let i in observers) {
+          if (observers[i].path == key && observers[i].observer == func) {
+            observers.splice(i, 1);
+            return;
+          }
+        }
+      };
+
+      const defProperty = (key) => {
+        Object.defineProperty(obj, key, {
+          enumerable: true,
+          get: () => {
+            return shadows[key];
+          },
+          set: (value) => {
+            const old = shadows[key];
+            if (old != null && old.__removeObserver) {
+              old.__removeObserver(key, notify);
+            }
+
+            const redefined = this.__redefine(value);
+            shadows[key] = redefined;
+            if (redefined != null && redefined.__addObserver) {
+              redefined.__addObserver(key, notify);
+            }
+
+            notify(key, old, redefined);
+          }
+        });
+      };
+
+      if (obj == null) return null;
+      if (obj.__redefined === true) return obj;
+
+      if (obj instanceof Array) {
+        //console.log(`redefine array:[${obj}]`)
+        Object.keys(obj).forEach(key => {
+          const redefined = this.__redefine(obj[key]);
+          if (redefined != null && redefined.__addObserver) {
+            redefined.__addObserver(key, notify);
+          }
+          obj[key] = redefined;
+        });
+
+        return new Proxy(obj, {
+          get: (target, key, receiver) => {
+            switch (key) {
+              case "__redefined":
+                return true;
+              case "__addObserver":
+                return __addObserver;
+              case "__removeObserver":
+                return __removeObserver;
+              default:
+                return Reflect.get(target, key, receiver);
+            }
+          },
+          set: (target, key, value, receiver) => {
+            //console.log(`set array ${key}`);
+
+            const old = Reflect.get(target, key, receiver);
+            if (old != null && old.__removeObserver) {
+              old.__removeObserver(key, notify);
+            }
+
+            const redefined = this.__redefine(value);
+            if (redefined != null && redefined.__addObserver) // listener its change
+              redefined.__addObserver(key, notify);
+
+            if (redefined == old) return true;
+            else {
+              Reflect.set(target, key, redefined, receiver); // recieve is proxy, then -> target otherwise receiver
+              notify(key, old, redefined);
+              return true;
+            }
+          }
+        });
+      } else if (typeof obj == "object") {
+        Object.keys(obj).forEach(key => {
+          const item = obj[key];
+          delete obj[key];
+
+          const redefined = this.__redefine(item);
+          if (redefined != null && redefined.__addObserver) {
+            redefined.__addObserver(key, notify);
+          }
+
+          shadows[key] = redefined;
+          defProperty(key);
+        });
+
+        Object.defineProperty(obj, "__redefined", {value: true});
+        Object.defineProperty(obj, "__addObserver", {value: __addObserver});
+        Object.defineProperty(obj, "__removeObserver", {value: __removeObserver});
+
+        Object.setPrototypeOf(obj, new Proxy({}, {
+          set: (target, prop, value, reciever) => {
+            const redefined = this.__redefine(value); // addObserver
+            if (redefined != null && redefined.__addObserver)
+              redefined.__addObserver(prop, notify);
+            shadows[prop] = redefined;
+            defProperty(prop);
+            notify(prop, null, redefined);
+            return true;
+          }
+
+        }));
+
+        return obj;
+      } else return obj;
+    }
+  }
+</script>

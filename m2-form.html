@@ -3,6 +3,7 @@
 <link rel="import" href="../h2-elements/behaviors/base-behavior.html">
 <link rel="import" href="../h2-elements/behaviors/tip-behavior.html">
 <link rel="import" href="../h2-elements/h2-fetch.html">
+<link rel="import" href="./behavior/m2-base-behavior.html">
 <link rel="import" href="./m2-field.html">
 
 <!--
@@ -126,7 +127,7 @@ onError() {
      * @polymer
      * @demo demo/m2-form/index.html
      */
-    class M2Form extends Polymer.mixinBehaviors([BaseBehavior, AjaxBehavior, TipBehavior], Polymer.Element) {
+    class M2Form extends Polymer.mixinBehaviors([M2BaseBehavior, BaseBehavior, AjaxBehavior, TipBehavior], Polymer.Element) {
 
       static get is() {
         return "m2-form";

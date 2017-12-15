@@ -456,6 +456,8 @@ option = {
             `);
             fieldMeta.candidates = [];
           }
+          fieldMeta.candidateLabel = fieldMeta.candidateLabel || "label";
+          fieldMeta.candidateValue = fieldMeta.candidateValue || "value";
         }
 
         rawFieldMeta.annotations && rawFieldMeta.annotations.forEach(an => {

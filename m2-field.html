@@ -1,8 +1,8 @@
 <link rel="import" href="../polymer/polymer.html">
-<!--<link rel="import" href="./all-imports.html">-->
 <link rel="import" href="./widgets/m2-widget-resources.html">
 <link rel="import" href="./widgets/m2-widget-base.html">
 <link rel="import" href="../h2-elements/behaviors/base-behavior.html">
+<link rel="import" href="./behavior/m2-base-behavior.html">
 
 <!--
 
@@ -85,7 +85,7 @@ metadata = {
      * @polymer
      * @demo demo/m2-field/index.html
      */
-    class M2Field extends Polymer.mixinBehaviors([BaseBehavior], Polymer.Element) {
+    class M2Field extends Polymer.mixinBehaviors([M2BaseBehavior, BaseBehavior], Polymer.Element) {
       static get is() {
         return "m2-field";
       }

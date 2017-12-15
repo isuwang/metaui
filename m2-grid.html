@@ -1,12 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../h2-elements/h2-grid.html">
-<link rel="import" href="../h2-elements/h2-grid-header.html">
-<link rel="import" href="../h2-elements/h2-grid-header-cell.html">
-<link rel="import" href="../h2-elements/h2-grid-body.html">
-<link rel="import" href="../h2-elements/h2-grid-row.html">
-<link rel="import" href="../h2-elements/h2-grid-cell.html">
 <link rel="import" href="../h2-elements/h2-button-group.html">
 <link rel="import" href="../h2-elements/behaviors/base-behavior.html">
+<link rel="import" href="./behavior/m2-base-behavior.html">
 <link rel="import" href="./m2-field.html">
 <link rel="import" href="./m2-action.html">
 <!--
@@ -130,13 +125,53 @@ value = [
       :host {
         font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
         font-size: 12px;
+        display: block;
+        overflow: auto;
       }
 
-      dom-repeat, dom-if {
-        display: none;
+      :host thead {
+        background: #595959;
+        color: #fff;
+      }
+
+      :host .result-grid {
+        background: transparent;
+        border-spacing: 0;
+        border-collapse: collapse;
+        width: 100%;
+        border:1px solid #dddddd;
+        border-radius: 4px;
+      }
+
+
+      :host th, td {
+        text-align: left;
+        padding: 5px 10px;
+        line-height: 20px;
+      }
+
+      :host th {
+        padding: 12px 10px;
+      }
+
+      :host .grid-column {
+        min-width: 70px;
+      }
+
+      :host .grid-row:hover {
+        background: #CAF1FF;
+      }
+
+      :host tr:nth-of-type(even) {
+        background-color: #dddddd;
+      }
+
+      :host .grid-actions{
+        display: flex;
       }
 
       :host .action, :host .action-group {
+        margin: 10px 5px;
         width: 100px;
         height: 30px;
       }
@@ -150,31 +185,31 @@ value = [
     </style>
     <slot name="filter"></slot>
 
-    <h2-grid no-paging>
-
+    <table class="result-grid">
       <caption class="table-caption">[[ metadata.title ]]</caption>
-      <h2-grid-header>
+      <thead class="grid-head">
+      <tr>
         <template is="dom-repeat" items="[[ metadata.grids ]]">
-          <h2-grid-header-cell>
-            [[item.label]]
-          </h2-grid-header-cell>
+          <th>[[item.label]]</th>
         </template>
-      </h2-grid-header>
-      <h2-grid-body>
-        <template is="dom-repeat" items="[[ value ]]" as="model">
-          <h2-grid-row>
-            <template is="dom-repeat" items="[[ metadata.grids ]]" as="fieldMeta">
-              <h2-grid-cell>
-                <template is="dom-if" if="[[ !isEqual(fieldMeta.metaType.type, 'ACTION') ]]">
-                  <m2-field class="field"
-                            metadata="[[ fieldMeta ]]"
-                            editable="[[ orElse(editable, metadata.editable, fieldMeta.editable) ]]"
-                            context="[[ model ]]"
-                            value="[[ getValueOrElse(model,fieldMeta.srcKey, fieldMeta.name) ]]">
-                  </m2-field>
-                </template>
+      </tr>
+      </thead>
+      <tbody class="grid-body">
+      <template is="dom-repeat" items="[[ value ]]" as="model">
+        <tr class="grid-row">
+          <template is="dom-repeat" items="[[ metadata.grids ]]" as="fieldMeta">
+            <td class="grid-column">
+              <template is="dom-if" if="[[ !isEqual(fieldMeta.metaType.type, 'ACTION') ]]">
+                <m2-field class="field"
+                          metadata="[[ fieldMeta ]]"
+                          editable="[[ orElse(editable, metadata.editable, fieldMeta.editable) ]]"
+                          context="[[ model ]]"
+                          value="[[ getValueOrElse(model,fieldMeta.srcKey, fieldMeta.name) ]]">
+                </m2-field>
+              </template>
 
-                <template is="dom-if" if="[[ isEqual(fieldMeta.metaType.type,'ACTION') ]]">
+              <template is="dom-if" if="[[ isEqual(fieldMeta.metaType.type,'ACTION') ]]">
+                <div class="grid-actions">
                   <template is="dom-repeat" items="[[ _noGroupActions(model.actions) ]]"
                             as="actionMeta">
                     <m2-action class="action"
@@ -183,8 +218,9 @@ value = [
                     </m2-action>
                   </template>
                   <template is="dom-repeat" items="[[ _groupedActions(model.actions) ]]">
-                    <h2-button-group label="[[ item.group ]]"
-                                     class="action-group">
+                    <h2-button-group
+                            class="action-group"
+                            name="[[ item.group ]]">
                       <template is="dom-repeat" items="[[ item.actions ]]" as="actionMeta">
                         <m2-action class="action"
                                    metadata="[[ actionMeta ]]"
@@ -193,13 +229,15 @@ value = [
                       </template>
                     </h2-button-group>
                   </template>
-                </template>
-              </h2-grid-cell>
-            </template>
-          </h2-grid-row>
-        </template>
-      </h2-grid-body>
-    </h2-grid>
+                </div>
+              </template>
+
+            </td>
+          </template>
+        </tr>
+      </template>
+      </tbody>
+    </table>
   </template>
   <script>
     /**
@@ -207,7 +245,7 @@ value = [
      * @polymer
      * @demo demo/m2-grid/index.html
      */
-    class M2Grid extends Polymer.mixinBehaviors([BaseBehavior], Polymer.Element) {
+    class M2Grid extends Polymer.mixinBehaviors([M2BaseBehavior, BaseBehavior], Polymer.Element) {
       constructor() {
         super();
       }
