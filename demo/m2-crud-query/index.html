@@ -62,7 +62,7 @@
             label: "性别",
             editable: true,
             visible: true,
-            element: "m2-select-list",
+            element: "m2-radio-group",
             candidates: [
               {
                 label: "男",
@@ -80,12 +80,14 @@
         style: `
           .conditions {
               grid-column-gap: 4%;
+              grid-row-gap: 10px;
               grid-template-columns: 48% 48%;
           }
         `
       };
       action.context = {
-        username: "jack"
+        username: "jack",
+        sex: "1"
       };
     </script>
   </template>
@@ -134,7 +136,7 @@
             label: "性别",
             editable: true,
             visible: true,
-            element: "h2-select-list",
+            element: "m2-radio-group",
             candidates: [
               {
                 label: "男",
@@ -148,10 +150,18 @@
             candidateLabel: "label",
             candidateValue: "value",
           }
-        ]
+        ],
+        style: `
+          .conditions {
+              grid-column-gap: 4%;
+              grid-row-gap: 10px;
+              grid-template-columns: 48% 48%;
+          }
+        `
       };
-      action.context = {
-        username: "jack"
+      action1.context = {
+        username: "jack",
+
       };
     </script>
   </template>

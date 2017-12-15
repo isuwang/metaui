@@ -126,7 +126,7 @@ value = [
         font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
         font-size: 12px;
         display: block;
-        overflow: auto;
+        overflow-x: auto;
       }
 
       :host thead {
@@ -220,10 +220,9 @@ value = [
                   <template is="dom-repeat" items="[[ _groupedActions(model.actions) ]]">
                     <h2-button-group
                             class="action-group"
-                            name="[[ item.group ]]">
+                            label="[[ item.group ]]">
                       <template is="dom-repeat" items="[[ item.actions ]]" as="actionMeta">
-                        <m2-action class="action"
-                                   metadata="[[ actionMeta ]]"
+                        <m2-action metadata="[[ actionMeta ]]"
                                    context="[[ model ]]">
                         </m2-action>
                       </template>

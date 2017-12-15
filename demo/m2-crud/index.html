@@ -75,9 +75,38 @@
               label: "操作"
             }
           ],
+          style: `
+            .grid-actions {
+              display: grid;
+              grid-template-columns: 30% 30% auto;
+              grid-column-gap: 5px;
+            }
+            .action, .action-group {
+              margin: 5px;
+            }
+          `,
           actions: {
             "record-edit": {
               actionId: "record-edit",
+              actionName: "Edit",
+              operType: 1,
+              formMeta: {
+                formUrl: "/url-to-send-form",
+                confirm: "Sure to submit?",
+                fields: [
+                  {
+                    name: "name",
+                    label: "Name"
+                  },
+                  {
+                    name: "phone",
+                    label: "Phone"
+                  },
+                ],
+              }
+            },
+            "record-add": {
+              actionId: "record-add",
               actionName: "Edit",
               operType: 1,
               formMeta: {
@@ -106,8 +135,20 @@
           {
             username: "Jack",
             phone: "15900000000",
-            address: "XXXX",
-            actions: ["record-edit"]
+            address: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            actions: ["record-add","record-add","record-add","record-add","record-add"]
+          },
+          {
+            username: "Jack",
+            phone: "15900000000",
+            address: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            actions: ["record-edit","record-edit","record-edit","record-edit","record-edit"]
+          },
+          {
+            username: "Jack",
+            phone: "15900000000",
+            address: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            actions: ["record-edit","record-edit","record-edit","record-edit","record-edit"]
           }
         ]
       };
