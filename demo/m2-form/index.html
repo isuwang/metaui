@@ -171,9 +171,6 @@
               grid-column-gap: 4%;
               grid-template-columns: 48% 48%;
           }
-          .container__item {
-              border: 1px dashed
-          }
         `,
         formUrl: "/url-to-send-form",
         title: "Form Title",
@@ -188,9 +185,7 @@
             onAttached: (fieldEle, formEle) => {
               formEle.watch(['bar'], ({bar}, whoChange) => {
                 console.log(whoChange);
-                fieldEle.style = bar.length > 4 ?
-                  'background:red;' : 'background:green;'
-
+                fieldEle.disabled = bar.length > 4;
               });
             }
           },
