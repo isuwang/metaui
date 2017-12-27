@@ -1,6 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
-<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
 <link rel="import" href="../neon-animation/web-animations.html">
 <link rel="import" href="../neon-animation/animations/scale-up-animation.html">
 <link rel="import" href="../neon-animation/animations/fade-out-animation.html">
@@ -19,12 +18,18 @@
   <template>
     <style>
       :host {
-        position: absolute;
+        display: block;
       }
 
-      :host paper-dialog {
-        min-width: 80%;
-        max-width: 80%;
+      paper-dialog {
+        display: flex;
+        width: 85%;
+        height: 90%;
+      }
+
+      .scrollable-container {
+        flex: 1;
+        overflow: auto;
       }
 
       :host .close-dialog {
@@ -46,23 +51,16 @@
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
       }
 
-      :host .scrollable-container {
-        min-height: 800px;
-      }
-
     </style>
-
 
     <paper-dialog id="dialog"
                   modal
                   entry-animation="scale-up-animation"
                   exit-animation="fade-out-animation">
       <div class="close-dialog" on-tap="close">X</div>
-      <paper-dialog-scrollable>
-        <div class="scrollable-container">
-          <slot name="container"></slot>
-        </div>
-      </paper-dialog-scrollable>
+      <div class="scrollable-container">
+        <slot name="container"></slot>
+      </div>
     </paper-dialog>
 
   </template>

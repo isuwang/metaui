@@ -68,16 +68,15 @@ onError() {
   <template>
     <style id="localStyle">
 
-      dom-repeat {
+      dom-repeat, dom-if {
         display: none;
       }
 
-      dom-if {
-        display: none;
+      :host {
+        display: block;
       }
 
       .btns {
-        position: relative;
         padding: 20px;
         margin-top: 10px;
         display: flex;

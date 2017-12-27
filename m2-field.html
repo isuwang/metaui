@@ -58,23 +58,31 @@ metadata = {
   <template>
     <style>
       :host {
+        display: block;
+      }
+
+      :host([hidden]) {
+        display: none;
+      }
+
+      :host([disabled]) {
         position: relative;
       }
 
-      :host .text-container {
+      :host > .text-container {
         word-wrap: break-word;
       }
 
-      :host .conceal {
+      :host([disabled]) .conceal {
         z-index: 99;
         position: absolute;
-        left: 0px;
-        right: 0px;
-        top: 0px;
-        bottom: 0px;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
         background-color: rgba(255, 255, 255, 0.5);
-
       }
+
     </style>
     <div id="textContainer" class="text-container"></div>
     <div id="mask" class="conceal"></div>
@@ -124,7 +132,7 @@ metadata = {
       }
 
       __disabledChangeHandler() {
-        this.$.mask.classList[this.disabled ? "add" : "remove"]("conceal");
+        this.disabled ? this.setAttribute('disabled', '') : this.removeAttribute('disabled');
       }
 
       __contextChange(obj) {
