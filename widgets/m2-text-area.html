@@ -10,11 +10,10 @@
     </style>
     <h2-textarea id="textArea"
                  value="{{ value }}"
-                 rows="3"
                  label="[[ metadata.label ]]"
-                 required="[[ metadata.required ]]"
-                 readonly="[[ !metadata.editable ]]"
-                 error-message="[[ metadata.prompt ]]"
+                 required$="[[ metadata.required ]]"
+                 readonly$="[[ !metadata.editable ]]"
+                 prompt="[[ metadata.prompt ]]"
                  minlength="[[ metadata.minLength ]]"
                  maxlength="[[ metadata.maxLength ]]"></h2-textarea>
 

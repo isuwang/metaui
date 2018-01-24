@@ -68,10 +68,6 @@ onError() {
   <template>
     <style id="localStyle">
 
-      dom-repeat, dom-if {
-        display: none;
-      }
-
       :host {
         display: block;
       }
@@ -126,7 +122,7 @@ onError() {
      * @polymer
      * @demo demo/m2-form/index.html
      */
-    class M2Form extends Polymer.mixinBehaviors([M2BaseBehavior, BaseBehavior, AjaxBehavior, TipBehavior], Polymer.Element) {
+    class M2Form extends Polymer.mixinBehaviors([M2BaseBehavior, BaseBehavior, TipBehavior], Polymer.Element) {
 
       static get is() {
         return "m2-form";
@@ -294,7 +290,7 @@ onError() {
         };
 
         if (this.metadata.confirm) {
-          this.hTip.confirm(this.metadata.confirm, _submit);
+          this.h2Tip.confirm(this.metadata.confirm, _submit);
         } else {
           _submit();
         }
@@ -316,7 +312,7 @@ onError() {
 
       __fetchErrorChangeHandler() {
         const err = this.__fetchError && this.__fetchError.content || "";
-        this.hTip.error(err);
+        this.h2Tip.error(err);
         this.isFunction(this.onError) && this.onError(err);
       }
 
@@ -345,7 +341,7 @@ onError() {
             const isValid = editor && editor.validate ? editor.validate() : true;
 
             if (!isValid) {
-              this.hTip.error(`${fieldMeta.label} is invalid.`);
+              this.h2Tip.error(`${fieldMeta.label} is invalid.`);
             }
 
             return isValid;

@@ -128,7 +128,8 @@ metadata = {
            * @type {{start:{Number}, limit: {Number}}}
            */
           paging: {
-            type: Object
+            type: Object,
+            notify: true
           },
 
           _extQueryCondition: {
@@ -136,13 +137,6 @@ metadata = {
             value: function () {
               return {};
             }
-          },
-          /**
-           * If true, a new query form will be submitted after reset() is called.
-           */
-          queryAfterReset: {
-            type: Boolean,
-            value: false
           },
           __fetchResponse: {
             type: Object
@@ -205,7 +199,7 @@ metadata = {
         if (this.__fetchResponse.ok) {
           this.__fetchResponse.clone().json().then(data => this.result = data);
         } else {
-          this.__fetchResponse.clone().text().then((err) => this.hTip.error(err));
+          this.__fetchResponse.clone().text().then((err) => this.h2Tip.error(err));
         }
       }
 
@@ -218,8 +212,11 @@ metadata = {
         });
 
         this._extQueryCondition = {};
-        if (this.queryAfterReset) {
+
+        if (this.paging.start == 0) {
           this.submit();
+        } else {
+          this.set('paging.start', 0);
         }
       }
     }

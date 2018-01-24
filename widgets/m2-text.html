@@ -12,15 +12,15 @@
             id="input"
             value="{{ value }}"
             label="[[ metadata.label ]]"
-            required="[[ metadata.required]]"
-            error-message="[[ metadata.prompt ]]"
+            required$="[[ metadata.required]]"
+            prompt="[[ metadata.prompt ]]"
             min="[[ metadata.min ]]"
             minlength="[[ metadata.minLength ]]"
             max="[[ metadata.max ]]"
             maxlength="[[ metadata.maxLength ]]"
             pattern="[[ metadata.regexp ]]"
-            disabled="[[ metadata.disabled]]"
-            readonly="[[ !metadata.editable ]]">
+            disabled$="[[ metadata.disabled]]"
+            readonly$="[[ !metadata.editable ]]">
 
     </h2-input>
   </template>

@@ -1,6 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="./widgets/m2-widget-resources.html">
-<link rel="import" href="../h2-elements/behaviors/ajax-behavior.html">
 <link rel="import" href="../h2-elements/behaviors/base-behavior.html">
 <link rel="import" href="../h2-elements/h2-pagination.html">
 <link rel="import" href="./m2-crud-query.html">
@@ -67,13 +66,16 @@ metadata = {
       :host .action-items {
         margin-left: 10px;
       }
+
+      .crud-pagination {
+        margin-top: 10px;
+      }
     </style>
     <div class="crud-query">
       <m2-crud-query id="query"
-                     query-after-reset
                      metadata="{{ metadata.query }}"
                      result="{{ rawResult }}"
-                     paging="[[ paging ]]"
+                     paging="{{ paging }}"
                      context="{{ context }}">
         <slot name="ext-condition" slot="ext-condition"></slot>
       </m2-crud-query>
@@ -97,8 +99,8 @@ metadata = {
     <div class="crud-pagination">
       <template is="dom-if" if="{{ !metadata.query.noPaging }}">
         <h2-pagination paging="{{ paging }}"
+                       limit="[[ orElse(metadata.query.limit, 15) ]]"
                        total="[[ getValueByPath(finalResult, keyForPageResult) ]]">
-
         </h2-pagination>
       </template>
     </div>
@@ -110,7 +112,7 @@ metadata = {
      * @polymer
      * @demo demo/m2-crud/index.html
      */
-    class M2Crud extends Polymer.mixinBehaviors([BaseBehavior, AjaxBehavior], Polymer.Element) {
+    class M2Crud extends Polymer.mixinBehaviors([BaseBehavior], Polymer.Element) {
       constructor() {
         super();
       }
