@@ -59,6 +59,9 @@ metadata = {
     <style>
       :host {
         display: block;
+        --h2-label: {
+          width: var(--h2-label-width, 100px);
+        }
       }
 
       :host([hidden]) {
@@ -83,9 +86,16 @@ metadata = {
         background-color: rgba(255, 255, 255, 0.5);
       }
 
+      #container,
+      #container > * {
+        width: inherit;
+        height: inherit;
+      }
+
     </style>
     <div id="textContainer" class="text-container"></div>
     <div id="mask" class="conceal"></div>
+    <div id="container"></div>
   </template>
   <script>
     /**
@@ -162,7 +172,7 @@ metadata = {
           const tagName = this.metadata.element || M2Field.defaultElements(this.metadata.metaType);
           const eleDom = document.createElement(tagName);
           eleDom.width = "100%";
-          this._ref = this.shadowRoot.appendChild(eleDom);
+          this._ref = this.$.container.appendChild(eleDom);
 
           eleDom.addEventListener('value-changed', e => {
             if (this.value !== e.detail.value) {
