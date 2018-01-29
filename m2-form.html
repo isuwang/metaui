@@ -100,7 +100,7 @@ onError() {
                 id="[[ getEditorId(fieldMeta.name) ]]"
                 editable
                 context="{{ __context }}"
-                value="[[ getValueOrElseNull(context,fieldMeta.srcKey, fieldMeta.name) ]]"
+                value="[[ getValueOrElseUndefined(context,fieldMeta.srcKey, fieldMeta.name) ]]"
                 on-value-changed="_onValueChange"
                 on-field-attached="_onFieldAttached"
                 metadata="[[ fieldMeta ]]">
